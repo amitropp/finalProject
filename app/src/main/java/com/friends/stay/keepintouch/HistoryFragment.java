@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import info.androidhive.materialtabs.R;
 
-
 public class HistoryFragment extends Fragment{
 
     public HistoryFragment() {
