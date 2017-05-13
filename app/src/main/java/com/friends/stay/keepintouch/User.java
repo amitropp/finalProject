@@ -20,13 +20,13 @@ public class User {
         msgTemplate = new ArrayList<String>();
 
         //initialize all days
-        availableTimes.put(Day.SUNDAY, new ArrayList<ArrayList<Integer>>());
-        availableTimes.put(Day.MONDAY, new ArrayList<ArrayList<Integer>>());
-        availableTimes.put(Day.TUESDAY, new ArrayList<ArrayList<Integer>>());
-        availableTimes.put(Day.WEDNESDAY, new ArrayList<ArrayList<Integer>>());
-        availableTimes.put(Day.THURSDAY, new ArrayList<ArrayList<Integer>>());
-        availableTimes.put(Day.FRIDAY, new ArrayList<ArrayList<Integer>>());
-        availableTimes.put(Day.SATURDAY, new ArrayList<ArrayList<Integer>>());
+        availableTimes.put(Day.SUNDAY, null);
+        availableTimes.put(Day.MONDAY, null);
+        availableTimes.put(Day.TUESDAY, null);
+        availableTimes.put(Day.WEDNESDAY, null);
+        availableTimes.put(Day.THURSDAY, null);
+        availableTimes.put(Day.FRIDAY, null);
+        availableTimes.put(Day.SATURDAY, null);
     }
 
     public void addContact(Contact newContact){
@@ -62,7 +62,7 @@ public class User {
         if(Day.isDay(dayName)){
             availableTimes.put(dayName, range);
         } else {
-            throw new IOException("Wrong Day sent");
+            throw new IOException("Wrong Day!!!");
         }
     }
 }
