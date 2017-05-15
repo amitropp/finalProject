@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frag_contact_list"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
@@ -8,14 +9,12 @@
         android:id="@+id/ib_add_contact"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
         android:src="@android:drawable/ic_input_add"
         android:layout_weight="0.18"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="81dp" />
+        android:layout_marginTop="17dp" />
 
     <TextView
         android:layout_width="wrap_content"

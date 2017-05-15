@@ -5,9 +5,9 @@ package com.friends.stay.keepintouch;
  */
 
 class Contact {
+
     public String getNumber()
     {
         return "0509223270";
-
     }
 }

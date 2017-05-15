@@ -2,53 +2,38 @@ package com.friends.stay.keepintouch;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageButton;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
     public static final int PERMISSION_REQUEST_CALL = 1 ;
+    private static final String[] tabsNames = {"CONTACTS", "FUTURE", "HISTORY"};
 
     private Call mNextCall;
     private ImageButton mAddBtn;
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private Tabs mTabs;
+    User mUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAddBtn = (ImageButton)findViewById(R.id.ib_add_contact);
+        mUser = new User();
 
-        setTabs();
-//        test();
+        Fragment[] tabFragments = {new ContactsListFragment(), new ContactsListFragment(), new ContactsListFragment()};
+        //create tabs on screen using tab names array and tab fragments array
+        mTabs = new Tabs(this, tabsNames, tabFragments);
+
 
     }
 
-    private void setTabs() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-
+    //test the program
     private void test()
     {
         Contact me = new Contact();
@@ -73,45 +58,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    //setup the tabs of the page
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ContactsListFragment(), "CONTACTS");
-//        adapter.addFragment(new MessageViewFragment(), "FUTURE");
-//        adapter.addFragment(new MessageViewFragment(), "HISTORY");
-        adapter.addFragment(new ContactsListFragment(), "FUTURE");
-        adapter.addFragment(new ContactsListFragment(), "HISTORY");
-        viewPager.setAdapter(adapter);
+    public User getUser()
+    {
+        return mUser;
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
 
 }
