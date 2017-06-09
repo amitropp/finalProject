@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         mAddBtn = (ImageButton)findViewById(R.id.ib_add_contact);
         mUser = new User();
 
-        Fragment[] tabFragments = {new ContactsListFragment(), new ContactsListFragment(), new ContactsListFragment()};
+        Fragment[] tabFragments = {new ContactsListFragment(), new testFragment(), new testFragment2()};
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
 

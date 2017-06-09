@@ -15,9 +15,21 @@
         android:text="@string/choose_contact"/>
 
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_nickname"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/nickname"
+            />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -53,24 +65,19 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ll_call_rate"
+            android:id="@+id/ll_rate"
             android:orientation="horizontal"
             >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/call_every"
+                android:text="@string/rate"
                 />
             <EditText
-                android:id="@+id/et_call_days"
+                android:id="@+id/et_days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -80,57 +87,10 @@
                 android:text="@string/days"
                 />
 
+        </LinearLayout>
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ll_whatsapp_rate"
-                android:orientation="horizontal"
-                >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/whatsapp_every"
-                    />
-                <EditText
-                    android:id="@+id/et_whatsapp_days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/days"
-                    />
-            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ll_message_rate"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/message_every"
-                />
-            <EditText
-                android:id="@+id/et_msg_days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/days"
-                />
-            </LinearLayout>
-
-    </LinearLayout>
 
     <Button
         android:id="@+id/btn_done"

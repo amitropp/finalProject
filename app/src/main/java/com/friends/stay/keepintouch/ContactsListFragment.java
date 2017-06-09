@@ -16,6 +16,8 @@ import android.widget.ImageButton;
 public class ContactsListFragment extends Fragment {
 
     private ImageButton mAddContactBtn;
+    public static final String TAG_CONATCT = "conFragTag";
+    private View myView = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,11 +27,18 @@ public class ContactsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
-        mAddContactBtn = (ImageButton)view.findViewById(R.id.ib_add_contact);
-        _setAddListener();
-        return view;
+        //create view only once per instance
+        if (myView == null)
+
+        {
+            // Inflate the layout for this fragment
+            View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
+            mAddContactBtn = (ImageButton)view.findViewById(R.id.ib_add_contact);
+            _setAddListener();
+            myView = view;
+            return view;
+        }
+        return myView;
 
     }
 
@@ -42,7 +51,7 @@ public class ContactsListFragment extends Fragment {
                 AddContactFragment addContactFrag = new AddContactFragment();
                 getFragmentManager().beginTransaction()
                         .replace(R.id.frag_contact_list, addContactFrag)
-                        .addToBackStack(null)
+                        .addToBackStack(TAG_CONATCT)
                         .commit();
             }
         });

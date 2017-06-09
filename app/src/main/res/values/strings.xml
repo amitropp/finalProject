@@ -12,4 +12,6 @@
     <string name="days">Days</string>
     <string name="message_every">Message Every</string>
     <string name="whatsapp_every">Send Whasapp Message</string>
+    <string name="rate">Keep in contact Every</string>
+    <string name="nickname">Enter a nickname (optional)</string>
 </resources>
