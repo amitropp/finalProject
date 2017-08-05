@@ -36,9 +36,9 @@ public class SettingFragmentTimes extends AppCompatActivity {
     // *TextView
     private TextView textViewServiceApp;
     private TextView textViewWeekCalender;
-//    private TextView textViewPrevDate;
+    private TextView textViewPrevDate;
     private TextView textViewDate;
-//    private TextView textViewNextDate;
+    private TextView textViewNextDate;
     private TextView textViewSun;
     private TextView textViewMon;
     private TextView textViewTue;
@@ -86,10 +86,10 @@ public class SettingFragmentTimes extends AppCompatActivity {
 
     private Typeface typface;
 
-//    public String dateFormat, logInID;
+    public String dateFormat, logInID;
     public String[] weekDays;
     public String[] NextPreWeekday;
-//    public String dateFormate;
+    public String dateFormate;
     public String firstDayOfWeek;
     public String lastDayOfWeek;
 
@@ -143,9 +143,9 @@ public class SettingFragmentTimes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        textViewPrevDate = (TextView) findViewById(R.id.textViewPrevDate);
+        textViewPrevDate = (TextView) findViewById(R.id.textViewPrevDate);
         textViewDate = (TextView) findViewById(R.id.textViewDate);
-//        textViewNextDate = (TextView) findViewById(R.id.textViewNextDate);
+        textViewNextDate = (TextView) findViewById(R.id.textViewNextDate);
         textViewSun = (TextView) findViewById(R.id.textViewSun);
         textViewMon = (TextView) findViewById(R.id.textViewMon);
         textViewTue = (TextView) findViewById(R.id.textViewTue);

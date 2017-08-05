@@ -1,10 +1,7 @@
 package com.friends.stay.keepintouch;
 
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +23,9 @@ public class SettingFragmentTemplates extends Fragment {
 
     public SettingFragmentTemplates(){
         msgTemplate = new ArrayList<String>();
-        msgTemplate.add("Hey <nickbame>, How are yoy?");
-        msgTemplate.add("whats up <nickbame>?");
-        msgTemplate.add("<nickbame>, I miss you!! \uD83E\uDD17");
+        msgTemplate.add("Hey <nickname>, How are yoy?");
+        msgTemplate.add("whats up <nickname>?");
+        msgTemplate.add("<nickname>, I miss you!! \uD83E\uDD17");
     }
 
     @Override
