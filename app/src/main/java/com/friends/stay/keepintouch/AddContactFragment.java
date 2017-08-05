@@ -120,10 +120,10 @@ public class AddContactFragment extends Fragment {
                 EditText etRate = (EditText)thisView.findViewById(R.id.et_days);
                 int rateEveryXDays = Integer.valueOf(etRate.getText().toString());
 
-                Contact newContact = new Contact();//(mChosenName, mChosenPhoneNumber, nickname,
+//                Contact newContact = new Contact();//(mChosenName, mChosenPhoneNumber, nickname,
                         //isWhatsapp, isFacebook, isMsg, isCall, rateEveryXDays); //TODO complete
                 //add new contact to list
-                activity.getUser().addContact(newContact);
+//                activity.getUser().addContact(newContact);
 
                 //return to last fragment
                 getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);

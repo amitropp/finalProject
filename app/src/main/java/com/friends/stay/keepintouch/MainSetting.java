@@ -16,7 +16,7 @@ public class MainSetting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_main_settings);
 
         Fragment[] tabFragments = {new SettingFragmentTimes(), new SettingFragmentTemplates()};
         //create tabs on screen using tab names array and tab fragments array
