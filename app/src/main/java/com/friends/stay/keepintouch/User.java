@@ -2,7 +2,7 @@ package com.friends.stay.keepintouch;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -31,6 +31,10 @@ public class User {
 
     public void addContact(Contact newContact){
         contactsList.add(newContact);
+    }
+
+    public void deleteContact(Contact contactToDelete){
+        contactsList.remove(contactToDelete);
     }
 
     public void deleteTemplate(String msgToDelete){
