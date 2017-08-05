@@ -14,4 +14,6 @@
     <string name="whatsapp_every">Send Whasapp Message</string>
     <string name="rate">Keep in contact Every</string>
     <string name="nickname">Enter a nickname (optional)</string>
+    <string name="action_settings">Settings</string>
 </resources>
+

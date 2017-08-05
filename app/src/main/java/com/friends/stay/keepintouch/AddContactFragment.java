@@ -123,7 +123,6 @@ public class AddContactFragment extends Fragment {
                 Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
                         isWhatsapp, isFacebook, isMsg, isCall, rateEveryXDays);
                 //add new contact to list
-                activity.getUser().addContact(newContact);
 
                 //return to last fragment
                 getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
