@@ -17,31 +17,33 @@ import java.util.Random;
  * Created by amitropp on 05/08/2017.
  */
 
-public class SettingFragmentTemplates extends Activity {
+public class SettingFragmentTemplates extends Fragment {
+
 
     private int MAX_TEPLATES = 10;
-    private ArrayList<String> msgTemplate;
+    private ArrayList<String> msgTemplate = new ArrayList<String>();
 
 
     public SettingFragmentTemplates(){
         msgTemplate = new ArrayList<String>();
         msgTemplate.add("Hey <nickbame>, How are yoy?");
         msgTemplate.add("whats up <nickbame>?");
-        msgTemplate.add("<nickbame>, I miss you!!");
+        msgTemplate.add("<nickbame>, I miss you!! \uD83E\uDD17");
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fregment_setting_templates);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fregment_setting_templates, container, false);
+
 
         String[] mStringArray = new String[msgTemplate.size()];
         mStringArray = msgTemplate.toArray(mStringArray);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, mStringArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.activity_listview, mStringArray);
 
-        ListView listView = (ListView) findViewById(R.id.templates_list);
+        ListView listView = (ListView) rootView.findViewById(R.id.templates_list);
         listView.setAdapter(adapter);
+        return rootView;
     }
 
 

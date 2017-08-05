@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainSetting"></activity>
+        <activity android:name=".SettingFragmentTimes"></activity>
 
     </application>
 

@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +31,7 @@ import java.util.Locale;
  * Created by amitropp on 05/08/2017.
  */
 
-public class SettingFragmentTimes extends Activity {
+public class SettingFragmentTimes extends AppCompatActivity {
 
     // *TextView
     private TextView textViewServiceApp;
