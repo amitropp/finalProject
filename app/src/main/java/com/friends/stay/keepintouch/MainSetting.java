@@ -19,7 +19,7 @@ public class MainSetting extends AppCompatActivity {
         setContentView(R.layout.fragment_main_settings);
 
 //        Fragment[] tabFragments = {new SettingFragmentTimes(), new SettingFragmentTemplates()};
-        //create tabs on screen using tab names array and tab fragments array
+// create tabs on screen using tab names array and tab fragments array
 //        mTabs = new Tabs(this, tabsNames, tabFragments);
 
 
