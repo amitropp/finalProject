@@ -1,5 +1,6 @@
 package com.friends.stay.keepintouch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 public class ContactsListFragment extends Fragment {
 
     private ImageButton mAddContactBtn;
+    private ImageButton mSettingsBtn;
     public static final String TAG_CONATCT = "conFragTag";
     private View myView = null;
 
@@ -29,11 +31,11 @@ public class ContactsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         //create view only once per instance
         if (myView == null)
-
         {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
             mAddContactBtn = (ImageButton)view.findViewById(R.id.ib_add_contact);
+            mSettingsBtn = (ImageButton)view.findViewById(R.id.ib_settings);
             _setAddListener();
             myView = view;
             return view;
@@ -55,6 +57,15 @@ public class ContactsListFragment extends Fragment {
                         .commit();
             }
         });
+
+        mSettingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            Intent intent = new Intent(this, MainSetting.class);
+            startActivity(intent);
+            }
+        });
+
     }
 
 }

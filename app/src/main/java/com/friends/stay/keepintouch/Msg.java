@@ -13,7 +13,7 @@ import java.util.Date;
 
 public abstract class Msg {
     //the contact the message is for
-    private Contact toContact;
+    private String number;
     //date message is timed to
     private Date date;
     //content of message
@@ -31,15 +31,15 @@ public abstract class Msg {
 
     /**
      * ctor
-     * @param toContact to whom are we sending the message
+     * @param number to whom are we sending the message
      * @param date date of timed message
      * @param content content of message
      * @param icon icon of the media the message will be sent from
      * @param context context of the calling activity
      */
-    public Msg(Contact toContact, Date date, String content, Bitmap icon, Context context)
+    public Msg(String number, Date date, String content, Bitmap icon, Context context)
     {
-        this.toContact = toContact;
+        this.number = number;
         this.date = date;
         this.content = content;
         this.icon = icon;
@@ -50,8 +50,8 @@ public abstract class Msg {
         return context;
     }
 
-    public Contact getToContact() {
-        return toContact;
+    public String getNumber() {
+        return number;
     }
 
     public Date getDate() {

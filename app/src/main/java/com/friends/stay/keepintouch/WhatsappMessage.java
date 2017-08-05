@@ -21,14 +21,14 @@ public class WhatsappMessage extends Msg {
     /**
      * ctor
      *
-     * @param toContact to whom are we sending the message
+     * @param number to whom are we sending the message
      * @param date      date of timed message
      * @param content   content of message
      * @param icon      icon of the media the message will be sent from
      * @param context   context of the calling activity
      */
-    public WhatsappMessage(Contact toContact, Date date, String content, Bitmap icon, Context context) {
-        super(toContact, date, content, icon, context);
+    public WhatsappMessage(String number, Date date, String content, Bitmap icon, Context context) {
+        super(number, date, content, icon, context);
     }
 
     @Override

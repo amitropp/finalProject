@@ -16,6 +16,17 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="17dp" />
 
+    <ImageButton
+        android:id="@+id/ib_settings"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_preferences"
+        android:layout_weight="0.18"
+        android:layout_alignTop="@+id/ib_add_contact"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
