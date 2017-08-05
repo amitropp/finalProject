@@ -61,7 +61,7 @@ public class ContactsListFragment extends Fragment {
         mSettingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent intent = new Intent(this, MainSetting.class);
+            Intent intent = new Intent(getContext(), MainSetting.class);
             startActivity(intent);
             }
         });
