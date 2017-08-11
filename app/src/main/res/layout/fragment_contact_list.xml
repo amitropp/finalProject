@@ -9,13 +9,13 @@
         android:id="@+id/ib_add_contact"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@mipmap/ic_add_contact"
         android:background="#0000"
         android:layout_weight="0.18"
+        android:layout_marginTop="13dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="17dp" />
+        android:layout_alignParentEnd="true" />
 
     <ImageButton
         android:id="@+id/ib_settings"
@@ -24,19 +24,38 @@
         android:src="@android:drawable/ic_menu_preferences"
         android:background="#0000"
         android:layout_weight="0.18"
-        android:layout_alignTop="@+id/ib_add_contact"
+        android:layout_alignBottom="@+id/ib_add_contact"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/ib_add_contact" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="testing"
-        android:textSize="40dp"
+        android:text="Please Choose Contacts To Stay In Touch With"
+        android:textAlignment="center"
+        android:textSize="16dp"
         android:textStyle="bold"
-        android:layout_centerInParent="true"
-        android:id="@+id/textView" />
+        android:id="@+id/pleaseChooseContacts"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/ib_add_contact"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/contacts_recycler_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/pleaseChooseContacts"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="12dp" />
 
 
 </RelativeLayout>

@@ -51,7 +51,7 @@ public class Call {
     public static int getIconId() {
         return R.drawable.ic_call;
     }
-    
+
 }
 
 

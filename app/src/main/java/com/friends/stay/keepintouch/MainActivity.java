@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     public static final int PERMISSION_REQUEST_CALL = 1 ;
     public static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 2 ;
     public static final int REQUEST_READ_PHONE_STATE = 3 ;
-
     private static final String[] tabsNames = {"CONTACTS", "FUTURE", "HISTORY"};
 
     public static Intent mNextCallIntent;
