@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "690216757603",
+    "firebase_url": "https://keepintouch-c5df5.firebaseio.com",
+    "project_id": "keepintouch-c5df5",
+    "storage_bucket": "keepintouch-c5df5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690216757603:android:2369fd557c5fb5a2",
+        "android_client_info": {
+          "package_name": "com.friends.stay.keepintouch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690216757603-230t6ktigove6nniic118tkcjlcs8fh2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWWdhopWsSfMAWXFuJHBw9wu4RTUHTbIs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
