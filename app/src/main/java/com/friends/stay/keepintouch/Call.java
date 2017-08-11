@@ -18,7 +18,7 @@ import java.util.Date;
 
 public class Call {
     //the contact the message is for
-    private Contact toContact;
+    private String number;
     //date message is timed to
     private Date date;
     //icon of media
@@ -26,8 +26,8 @@ public class Call {
     //main activity context
     private Context context;
 
-    public Call(Contact toContact, Date date, Bitmap icon, Context context) {
-        this.toContact = toContact;
+    public Call(String number, Date date, Bitmap icon, Context context) {
+        this.number = number;
         this.date = date;
         this.icon = icon;
         this.context = context;
@@ -35,28 +35,22 @@ public class Call {
 
     public void callNow() {
         Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:" + toContact.getNumber()));
+        intent.setData(Uri.parse("tel:" + number));
         //check for permission
         int result = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE);
         //if there is permission start calling
         if (result == PackageManager.PERMISSION_GRANTED){
             context.startActivity(intent);
-
-        } else {
-            //there is no permission - so request for permission
-            requestForCallPermission();
-        }
-
-    }
-
-    private void requestForCallPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale((MainActivity)context,Manifest.permission.CALL_PHONE)) {
         }
         else {
-            //request for permission
-            ActivityCompat.requestPermissions((MainActivity)context,new String[]{Manifest.permission.CALL_PHONE},MainActivity.PERMISSION_REQUEST_CALL);
+            MainActivity.mNextCallIntent = intent;
+            //there is no permission - so request for permission
+            ActivityCompat.requestPermissions((MainActivity)context,new String[]{Manifest.permission.CALL_PHONE},
+                    MainActivity.PERMISSION_REQUEST_CALL);
         }
+
     }
+
 
 
 }

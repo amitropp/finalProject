@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -33,17 +34,28 @@ public class SmsMessage extends Msg {
 
     @Override
     public void send() {
-        String phoneNo = getNumber();
-        String content = getContent();
-        SmsManager smsManager = SmsManager.getDefault();
-        try {
-            ActivityCompat.requestPermissions((MainActivity)getContext(),new String[]{Manifest.permission.SEND_SMS},2); //todo
-            smsManager.sendTextMessage(phoneNo, null, content, null, null);
-        }
-        catch (Exception e)
-        {
-            Toast.makeText(getContext().getApplicationContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+        int permissionCheckReadState = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE);
+
+        if (permissionCheckReadState != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(( MainActivity) getContext(), new String[]{Manifest.permission.READ_PHONE_STATE}, MainActivity.REQUEST_READ_PHONE_STATE);
         }
 
+
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            MainActivity.mNextSmsMessage = this;
+            ActivityCompat.requestPermissions((MainActivity) getContext(), new String[]{Manifest.permission.SEND_SMS}, MainActivity.MY_PERMISSIONS_REQUEST_SEND_SMS);
+        }
+        else {
+            SmsManager smsManager = SmsManager.getDefault();
+            try {
+                smsManager.sendTextMessage(getNumber(), null, getContent(), null, null);
+                Toast.makeText(getContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            }
+
+
+        }
     }
 }

@@ -1,10 +1,16 @@
 package com.friends.stay.keepintouch;
 
+import android.Manifest;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import java.util.Date;
@@ -13,10 +19,12 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
     public static final int PERMISSION_REQUEST_CALL = 1 ;
     public static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 2 ;
+    public static final int REQUEST_READ_PHONE_STATE = 3 ;
+
     private static final String[] tabsNames = {"CONTACTS", "FUTURE", "HISTORY"};
 
-    private Call mNextCall;
-//    private SmsMessage mNextSmsMessage;
+    public static Intent mNextCallIntent;
+    public static SmsMessage mNextSmsMessage;
     private ImageButton mAddBtn;
     private Tabs mTabs;
     User mUser;
@@ -32,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         Fragment[] tabFragments = {new ContactsListFragment(), new testFragment(), new testFragment2()};
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
-//        test();
+
+        test();
 
 
     }
@@ -41,36 +50,45 @@ public class MainActivity extends AppCompatActivity {
     //test the program
     private void test()
     {
-//        Contact me = new Contact();
+//        Contact me = new Contact("avi",  "5556", "", false, false, false, true, 2);
         Date date = new Date();
-//        Msg waMessage = new WhatsappMessage(me, date, "hello", null, this);
         Msg smsMessage = new SmsMessage("5556", date, "hello", null, this);
-        smsMessage.send();
-//        Call mCall = new Call(me, date, null, this);
+//        smsMessage.send();
+//        Call mCall = new Call("5556", date, null, this);
 //        mCall.callNow();
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_CALL:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mNextCall.callNow();
+                    startActivity(mNextCallIntent);
                 }
                 break;
-//            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
-//                if (grantResults.length > 0
-//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    SmsManager smsManager = SmsManager.getDefault();
-//                    smsManager.sendTextMessage(mNextSmsMessage.getNumber(), null, mNextSmsMessage.getContent(), null, null);
-//                    Toast.makeText(getApplicationContext(), "SMS sent.",
-//                            Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(getApplicationContext(),
-//                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-//                    return;
-//                }
+            case MY_PERMISSIONS_REQUEST_SEND_SMS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    try {
+                        smsManager.sendTextMessage(mNextSmsMessage.getNumber(), null, mNextSmsMessage.getContent(), null, null);
+                        Toast.makeText(getApplicationContext(), "SMS sent.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    catch(Exception e) {
+                        Toast.makeText(getApplicationContext(),
+                                "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),
+                            "SMS faild, permission denied.", Toast.LENGTH_LONG).show();
+                    break;
+                }
+            case REQUEST_READ_PHONE_STATE:
+                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    return;
+                }
+                break;
         }
     }
 
