@@ -21,15 +21,12 @@ public class Call {
     private String number;
     //date message is timed to
     private Date date;
-    //icon of media
-    private Bitmap icon;
     //main activity context
     private Context context;
 
-    public Call(String number, Date date, Bitmap icon, Context context) {
+    public Call(String number, Date date, Context context) {
         this.number = number;
         this.date = date;
-        this.icon = icon;
         this.context = context;
     }
 
@@ -51,8 +48,10 @@ public class Call {
 
     }
 
-
-
+    public static int getIconId() {
+        return R.drawable.ic_call;
+    }
+    
 }
 
 

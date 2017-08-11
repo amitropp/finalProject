@@ -1,6 +1,7 @@
 package com.friends.stay.keepintouch;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,6 +37,7 @@ public class ContactsListFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
             mAddContactBtn = (ImageButton)view.findViewById(R.id.ib_add_contact);
             mSettingsBtn = (ImageButton)view.findViewById(R.id.ib_settings);
+
             _setAddListener();
             myView = view;
             return view;

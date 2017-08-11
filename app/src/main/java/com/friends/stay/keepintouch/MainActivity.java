@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         mTabs = new Tabs(this, tabsNames, tabFragments);
 
         test();
-
-
     }
 
 
@@ -52,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     {
 //        Contact me = new Contact("avi",  "5556", "", false, false, false, true, 2);
         Date date = new Date();
-        Msg smsMessage = new SmsMessage("5556", date, "hello", null, this);
+        Msg smsMessage = new SmsMessage("5556", date, "hello", this);
 //        smsMessage.send();
 //        Call mCall = new Call("5556", date, null, this);
 //        mCall.callNow();

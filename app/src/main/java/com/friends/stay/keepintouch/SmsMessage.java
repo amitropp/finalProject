@@ -25,11 +25,10 @@ public class SmsMessage extends Msg {
      * @param number to which contact will the message be sent to
      * @param date date to send the message
      * @param content content of the message
-     * @param icon icon of message
      * @param context context of the calling activity
      */
-    public SmsMessage(String number, Date date, String content, Bitmap icon, Context context) {
-        super(number, date, content, icon, context);
+    public SmsMessage(String number, Date date, String content, Context context) {
+        super(number, date, content, context);
     }
 
     @Override
@@ -55,7 +54,11 @@ public class SmsMessage extends Msg {
                 Toast.makeText(getContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             }
 
-
         }
+    }
+
+    @Override
+    public int getIconId() {
+        return R.mipmap.ic_sms_image;
     }
 }

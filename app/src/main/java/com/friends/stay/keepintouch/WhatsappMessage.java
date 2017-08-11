@@ -24,11 +24,10 @@ public class WhatsappMessage extends Msg {
      * @param number to whom are we sending the message
      * @param date      date of timed message
      * @param content   content of message
-     * @param icon      icon of the media the message will be sent from
      * @param context   context of the calling activity
      */
-    public WhatsappMessage(String number, Date date, String content, Bitmap icon, Context context) {
-        super(number, date, content, icon, context);
+    public WhatsappMessage(String number, Date date, String content, Context context) {
+        super(number, date, content, context);
     }
 
     @Override
@@ -54,5 +53,10 @@ public class WhatsappMessage extends Msg {
                     .show();
         }
 
+    }
+
+    @Override
+    public int getIconId() {
+        return R.mipmap.ic_whatsapp;
     }
 }

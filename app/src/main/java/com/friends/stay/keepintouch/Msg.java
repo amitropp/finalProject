@@ -18,8 +18,6 @@ public abstract class Msg {
     private Date date;
     //content of message
     private String content;
-    //icon of media
-    private Bitmap icon;
     //main activity context
     private Context context;
 
@@ -28,21 +26,20 @@ public abstract class Msg {
      * send function specific for the media we are using
      */
     public abstract void send();
+    public abstract int getIconId();
 
     /**
      * ctor
      * @param number to whom are we sending the message
      * @param date date of timed message
      * @param content content of message
-     * @param icon icon of the media the message will be sent from
      * @param context context of the calling activity
      */
-    public Msg(String number, Date date, String content, Bitmap icon, Context context)
+    public Msg(String number, Date date, String content, Context context)
     {
         this.number = number;
         this.date = date;
         this.content = content;
-        this.icon = icon;
         this.context = context;
     }
 
@@ -60,9 +57,5 @@ public abstract class Msg {
 
     public String getContent() {
         return content;
-    }
-
-    public Bitmap getIcon() {
-        return icon;
     }
 }
