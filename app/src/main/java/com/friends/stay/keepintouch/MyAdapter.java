@@ -2,8 +2,12 @@ package com.friends.stay.keepintouch;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -20,9 +24,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView mTextView;
-        public ViewHolder(TextView v) {
+        public ImageButton mCallIcon;
+        public ImageButton mSmsIcon;
+        public ImageButton mWhatsappIcon;
+        public ViewHolder(View v) {
             super(v);
-            mTextView = v;
+            mTextView = (TextView)v.findViewById(R.id.tv_contact_name);
+            mCallIcon = (ImageButton) v.findViewById(R.id.ib_call_icon);
+            mSmsIcon = (ImageButton) v.findViewById(R.id.ib_sms_icon);
+            mWhatsappIcon = (ImageButton) v.findViewById(R.id.ib_whatsapp_icon);
         }
     }
 
@@ -36,8 +46,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_text_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_contact_view, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -49,6 +58,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - replace the contents of the view with that element
         Contact contact = mDataset.get(position);
         holder.mTextView.setText(contact.getName());
+        if (contact.isCall()) {
+            holder.mCallIcon.setVisibility(View.VISIBLE);
+        }
+        if (contact.isSMS()) {
+            holder.mSmsIcon.setVisibility(View.VISIBLE);
+        }
+        if (contact.isWatsApp()) {
+            holder.mWhatsappIcon.setVisibility(View.VISIBLE);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -14,20 +14,18 @@ class Contact {
     private String number;
     private String nickname;
     private boolean isWatsApp;
-    private boolean isFacebook;
     private boolean isSMS;
     private boolean isCall;
     private int communicationRate;
     private ArrayList<Msg> futureMessages;
     private ArrayList<Msg> historyMessages;
 
-    public Contact(String name,  String number, String nickname, boolean isWatsApp,
-                   boolean isFacebook, boolean isSMS, boolean isCall, int communicationRate) {
+    public Contact(String name,  String number, String nickname, boolean isCall,
+                   boolean isSMS, boolean isWatsApp, int communicationRate) {
         this.name = name;
         this.number = number;
         this.nickname = nickname;
         this.isWatsApp = isWatsApp;
-        this.isFacebook = isFacebook;
         this.isSMS = isSMS;
         this.isCall = isCall;
         this.communicationRate = communicationRate;
@@ -65,14 +63,6 @@ class Contact {
 
     public void setWatsApp() {
         isWatsApp = !isWatsApp;
-    }
-
-    public boolean isFacebook() {
-        return isFacebook;
-    }
-
-    public void setFacebook() {
-        isFacebook = !isFacebook;
     }
 
     public boolean isSMS() {

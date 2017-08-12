@@ -44,9 +44,9 @@ public class ContactsListFragment extends Fragment {
             mSettingsBtn = (ImageButton)view.findViewById(R.id.ib_settings);
             mContacts = new ArrayList<Contact>();
             //test
-            mContacts.add(new Contact("Amit", "5", "Amitush", true, true, true, true, 5));
-            mContacts.add(new Contact("Avi", "7", "avush", true, true, true, true, 5));
-
+            mContacts.add(new Contact("Amit Tropp", "5", "Amitush", true, true, true, 5));
+            mContacts.add(new Contact("Avi Hendler", "7", "avush", false, true, false, 5));
+            mContacts.add(new Contact("Eyal Cohen", "7", "", false, false, true, 5));
             mContactsRecyclerView = new ContactsRecyclerView(view, getActivity(), mContacts);
 
             _setAddListener();

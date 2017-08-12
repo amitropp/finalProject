@@ -22,7 +22,7 @@ class ContactsRecyclerView {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = (MyAdapter) new MyAdapter(mContacts);
+        mAdapter = new MyAdapter(mContacts);
         mRecyclerView.setAdapter(mAdapter);
     }
 }

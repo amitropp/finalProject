@@ -114,14 +114,13 @@ public class AddContactFragment extends Fragment {
                 boolean isCall = cvIsCall.isChecked();
                 CheckBox cvIsMsg = (CheckBox)thisView.findViewById(R.id.cb_message);
                 boolean isMsg = cvIsMsg.isChecked();
-                boolean isFacebook = false; //todo
 
                 //get rate
                 EditText etRate = (EditText)thisView.findViewById(R.id.et_days);
                 int rateEveryXDays = Integer.valueOf(etRate.getText().toString());
 
                 Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
-                        isWhatsapp, isFacebook, isMsg, isCall, rateEveryXDays);
+                        isWhatsapp, isMsg, isCall, rateEveryXDays);
                 //add new contact to list
                 activity.getUser().addContact(newContact);
 
