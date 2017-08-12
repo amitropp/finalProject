@@ -48,11 +48,16 @@ public class MainActivity extends AppCompatActivity {
     private void test()
     {
 //        Contact me = new Contact("avi",  "5556", "", false, false, false, true, 2);
-        Date date = new Date();
-        Msg smsMessage = new SmsMessage("5556", date, "hello", this);
+//        Date date = new Date();
+//        Msg smsMessage = new SmsMessage("5556", date, "hello", this);
 //        smsMessage.send();
 //        Call mCall = new Call("5556", date, null, this);
 //        mCall.callNow();
+
+        mUser.addContact(new Contact("Amit Tropp", "5", "Amitush", true, true, true, 5));
+        mUser.addContact(new Contact("Avi Hendler", "7", "avush", false, true, false, 5));
+        mUser.addContact(new Contact("Eyal Cohen", "7", "", false, false, true, 5));
+
     }
 
     @Override
@@ -93,7 +98,5 @@ public class MainActivity extends AppCompatActivity {
     {
         return mUser;
     }
-
-
 
 }

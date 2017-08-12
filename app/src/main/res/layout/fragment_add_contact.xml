@@ -7,62 +7,101 @@
     android:background="?android:windowBackground"
     tools:context="com.friends.stay.keepintouch.AddContactFragment">
 
-
-    <Button
-        android:id="@+id/btn_pick_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/choose_contact"/>
-
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ll_nickname"
-        android:orientation="horizontal"
-        >
-
-        <EditText
-            android:id="@+id/et_nickname"
+        android:orientation="horizontal" >
+        <Button
+            android:id="@+id/btn_pick_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/nickname"
+            android:text="@string/choose_contact"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Choose A Contact!"
+            android:textColor="@android:color/holo_red_dark"
+            android:id="@+id/tv_err_no_chosen_contact"
+            android:layout_marginLeft="30dp"
+            android:visibility="invisible"
             />
 
     </LinearLayout>
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorPrimary"
+        android:text="@string/nickname"
+        />
+
+    <EditText
+        android:id="@+id/et_nickname"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorPrimary"
+        />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
 
         <CheckBox
             android:id="@+id/cb_call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/call"
-            />
+            android:text="@string/call" />
 
         <CheckBox
             android:id="@+id/cb_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/message"
-            />
+            android:text="@string/message" />
 
         <CheckBox
             android:id="@+id/cb_whatsapp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/whatsapp"
-            />
+            android:text="@string/whatsapp" />
 
+        <TextView
+            android:id="@+id/tv_err_no_chosen_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Choose A Box!"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="10dp"
+            android:visibility="invisible"
+        />
 
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -75,28 +114,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rate"
+                android:textColor="@color/textColorPrimary"
+                android:id="@+id/tv_keep_in_contact_every_const"
                 />
-            <EditText
-                android:id="@+id/et_days"
-                android:layout_width="wrap_content"
+
+            <Spinner
+                android:id="@+id/sp_days"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/days"
+                android:textColor="@color/textColorPrimary"
+                android:id="@+id/tv_days_const"
                 />
 
         </LinearLayout>
 
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
 
     <Button
         android:id="@+id/btn_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="done"
-        />
+        android:text="done" />
 
 </LinearLayout>

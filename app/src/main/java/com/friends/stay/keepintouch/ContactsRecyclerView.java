@@ -11,10 +11,10 @@ import java.util.ArrayList;
  */
 
 class ContactsRecyclerView {
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Contact> mContacts;
+    public RecyclerView mRecyclerView;
+    public RecyclerView.Adapter mAdapter;
+    public RecyclerView.LayoutManager mLayoutManager;
+    public ArrayList<Contact> mContacts;
 
     public ContactsRecyclerView(View view, Context context, ArrayList<Contact> contacts) {
         mContacts = contacts;

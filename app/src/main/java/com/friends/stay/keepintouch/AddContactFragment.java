@@ -2,6 +2,7 @@ package com.friends.stay.keepintouch;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -9,9 +10,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 /**
  * This fragment appears when user clicks on the add button - adding a new contact to his list
@@ -22,13 +26,19 @@ public class AddContactFragment extends Fragment {
     public static final int RESULT_PICK_CONTACT = 2;
     private Button mDoneBtn;
     private Button mChooseContactBtn;
+    private Spinner mRateDropdown;
+    private View thisView = null;
     private String mChosenPhoneNumber = null;
     private String mChosenName = null;
-    private View thisView = null;
-
+    private int mChosenRate = 0;
+    private static String [] mNumbers1_21;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mNumbers1_21 = new String[21];
+        for (int i = 0; i < 21; i++) {
+            mNumbers1_21[i] = Integer.toString(i + 1);
+        }
         super.onCreate(savedInstanceState);
     }
 
@@ -40,6 +50,24 @@ public class AddContactFragment extends Fragment {
         thisView = view;
         mChooseContactBtn = (Button)view.findViewById(R.id.btn_pick_contact);
         mDoneBtn = (Button)view.findViewById(R.id.btn_done);
+        mRateDropdown = (Spinner)thisView.findViewById(R.id.sp_days);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, mNumbers1_21);
+        mRateDropdown.setAdapter(adapter);
+        mRateDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                mChosenRate = Integer.valueOf((String)parent.getItemAtPosition(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
         _setDoneListener();
         _setPickConatctListener();
 
@@ -67,7 +95,6 @@ public class AddContactFragment extends Fragment {
                 break;
         }
     }
-
 
     /**
      * Query the Uri and read contact details. Handle the picked contact data.
@@ -103,6 +130,21 @@ public class AddContactFragment extends Fragment {
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //get rate
+                if (mChosenRate == 0) {
+                    thisView.findViewById(R.id.tv_days_const).setBackgroundColor(Color.RED);
+                    thisView.findViewById(R.id.tv_keep_in_contact_every_const).setBackgroundColor(Color.RED);
+                    return;
+                }
+
+                boolean isChosenName = mChosenName != null;
+                if (!isChosenName) {
+                    thisView.findViewById(R.id.tv_err_no_chosen_contact).setVisibility(View.VISIBLE);
+                }
+                else {
+                    thisView.findViewById(R.id.tv_err_no_chosen_contact).setVisibility(View.INVISIBLE);
+                }
+
                 MainActivity activity = (MainActivity)getActivity();
                 //get nickname
                 EditText edNickname = (EditText)thisView.findViewById(R.id.et_nickname);
@@ -115,12 +157,20 @@ public class AddContactFragment extends Fragment {
                 CheckBox cvIsMsg = (CheckBox)thisView.findViewById(R.id.cb_message);
                 boolean isMsg = cvIsMsg.isChecked();
 
-                //get rate
-                EditText etRate = (EditText)thisView.findViewById(R.id.et_days);
-                int rateEveryXDays = Integer.valueOf(etRate.getText().toString());
+                //if no checkbox is checked - tell user to choose a contact
+                boolean isChosenBox = isWhatsapp || isCall || isMsg;
+                if (!isChosenBox) {
+                    thisView.findViewById(R.id.tv_err_no_chosen_box).setVisibility(View.VISIBLE);
+                }
+                else {
+                    thisView.findViewById(R.id.tv_err_no_chosen_box).setVisibility(View.INVISIBLE);
+                }
 
+                if (!isChosenBox || !isChosenName) {
+                    return;
+                }
                 Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
-                        isWhatsapp, isMsg, isCall, rateEveryXDays);
+                        isCall, isMsg, isWhatsapp, mChosenRate);
                 //add new contact to list
                 activity.getUser().addContact(newContact);
 

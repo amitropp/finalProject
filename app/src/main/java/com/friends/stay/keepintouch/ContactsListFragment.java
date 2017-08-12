@@ -42,13 +42,9 @@ public class ContactsListFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
             mAddContactBtn = (ImageButton)view.findViewById(R.id.ib_add_contact);
             mSettingsBtn = (ImageButton)view.findViewById(R.id.ib_settings);
-            mContacts = new ArrayList<Contact>();
-            //test
-            mContacts.add(new Contact("Amit Tropp", "5", "Amitush", true, true, true, 5));
-            mContacts.add(new Contact("Avi Hendler", "7", "avush", false, true, false, 5));
-            mContacts.add(new Contact("Eyal Cohen", "7", "", false, false, true, 5));
-            mContactsRecyclerView = new ContactsRecyclerView(view, getActivity(), mContacts);
-
+            MainActivity mainActivity = (MainActivity)getActivity();
+            mContacts = mainActivity.getUser().getContacts();
+            mContactsRecyclerView = new ContactsRecyclerView(view, mainActivity, mContacts);
             _setAddListener();
             myView = view;
             return view;
@@ -62,12 +58,15 @@ public class ContactsListFragment extends Fragment {
         mAddContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int szBeforeAdding = mContacts.size();
+
                 //switch to new fragment - request to add a new contact
                 AddContactFragment addContactFrag = new AddContactFragment();
                 getFragmentManager().beginTransaction()
                         .replace(R.id.frag_contact_list, addContactFrag)
                         .addToBackStack(TAG_CONATCT)
                         .commit();
+
             }
         });
 

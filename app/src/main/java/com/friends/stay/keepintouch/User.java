@@ -33,6 +33,8 @@ public class User {
         contactsList.add(newContact);
     }
 
+    public ArrayList<Contact> getContacts() {return  contactsList;}
+
     public void deleteContact(Contact contactToDelete){
         contactsList.remove(contactToDelete);
     }
