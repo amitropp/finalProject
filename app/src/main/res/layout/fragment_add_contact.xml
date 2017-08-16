@@ -141,11 +141,28 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
 
-
-    <Button
-        android:id="@+id/btn_done"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="done" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_alignParentLeft="true"
+            android:text="Done" />
+
+        <Button
+            android:id="@+id/btn_del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_alignParentRight="true"
+            android:text="delete Contact"
+            android:visibility="invisible"
+            />
+    </RelativeLayout>
 
 </LinearLayout>

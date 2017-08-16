@@ -58,11 +58,9 @@ public class ContactsListFragment extends Fragment {
         mAddContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int szBeforeAdding = mContacts.size();
-
                 //switch to new fragment - request to add a new contact
                 AddContactFragment addContactFrag = new AddContactFragment();
-                getFragmentManager().beginTransaction()
+                getActivity().getFragmentManager().beginTransaction()
                         .replace(R.id.frag_contact_list, addContactFrag)
                         .addToBackStack(TAG_CONATCT)
                         .commit();

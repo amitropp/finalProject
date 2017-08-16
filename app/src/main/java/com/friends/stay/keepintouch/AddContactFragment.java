@@ -6,7 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,19 +26,25 @@ public class AddContactFragment extends Fragment {
     public static final int RESULT_PICK_CONTACT = 2;
     private Button mDoneBtn;
     private Button mChooseContactBtn;
+    private Button mDelBtm;
     private Spinner mRateDropdown;
     private View thisView = null;
     private String mChosenPhoneNumber = null;
     private String mChosenName = null;
     private int mChosenRate = 0;
-    private static String [] mNumbers1_21;
+    private Contact mExistingContact = null;
+    private static String [] mNumbers1_21 = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mNumbers1_21 = new String[21];
-        for (int i = 0; i < 21; i++) {
-            mNumbers1_21[i] = Integer.toString(i + 1);
+        if (mNumbers1_21 == null)
+        {
+            mNumbers1_21 = new String[21];
+            for (int i = 0; i < 21; i++) {
+                mNumbers1_21[i] = Integer.toString(i + 1);
+            }
         }
+
         super.onCreate(savedInstanceState);
     }
 
@@ -48,10 +54,38 @@ public class AddContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_contact, container, false);
         thisView = view;
+        MainActivity activity = (MainActivity)getActivity();
         mChooseContactBtn = (Button)view.findViewById(R.id.btn_pick_contact);
         mDoneBtn = (Button)view.findViewById(R.id.btn_done);
         mRateDropdown = (Spinner)thisView.findViewById(R.id.sp_days);
+        mDelBtm = (Button)view.findViewById(R.id.btn_del);
+        Bundle args = getArguments();
+        if (args != null) {
+            int indexOfContact = args.getInt("indexOfContact", 0);
+            mExistingContact = activity.getUser().getContacts().get(indexOfContact);
+            mDelBtm.setVisibility(View.VISIBLE);
+            setContact();
+        }
+        _setRateSpinnerListener();
+        _setDoneListener();
+        _setPickConatctListener();
+        _setDelListener();
+        return view;
 
+    }
+
+    private void _setDelListener() {
+        mDelBtm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity activity = (MainActivity)getActivity();
+                activity.getUser().getContacts().remove(getArguments().getInt("indexOfContact", 0));
+                getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
+            }
+        });
+    }
+
+    private void _setRateSpinnerListener() {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, mNumbers1_21);
         mRateDropdown.setAdapter(adapter);
@@ -66,19 +100,15 @@ public class AddContactFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-
-        _setDoneListener();
-        _setPickConatctListener();
-
-        return view;
-
     }
 
     private void _setPickConatctListener() {
         mChooseContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mExistingContact != null) {
+                    return;
+                }
                 Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
                         ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
                 startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
@@ -108,7 +138,7 @@ public class AddContactFragment extends Fragment {
             // getData() method will have the Content Uri of the selected contact
             Uri uri = data.getData();
             //Query the content uri
-            cursor = getContext().getContentResolver().query(uri, null, null, null, null);
+            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
             cursor.moveToFirst();
             // column index of the phone number
             int  phoneIndex =cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
@@ -125,7 +155,7 @@ public class AddContactFragment extends Fragment {
         }
     }
 
-
+    // wait for the user to click the done button
     private void _setDoneListener() {
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,15 +199,71 @@ public class AddContactFragment extends Fragment {
                 if (!isChosenBox || !isChosenName) {
                     return;
                 }
-                Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
-                        isCall, isMsg, isWhatsapp, mChosenRate);
-                //add new contact to list
-                activity.getUser().addContact(newContact);
+
+                //update existing contact's details
+                if (mExistingContact != null) {
+                    if (mExistingContact.isCall() != isCall) {
+                        mExistingContact.setCall();
+                    }
+                    if (mExistingContact.isSMS() != isMsg) {
+                        mExistingContact.setSMS();
+                    }
+                    if (mExistingContact.isWatsApp() != isWhatsapp) {
+                        mExistingContact.setWatsApp();
+                    }
+                    mExistingContact.setNickname(nickname);
+                    mExistingContact.setCommunicationRate(mChosenRate);
+                    MyAdapter.updateContactIcons();
+                    //todo update future messages?
+                }
+                else {
+                    Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
+                            isCall, isMsg, isWhatsapp, mChosenRate);
+                    //add new contact to list
+                    activity.getUser().addContact(newContact);
+                }
 
                 //return to last fragment
                 getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
             }
         });
+    }
+
+
+    public static AddContactFragment newInstance(int indexOfContact) {
+        AddContactFragment newFrag = new AddContactFragment();
+        Bundle args = new Bundle();
+        args.putInt("indexOfContact", indexOfContact);
+        newFrag.setArguments(args);
+        return newFrag;
+    }
+
+
+    public void setContact() {
+         Contact contact = mExistingContact;
+        String name = contact.getName();
+        mChooseContactBtn.setText(name);
+        mChosenName = name;
+
+        if (contact.isCall()) {
+            CheckBox ch = (CheckBox)thisView.findViewById(R.id.cb_call);
+            ch.setChecked(true);
+        }
+        if (contact.isSMS()) {
+            CheckBox ch = (CheckBox)thisView.findViewById(R.id.cb_message);
+            ch.setChecked(true);
+        }
+        if (contact.isWatsApp()) {
+            CheckBox ch = (CheckBox)thisView.findViewById(R.id.cb_whatsapp);
+            ch.setChecked(true);
+        }
+
+        if (!contact.getNickname().equals("")) {
+            EditText et = (EditText)thisView.findViewById(R.id.et_nickname);
+            et.setText(contact.getNickname());
+        }
+
+
     }
 
 
