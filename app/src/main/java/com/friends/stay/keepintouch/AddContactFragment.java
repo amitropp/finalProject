@@ -31,7 +31,7 @@ public class AddContactFragment extends Fragment {
     private View thisView = null;
     private String mChosenPhoneNumber = null;
     private String mChosenName = null;
-    private int mChosenRate = 0;
+    private int mChosenRate = 7;
     private Contact mExistingContact = null;
     private static String [] mNumbers1_21 = null;
 
@@ -79,7 +79,7 @@ public class AddContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MainActivity activity = (MainActivity)getActivity();
-                activity.getUser().getContacts().remove(getArguments().getInt("indexOfContact", 0));
+                activity.deleteCntactAndUpdeateRecyclerV(getArguments().getInt("indexOfContact", 0));
                 getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
             }
         });
@@ -89,6 +89,7 @@ public class AddContactFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, mNumbers1_21);
         mRateDropdown.setAdapter(adapter);
+        mRateDropdown.setSelection(mChosenRate - 1);
         mRateDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
@@ -160,13 +161,6 @@ public class AddContactFragment extends Fragment {
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get rate
-                if (mChosenRate == 0) {
-                    thisView.findViewById(R.id.tv_days_const).setBackgroundColor(Color.RED);
-                    thisView.findViewById(R.id.tv_keep_in_contact_every_const).setBackgroundColor(Color.RED);
-                    return;
-                }
-
                 boolean isChosenName = mChosenName != null;
                 if (!isChosenName) {
                     thisView.findViewById(R.id.tv_err_no_chosen_contact).setVisibility(View.VISIBLE);
@@ -220,7 +214,7 @@ public class AddContactFragment extends Fragment {
                     Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
                             isCall, isMsg, isWhatsapp, mChosenRate);
                     //add new contact to list
-                    activity.getUser().addContact(newContact);
+                    activity.addContactAndUpdeateRecyclerV(newContact);
                 }
 
                 //return to last fragment
@@ -244,6 +238,7 @@ public class AddContactFragment extends Fragment {
         String name = contact.getName();
         mChooseContactBtn.setText(name);
         mChosenName = name;
+        mChosenRate = contact.getCommunicationRate();
 
         if (contact.isCall()) {
             CheckBox ch = (CheckBox)thisView.findViewById(R.id.cb_call);

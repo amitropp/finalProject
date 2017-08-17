@@ -39,6 +39,10 @@ public class User {
         contactsList.remove(contactToDelete);
     }
 
+    public void deleteContact(int pos){
+        contactsList.remove(pos);
+    }
+
     public void deleteTemplate(String msgToDelete){
         msgTemplate.remove(msgToDelete);
     }

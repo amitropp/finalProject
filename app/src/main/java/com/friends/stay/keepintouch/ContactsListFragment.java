@@ -53,6 +53,19 @@ public class ContactsListFragment extends Fragment {
 
     }
 
+    public void updateRecyclerViewOnAdd() {
+        int position =  mContacts.size() - 1;
+        mContactsRecyclerView.mAdapter.notifyItemInserted(position);
+        //scroll to the bottom of the list
+        mContactsRecyclerView.mRecyclerView.scrollToPosition(position);
+    }
+
+    public void updateRecyclerViewOnRemove(int pos) {
+        mContactsRecyclerView.mAdapter.notifyItemRemoved(pos);
+        mContactsRecyclerView.mAdapter.notifyItemRangeChanged(pos, mContacts.size());
+    }
+
+
     private void _setAddListener()
     {
         mAddContactBtn.setOnClickListener(new View.OnClickListener() {
