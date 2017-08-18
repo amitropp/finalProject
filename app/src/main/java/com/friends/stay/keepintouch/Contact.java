@@ -92,6 +92,8 @@ class Contact {
 
     public void addFutureMessages(Msg newMessages) {
         futureMessages.add(newMessages);
+        MainActivity.getUser().addToAllFutureMsg(newMessages);
+
     }
 
     public ArrayList<Msg> getHistoryMessages() {
@@ -100,6 +102,8 @@ class Contact {
 
     public void addHistoryMessages(Msg newMessages) {
         historyMessages.add(newMessages);
+        MainActivity.getUser().addToAllHistoryMsg(newMessages);
+
     }
 
 

@@ -20,6 +20,8 @@ public abstract class Msg {
     private String content;
     //main activity context
     private Context context;
+    //name of contact
+    private String name;
 
     /**
      * abstract function to send the message. The inherit class will implement the
@@ -35,12 +37,13 @@ public abstract class Msg {
      * @param content content of message
      * @param context context of the calling activity
      */
-    public Msg(String number, Date date, String content, Context context)
+    public Msg(String name, String number, Date date, String content, Context context)
     {
         this.number = number;
         this.date = date;
         this.content = content;
         this.context = context;
+        this.name = name;
     }
 
     public Context getContext() {
@@ -58,4 +61,6 @@ public abstract class Msg {
     public String getContent() {
         return content;
     }
+
+    public String getName() { return name; }
 }

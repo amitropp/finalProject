@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import java.util.ArrayList;
+
 
 /**
  * Future and History display of messages
@@ -17,6 +19,7 @@ public class FutureHistoryFragment extends Fragment {
     private View myView = null;
     private boolean isFuture = false;
     private ImageButton mAddMessageBtn;
+    private MsgRecyclerView mMsgRecyclerView;
 
     public static FutureHistoryFragment newInstance(boolean isFuture) {
         FutureHistoryFragment  newFrag = new FutureHistoryFragment();
@@ -49,10 +52,16 @@ public class FutureHistoryFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_future_history, container, false);
             myView = view;
             mAddMessageBtn = (ImageButton)view.findViewById(R.id.ib_add_message);
-//            MainActivity mainActivity = (MainActivity)getActivity();
-
-
-
+            MainActivity mainActivity = (MainActivity)getActivity();
+            ArrayList<Msg> msgs;
+            if (isFuture) {
+                msgs = MainActivity.getUser().getAllFutureMessages();
+            }
+            else {
+                msgs = MainActivity.getUser().getAllHistoryMessages();
+                mAddMessageBtn.setVisibility(View.INVISIBLE);
+            }
+            mMsgRecyclerView = new MsgRecyclerView(view, mainActivity, msgs);
             return view;
         }
         return myView;

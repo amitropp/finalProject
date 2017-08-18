@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/single_msg_view"
+    android:background="?android:windowBackground"
+    android:weightSum="1">
+
+
+    <ImageButton
+        android:id="@+id/ib_message_icon"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@mipmap/ic_jog_dial_answer"
+        android:background="#0000"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ll_message_content"
+        android:background="?android:windowBackground"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ib_message_icon"
+        android:layout_toEndOf="@+id/ib_message_icon"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp">
+
+        <TextView
+            android:id="@+id/tv_msg_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="contact name"
+            android:textSize="20dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_msg_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E, MMM dd HH:mm"
+            android:textSize="20dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_msg_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hi, Whats up???"
+            android:textSize="20dp">
+        </TextView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+
+</RelativeLayout>
