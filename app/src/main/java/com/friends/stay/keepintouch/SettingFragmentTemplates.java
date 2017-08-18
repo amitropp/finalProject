@@ -172,7 +172,6 @@ public class SettingFragmentTemplates extends Fragment {
                 .setPositiveButton(add, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // add the item to the cloud
-                        Log.d("firebaseLog", "~~~addItemToScreen");
                         String itemText = input.getText().toString();// + ",\t" + date.getText().toString();
                         Log.d("itemText = ", itemText);
                         addItemToScreen(itemText);
@@ -183,7 +182,6 @@ public class SettingFragmentTemplates extends Fragment {
                 .setNegativeButton(can, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Refresh the adapter
-                        Log.d("firebaseLog", "~~~removeItemFromScreen");
 //                        String itemText = input.getText().toString();// + ",\t" + date.getText().toString();
 //                        removeItemFromScreen(itemText);
                         adapter.notifyDataSetChanged();
@@ -246,14 +244,12 @@ public class SettingFragmentTemplates extends Fragment {
 
     public void addItemToScreen(String newItem) { //TODO call
         // Refresh the adapter
-        Log.d("newItem = ", newItem);
         adapter.notifyDataSetChanged();
-        Log.d("addItemToScreen", "~~~2");
         adapter.add(newItem);
-        Log.d("addItemToScreen", "~~~3");
+        //add to user templates
+        MainActivity.getUser().addTemplate(newItem);
 
         writeItems();
-        Log.d("addItemToScreen", "~~~4");
 
         //scroll to the bottom of the list
         scrollMyListViewToBottom();
@@ -261,25 +257,13 @@ public class SettingFragmentTemplates extends Fragment {
     }
 
     public void removeItemFromScreen(String item){
-        Log.d("removeItemFromScreen", "~~~1");
         msgTemplate.remove(item);
-        Log.d("removeItemFromScreen", "~~~2");
+        //remove to user templates
+        MainActivity.getUser().deleteTemplate(item);
         // Refresh the adapter
         adapter.notifyDataSetChanged();
         writeItems();
-        Log.d("removeItemFromScreen", "~~~3");
-
     }
-
-//    private int getIndex(String item) {
-//        for (int pos = 0; pos < msgTemplate.size(); pos++) {
-//            String it = msgTemplate.get(pos);
-//            if (it.equals(item)) {
-//                return pos;
-//            }
-//        }
-//        return -1;
-//    }
 
 //    public String getRandomMsgTemplate() {
 //        Random random = new Random();
@@ -287,13 +271,7 @@ public class SettingFragmentTemplates extends Fragment {
 //        return msgTemplate.get(index);
 //    }
 //
-//    public void addMsgTemplate(String template) {
-//        msgTemplate.add(template);
-//    }
-//
-//    public void deleteMsgTemplate(int index) {
-//        msgTemplate.remove(index);
-//    }
+
 }
 
 class CustomListener implements View.OnClickListener {

@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class User {
     private ArrayList<Contact> contactsList;
-    private HashMap<Day, ArrayList<ArrayList<Integer>>> availableTimes;
+    private HashMap<Day, ArrayList<String>> availableTimes;
     private ArrayList<String> msgTemplate;
     private ArrayList<Msg> allFutureMessages;
     private ArrayList<Msg> allHistoryMessages;
@@ -20,19 +20,19 @@ public class User {
 
     public User() {
         contactsList = new ArrayList<Contact>();
-        availableTimes = new HashMap<Day, ArrayList<ArrayList<Integer>>>(); //day os week and times from 0 to 23
+        availableTimes = new HashMap<Day, ArrayList<String>>(); //day os week and times from 0 to 23
         msgTemplate = new ArrayList<String>();
         allFutureMessages = new ArrayList<>();
         allHistoryMessages = new ArrayList<>();
 
         //initialize all days
-        availableTimes.put(Day.SUNDAY, null);
-        availableTimes.put(Day.MONDAY, null);
-        availableTimes.put(Day.TUESDAY, null);
-        availableTimes.put(Day.WEDNESDAY, null);
-        availableTimes.put(Day.THURSDAY, null);
-        availableTimes.put(Day.FRIDAY, null);
-        availableTimes.put(Day.SATURDAY, null);
+        availableTimes.put(Day.SUNDAY, new ArrayList<String>());
+        availableTimes.put(Day.MONDAY, new ArrayList<String>());
+        availableTimes.put(Day.TUESDAY, new ArrayList<String>());
+        availableTimes.put(Day.WEDNESDAY, new ArrayList<String>());
+        availableTimes.put(Day.THURSDAY, new ArrayList<String>());
+        availableTimes.put(Day.FRIDAY, new ArrayList<String>());
+        availableTimes.put(Day.SATURDAY, new ArrayList<String>());
     }
 
     public void addContact(Contact newContact){
@@ -57,26 +57,19 @@ public class User {
         msgTemplate.add(msgToAdd);
     }
 
-    //give the user an option to edit an existing msg
-    //need to save the original msg (before the change) in order to delete it
-    public void editTemplate(String msgToEdit, String newMsg){
-        msgTemplate.remove(msgToEdit);
-        msgTemplate.add(newMsg);
-    }
-
     /**
      * set a day in the availableTimes hashMap. each setting require to update the range of the
      * specified day
      * @param dayName - the day we want to chang is range
-     * @param range - ArrayList<ArrayList<Integer>>, each inner ArrayList contain two numbers
-     *              from 00 to 23 which represent a range og hours.
-     *              for example, if the user available in Sunday from 12pm to 5pm and from 8pm
-     *              to 10pm this param will by <<12,17>,<20,22>>
+     * @param range - String, range of hours : MORNING = "8-12", NOON = "12-17", EVNING = "17-22"
      * @throws IOException
      */
-    public void setAvailableTimes(Day dayName, ArrayList<ArrayList<Integer>> range) throws IOException {
+    public void setAvailableTimes(Day dayName, String range) throws IOException {
         if(Day.isDay(dayName)){
-            availableTimes.put(dayName, range);
+            ArrayList<String> current = availableTimes.get(dayName);
+            //update the current
+            current.add(range);
+            availableTimes.put(dayName, current);
         } else {
             throw new IOException("Wrong Day!!!");
         }
