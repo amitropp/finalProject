@@ -6,8 +6,9 @@
     android:orientation="vertical" >
 
     <ImageButton
-        android:layout_width=""
-        android:layout_height="" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ib_add_message"/>
 
 
 
