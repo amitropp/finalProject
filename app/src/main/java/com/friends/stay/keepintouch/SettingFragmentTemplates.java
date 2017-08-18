@@ -38,7 +38,7 @@ public class SettingFragmentTemplates extends Fragment {
     private static final String TAB_NAME = "templates";
     private ArrayList<String> msgTemplate;
     private ListView listView;
-    private  ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
     private View rootView;
 
 
@@ -54,19 +54,21 @@ public class SettingFragmentTemplates extends Fragment {
         rootView = inflater.inflate(R.layout.fregment_setting_templates, container, false);
 
         msgTemplate = new ArrayList<String>();
-        msgTemplate.add("Hey <nickname>, How are yoy?");
-        msgTemplate.add("whats up <nickname>?");
-        msgTemplate.add("<nickname>, I miss you!! \uD83E\uDD17");
+//        msgTemplate.add("Hey <nickname>, How are yoy?");
+//        msgTemplate.add("whats up <nickname>?");
+//        msgTemplate.add("<nickname>, I miss you!! \uD83E\uDD17");
 
         String[] mStringArray = new String[msgTemplate.size()];
-        mStringArray = msgTemplate.toArray(mStringArray);
+//        mStringArray = msgTemplate.toArray(mStringArray);
         readItems();
-        adapter = new ArrayAdapter<String>(getContext(), R.layout.activity_listview, mStringArray);
+        adapter = new ArrayAdapter<String>(getContext(), R.layout.activity_listview, msgTemplate);
+
 
 
         listView = (ListView) rootView.findViewById(R.id.listView);
         listView.setAdapter(adapter);
         setupListViewListener();
+        addNewTemplate();
         return rootView;
     }
 
@@ -141,6 +143,7 @@ public class SettingFragmentTemplates extends Fragment {
                         // add the item to the cloud
                         Log.d("firebaseLog", "~~~addItemToScreen");
                         String itemText = input.getText().toString();// + ",\t" + date.getText().toString();
+                        Log.d("itemText = ", itemText);
                         addItemToScreen(itemText);
                         dialog.dismiss();
 
@@ -162,7 +165,7 @@ public class SettingFragmentTemplates extends Fragment {
 
     }
 
-    public void addNewTemplate(View v) {
+    public void addNewTemplate() {
         Button addBtn = (Button) rootView.findViewById(R.id.btnAddItem);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,9 +188,9 @@ public class SettingFragmentTemplates extends Fragment {
 
     private void writeItems() {
         File filesDir = getActivity().getFilesDir();
-        File todoFile = new File(filesDir, "templates.txt");
+        File dataFile = new File(filesDir, "templates.txt");
         try {
-            FileUtils.writeLines(todoFile, msgTemplate);
+            FileUtils.writeLines(dataFile, msgTemplate);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -204,12 +207,16 @@ public class SettingFragmentTemplates extends Fragment {
     }
 
     public void addItemToScreen(String newItem) { //TODO call
-
         // Refresh the adapter
-
+        Log.d("newItem = ", newItem);
         adapter.notifyDataSetChanged();
+        Log.d("addItemToScreen", "~~~2");
         adapter.add(newItem);
+        Log.d("addItemToScreen", "~~~3");
+
         writeItems();
+        Log.d("addItemToScreen", "~~~4");
+
         //scroll to the bottom of the list
         scrollMyListViewToBottom();
 
