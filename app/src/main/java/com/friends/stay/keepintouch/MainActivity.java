@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mUser = new User();
         mContactListFrag = new ContactsListFragment();
 
-        Fragment[] tabFragments = {mContactListFrag, new testFragment(), new testFragment2()};
+        Fragment[] tabFragments = {mContactListFrag, new MessagesViewFragment(), new testFragment2()};
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
 
