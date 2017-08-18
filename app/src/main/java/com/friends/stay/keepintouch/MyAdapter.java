@@ -3,6 +3,7 @@ package com.friends.stay.keepintouch;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,16 +101,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         Contact contact = mDataset.get(position);
-        holder.mTextView.setText(contact.getName());
+        int isCallVisibility = View.INVISIBLE;
+        int isSmsVisibility = View.INVISIBLE;
+        int isWhatsappVisibility = View.INVISIBLE;
         if (contact.isCall()) {
-            holder.mCallIcon.setVisibility(View.VISIBLE);
+            isCallVisibility = View.VISIBLE;
         }
         if (contact.isSMS()) {
-            holder.mSmsIcon.setVisibility(View.VISIBLE);
+            isSmsVisibility = View.VISIBLE;
         }
         if (contact.isWatsApp()) {
-            holder.mWhatsappIcon.setVisibility(View.VISIBLE);
+            isWhatsappVisibility = View.VISIBLE;
         }
+
+        holder.mTextView.setText(contact.getName());
+        holder.mCallIcon.setVisibility(isCallVisibility);
+        holder.mSmsIcon.setVisibility(isSmsVisibility);
+        holder.mWhatsappIcon.setVisibility(isWhatsappVisibility);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
