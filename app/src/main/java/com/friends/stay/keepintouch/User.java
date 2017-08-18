@@ -1,6 +1,7 @@
 package com.friends.stay.keepintouch;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import java.util.Date;
 import java.util.HashMap;
@@ -13,11 +14,16 @@ public class User {
     private ArrayList<Contact> contactsList;
     private HashMap<Day, ArrayList<ArrayList<Integer>>> availableTimes;
     private ArrayList<String> msgTemplate;
+    private ArrayList<Msg> allFutureMessages;
+    private ArrayList<Msg> allHistoryMessages;
+
 
     public User() {
         contactsList = new ArrayList<Contact>();
         availableTimes = new HashMap<Day, ArrayList<ArrayList<Integer>>>(); //day os week and times from 0 to 23
         msgTemplate = new ArrayList<String>();
+        allFutureMessages = new ArrayList<>();
+        allHistoryMessages = new ArrayList<>();
 
         //initialize all days
         availableTimes.put(Day.SUNDAY, null);
@@ -75,4 +81,16 @@ public class User {
             throw new IOException("Wrong Day!!!");
         }
     }
+
+    public void addToAllFutureMsg(Msg m) {
+        allFutureMessages.add(m);
+    }
+
+    public void addToAllHistoryMsg(Msg m) {
+        allHistoryMessages.add(m);
+    }
+
+    public ArrayList<Msg> getAllFutureMessages() { return allFutureMessages; }
+    public ArrayList<Msg> getAllHistoryMessages() { return allHistoryMessages; }
+
 }

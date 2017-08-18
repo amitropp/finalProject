@@ -32,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mAddBtn;
     private Tabs mTabs;
     private ContactsListFragment mContactListFrag;
-    private User mUser;
+    private FutureHistoryFragment mFutureFrag;
+    private FutureHistoryFragment mHistoryFrag;
+
+    private static User mUser;
 
 
     @Override
@@ -42,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         mAddBtn = (ImageButton) findViewById(R.id.ib_add_contact);
         mUser = new User();
         mContactListFrag = new ContactsListFragment();
-
-        Fragment[] tabFragments = {mContactListFrag, new MessagesViewFragment(), new testFragment2()};
+        mFutureFrag = FutureHistoryFragment.newInstance(true);
+        mHistoryFrag = FutureHistoryFragment.newInstance(false);
+        Fragment[] tabFragments = {mContactListFrag, mFutureFrag , mHistoryFrag};
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
 
@@ -67,29 +71,45 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MONTH, Calendar.AUGUST);
         calendar.set(Calendar.DAY_OF_MONTH, 16);
         calendar.set(Calendar.YEAR, 2017);
-        final Msg smsMessage = new SmsMessage("5556", date, "hello", this);
+        final Msg fsmsMessage = new SmsMessage("Amit", "5556", date, "inFuture", this);
+        final Msg fsmsMessage2 = new WhatsappMessage("Amit", "5556", date, "inFuture2", this);
+        final Msg fsmsMessage3 = new Call("Amit", "5556", date, "", this);
+        final Msg fsmsMessage4 = new SmsMessage("Eyal", "5556", date, "inFuture4", this);
 
-        final Handler handler = new Handler();
-        // Define the code block to be executed
-        final Runnable runnableCode = new Runnable() {
-            @Override
-            public void run() {
-                // Do something here on the main thread
-                smsMessage.send();
-                Toast.makeText(getApplicationContext(), "runnableCode executed.",
-                        Toast.LENGTH_LONG).show();
-            }
-        };
-        // Start the initial runnable task by posting through the handler
-//        handler.postDelayed(runnableCode, 2000);
+        final Msg hsmsMessage = new SmsMessage("Amit", "5556", date, "inHistory", this);
+        final Msg hsmsMessage2 = new WhatsappMessage("Amit", "5556", date, "inHistory2", this);
+        final Msg hsmsMessage3 = new Call("Amit", "5556", date, "inHistory3", this);
+        final Msg hsmsMessage4 = new Call("Amit", "5556", date, "inHistory4", this);
 
-
+//        final Handler handler = new Handler();
+//        // Define the code block to be executed
+//        final Runnable runnableCode = new Runnable() {
+//            @Override
+//            public void run() {
+//                // Do something here on the main thread
+//                smsMessage.send();
+//                Toast.makeText(getApplicationContext(), "runnableCode executed.",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        };
+//        // Start the initial runnable task by posting through the handler
+////        handler.postDelayed(runnableCode, 2000);
 //        smsMessage.send();
 //        Call mCall = new Call("5556", date, null, this);
 //        mCall.callNow();
         mUser.addContact(new Contact("Amit Tropp", "5", "Amitush", true, true, true, 2));
         mUser.addContact(new Contact("Avi Hendler", "7", "avush", false, true, false, 5));
         mUser.addContact(new Contact("Eyal Cohen", "7", "", false, false, true, 8));
+        mUser.getContacts().get(0).addFutureMessages(fsmsMessage);
+        mUser.getContacts().get(0).addFutureMessages(fsmsMessage2);
+        mUser.getContacts().get(0).addFutureMessages(fsmsMessage3);
+        mUser.getContacts().get(0).addFutureMessages(fsmsMessage4);
+
+        mUser.getContacts().get(0).addHistoryMessages(hsmsMessage);
+        mUser.getContacts().get(0).addHistoryMessages(hsmsMessage2);
+        mUser.getContacts().get(0).addHistoryMessages(hsmsMessage3);
+        mUser.getContacts().get(0).addHistoryMessages(hsmsMessage4);
+
 
     }
 
@@ -125,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public User getUser() {
+    public static User getUser() {
         return mUser;
     }
 

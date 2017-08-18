@@ -26,8 +26,8 @@ public class WhatsappMessage extends Msg {
      * @param content   content of message
      * @param context   context of the calling activity
      */
-    public WhatsappMessage(String number, Date date, String content, Context context) {
-        super(number, date, content, context);
+    public WhatsappMessage(String name, String number, Date date, String content, Context context) {
+        super(name, number, date, content, context);
     }
 
     @Override
