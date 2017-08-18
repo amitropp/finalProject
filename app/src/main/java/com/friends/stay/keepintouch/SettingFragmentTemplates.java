@@ -54,9 +54,9 @@ public class SettingFragmentTemplates extends Fragment {
         rootView = inflater.inflate(R.layout.fregment_setting_templates, container, false);
 
         msgTemplate = new ArrayList<String>();
-//        addItemToScreen("Hey <nickname>, How are yoy?");
-//        addItemToScreen("whats up <nickname>?");
-//        addItemToScreen("<nickname>, I miss you!! \uD83E\uDD17");
+        msgTemplate.add("Hey <nickname>, How are yoy?");
+        msgTemplate.add("whats up <nickname>?");
+        msgTemplate.add("<nickname>, I miss you!! \uD83E\uDD17");
 
         String[] mStringArray = new String[msgTemplate.size()];
         mStringArray = msgTemplate.toArray(mStringArray);
