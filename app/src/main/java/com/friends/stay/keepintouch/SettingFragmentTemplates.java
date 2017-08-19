@@ -265,13 +265,6 @@ public class SettingFragmentTemplates extends Fragment {
         writeItems();
     }
 
-//    public String getRandomMsgTemplate() {
-//        Random random = new Random();
-//        int index = random.nextInt(msgTemplate.size()-1);
-//        return msgTemplate.get(index);
-//    }
-//
-
 }
 
 class CustomListener implements View.OnClickListener {

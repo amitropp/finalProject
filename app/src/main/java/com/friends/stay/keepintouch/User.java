@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import java.util.Date;
 import java.util.HashMap;
-
+import java.util.Random;
 /**
  * Created by amitropp on 13/05/2017.
  */
@@ -36,6 +36,10 @@ public class User {
     }
 
     public void addContact(Contact newContact){
+        //add first future msgs to this contact
+        //newContact.
+
+        //add it to contactsList
         contactsList.add(newContact);
     }
 
@@ -46,6 +50,11 @@ public class User {
     }
 
     public void deleteContact(int pos){
+        //delete his future messages //TODO remove from comment after avi update
+//        Contact c = contactsList.get(pos);
+//        for (Msg msg : c.getFutureMessages()){
+//            allFutureMessages.remove(msg);
+//        }
         contactsList.remove(pos);
     }
 
@@ -85,5 +94,16 @@ public class User {
 
     public ArrayList<Msg> getAllFutureMessages() { return allFutureMessages; }
     public ArrayList<Msg> getAllHistoryMessages() { return allHistoryMessages; }
+
+    public String getRandomMsgTemplate() {
+        Random random = new Random();
+        if (msgTemplate.size() != 0){
+            int index = random.nextInt(msgTemplate.size()-1);
+            return msgTemplate.get(index);
+        } else {
+            return "Hi :)";
+        }
+    }
+
 
 }

@@ -212,7 +212,7 @@ public class AddContactFragment extends Fragment {
                 }
                 else {
                     Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
-                            isCall, isMsg, isWhatsapp, mChosenRate);
+                            isCall, isMsg, isWhatsapp, mChosenRate, getActivity());
                     //add new contact to list
                     activity.addContactAndUpdeateRecyclerV(newContact);
                 }
@@ -234,7 +234,7 @@ public class AddContactFragment extends Fragment {
 
 
     public void setContact() {
-         Contact contact = mExistingContact;
+        Contact contact = mExistingContact;
         String name = contact.getName();
         mChooseContactBtn.setText(name);
         mChosenName = name;

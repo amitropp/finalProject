@@ -21,6 +21,9 @@
         </activity>
         <activity android:name=".MainSetting"></activity>
         <activity android:name=".SettingFragmentTimes"></activity>
+        <service    android:name=".ManagerService"
+                    android:exported="false">
+        </service>
 
     </application>
 
