@@ -22,6 +22,8 @@ public abstract class Msg {
     private Context context;
     //name of contact
     private String name;
+    //is manual msg
+    private boolean isManual;
 
     /**
      * abstract function to send the message. The inherit class will implement the
@@ -37,13 +39,14 @@ public abstract class Msg {
      * @param content content of message
      * @param context context of the calling activity
      */
-    public Msg(String name, String number, Date date, String content, Context context)
+    public Msg(String name, String number, Date date, String content, Context context, boolean isManual)
     {
         this.number = number;
         this.date = date;
         this.content = content;
         this.context = context;
         this.name = name;
+        this.isManual = isManual;
     }
 
     public Context getContext() {
@@ -63,4 +66,6 @@ public abstract class Msg {
     }
 
     public String getName() { return name; }
+
+    public boolean isManual() { return isManual;  }
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Random;
 /**
@@ -12,7 +13,7 @@ import java.util.Random;
 
 public class User {
     private ArrayList<Contact> contactsList;
-    private HashMap<Day, ArrayList<String>> availableTimes;
+    private HashMap<Integer, ArrayList<String>> availableTimes;
     private ArrayList<String> msgTemplate;
     private ArrayList<Msg> allFutureMessages;
     private ArrayList<Msg> allHistoryMessages;
@@ -20,19 +21,19 @@ public class User {
 
     public User() {
         contactsList = new ArrayList<Contact>();
-        availableTimes = new HashMap<Day, ArrayList<String>>(); //day os week and times from 0 to 23
+        availableTimes = new HashMap<Integer, ArrayList<String>>(); //day os week and times from 0 to 23
         msgTemplate = new ArrayList<String>();
         allFutureMessages = new ArrayList<>();
         allHistoryMessages = new ArrayList<>();
 
         //initialize all days
-        availableTimes.put(Day.SUNDAY, new ArrayList<String>());
-        availableTimes.put(Day.MONDAY, new ArrayList<String>());
-        availableTimes.put(Day.TUESDAY, new ArrayList<String>());
-        availableTimes.put(Day.WEDNESDAY, new ArrayList<String>());
-        availableTimes.put(Day.THURSDAY, new ArrayList<String>());
-        availableTimes.put(Day.FRIDAY, new ArrayList<String>());
-        availableTimes.put(Day.SATURDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.SUNDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.MONDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.TUESDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.WEDNESDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.THURSDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.FRIDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.SATURDAY, new ArrayList<String>());
     }
 
     public void addContact(Contact newContact){
@@ -73,15 +74,15 @@ public class User {
      * @param range - String, range of hours : MORNING = "8-12", NOON = "12-17", EVNING = "17-22"
      * @throws IOException
      */
-    public void setAvailableTimes(Day dayName, String range) throws IOException {
-        if(Day.isDay(dayName)){
-            ArrayList<String> current = availableTimes.get(dayName);
-            //update the current
-            current.add(range);
-            availableTimes.put(dayName, current);
-        } else {
-            throw new IOException("Wrong Day!!!");
-        }
+    public void setAvailableTimes(int dayName, String range) throws IOException {
+        ArrayList<String> current = availableTimes.get(dayName);
+        //update the current
+        current.add(range);
+        availableTimes.put(dayName, current);
+    }
+
+    public ArrayList<String> getAvailableTimes(int dayName) {
+        return availableTimes.get(dayName);
     }
 
     public void addToAllFutureMsg(Msg m) {
@@ -93,6 +94,7 @@ public class User {
     }
 
     public ArrayList<Msg> getAllFutureMessages() { return allFutureMessages; }
+
     public ArrayList<Msg> getAllHistoryMessages() { return allHistoryMessages; }
 
     public String getRandomMsgTemplate() {

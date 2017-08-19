@@ -2,6 +2,7 @@ package com.friends.stay.keepintouch;
 
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Date;
@@ -24,6 +25,7 @@ class Contact {
     private ArrayList<Msg> futureMessages;
     private ArrayList<Msg> historyMessages;
     private Context context;
+    private Random random = new Random();
 
     public Contact(String name,  String number, String nickname, boolean isCall,
                    boolean isSMS, boolean isWatsApp, int communicationRate, Context context) {
@@ -113,6 +115,7 @@ class Contact {
         return futureMessages;
     }
 
+    //TODO make sure isManual=true wehn creating manual msg
     public Msg createFutureMsg(){
         //check existing msgs
         Calendar c = Calendar.getInstance();
@@ -130,13 +133,11 @@ class Contact {
             Date lastMsgDate = last.getDate();
             c.setTime(lastMsgDate);
             c.add(Calendar.DAY_OF_MONTH, communicationRate);
-            newMsgDate = c.getTime();
         } else {
             //there is no futureMessages
             Date currentDate = new Date();
             c.setTime(currentDate);
             c.add(Calendar.DAY_OF_MONTH, communicationRate);
-            newMsgDate = c.getTime();
         }
 
         content = MainActivity.getUser().getRandomMsgTemplate();
@@ -144,27 +145,58 @@ class Contact {
             content = content.replace("<nickname>", nickname);
         }
 
+        //TODO update hour of day according to availability of user
+
         //Select the type of message sent
+        //get the current day
+        int DayOfResult = c.get(Calendar.DAY_OF_WEEK);
+        //check availability
+        ArrayList<String> currentDayRange = MainActivity.getUser().getAvailableTimes(DayOfResult);
+        //change day if needed (no available times that day)
+        while (currentDayRange.size() == 0){
+            //move to the next day
+            DayOfResult += 1;
+            DayOfResult = DayOfResult % 8;
+            if(DayOfResult == 0){
+                DayOfResult = 1;
+            }
+            //check availability for the next day
+            currentDayRange = MainActivity.getUser().getAvailableTimes(DayOfResult);
+        }
+        //update to day with availability
+        c.add(Calendar.DAY_OF_WEEK, DayOfResult);
+
+        //change time
+        int index = random.nextInt(currentDayRange.size());
+        String range = currentDayRange.get(index);
+        int start = Integer.valueOf(range.charAt(0));
+        int end = Integer.valueOf(range.charAt(2));
+        int hour = random.nextInt((end - start) + 1) + start;
+        c.set(Calendar.HOUR_OF_DAY, hour);
+        int minute = random.nextInt((59 - 0) + 1) + 0;
+        c.set(Calendar.MINUTE, minute);
+        newMsgDate = c.getTime();
 
         boolean[] communicationTypeArray = {isWatsApp, isSMS, isCall};
 
-        Random random = new Random();
-        int index = random.nextInt(3);
+        index = random.nextInt(3);
         while (communicationTypeArray[index] == false){
             //continue to the next cell
             index += 1;
             index = index % 3;
         }
         if (index == 0){
-            return new WhatsappMessage(name, number, newMsgDate, content, context);
+            return new WhatsappMessage(name, number, newMsgDate, content, context, false);
         } else if (index == 1){
-            return new SmsMessage(name, number, newMsgDate, content, context);
+            return new SmsMessage(name, number, newMsgDate, content, context, false);
         } else {
             //index == 2
-            return new Call(name, number, newMsgDate, content, context);
+            return new Call(name, number, newMsgDate, content, context, false);
         }
 
     }
+
+
 
 
     public ArrayList<Msg> getHistoryMessages() {

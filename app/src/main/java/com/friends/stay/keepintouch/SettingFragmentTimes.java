@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import java.util.Calendar;
 import android.widget.TextView;
 import android.widget.GridLayout.LayoutParams;
 
@@ -110,21 +111,21 @@ public class SettingFragmentTimes extends Fragment {
                 //update existing contact's details - Sunday
                 if (isSundayMorning){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.SUNDAY, MORNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, MORNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isSundayNoon){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.SUNDAY, NOON);
+                        MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, NOON);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isSundayEvening){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.SUNDAY, EVNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, EVNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -133,21 +134,21 @@ public class SettingFragmentTimes extends Fragment {
                 //update existing contact's details - Monday
                 if (isMondayMorning){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.MONDAY, MORNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, MORNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isMondayNoon){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.MONDAY, NOON);
+                        MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, NOON);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isMondayEvening){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.MONDAY, EVNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, EVNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -156,21 +157,21 @@ public class SettingFragmentTimes extends Fragment {
                 //update existing contact's details - Tuesday
                 if (isTuesdayMorning){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.TUESDAY, MORNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, MORNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isTuesdayNoon){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.TUESDAY, NOON);
+                        MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, NOON);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isTuesdayEvening){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.TUESDAY, EVNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, EVNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -179,21 +180,21 @@ public class SettingFragmentTimes extends Fragment {
                 //update existing contact's details - Tuesday
                 if (isTuesdayMorning){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.TUESDAY, MORNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, MORNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isTuesdayNoon){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.TUESDAY, NOON);
+                        MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, NOON);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isTuesdayEvening){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.TUESDAY, EVNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, EVNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -203,21 +204,21 @@ public class SettingFragmentTimes extends Fragment {
                 //update existing contact's details - Wednesday
                 if (isWednesdayMorning){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.WEDNESDAY, MORNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, MORNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isWednesdayNoon){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.WEDNESDAY, NOON);
+                        MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, NOON);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isWednesdayEvening){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.WEDNESDAY, EVNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, EVNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -226,21 +227,21 @@ public class SettingFragmentTimes extends Fragment {
                 //update existing contact's details - Thursday
                 if (isThursdayMorning){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.THURSDAY, MORNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, MORNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isThursdayNoon){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.THURSDAY, NOON);
+                        MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, NOON);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isThursdayEvening){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.THURSDAY, EVNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, EVNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -249,21 +250,21 @@ public class SettingFragmentTimes extends Fragment {
                 //update existing contact's details - Friday
                 if (isFridayMorning){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.FRIDAY, MORNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, MORNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isFridayNoon){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.FRIDAY, NOON);
+                        MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, NOON);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isFridayEvening){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.FRIDAY, EVNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, EVNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -272,21 +273,21 @@ public class SettingFragmentTimes extends Fragment {
                 //update existing contact's details - Saturday
                 if (isSaturdayMorning){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.SATURDAY, MORNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, MORNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isSaturdayNoon){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.SATURDAY, NOON);
+                        MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, NOON);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
                 if (isSaturdayEvening){
                     try {
-                        MainActivity.getUser().setAvailableTimes(Day.SATURDAY, EVNING);
+                        MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, EVNING);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
