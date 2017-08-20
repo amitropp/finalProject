@@ -23,6 +23,12 @@
         <activity android:name=".MainSetting" />
         <activity android:name=".SettingFragmentTimes" />
         <activity android:name=".EditContactActivity"></activity>
+        <activity android:name=".MainSetting"></activity>
+        <activity android:name=".SettingFragmentTimes"></activity>
+        <service    android:name=".ManagerService"
+                    android:exported="false">
+        </service>
+
     </application>
 
 </manifest>

@@ -55,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         if (firstEntrance) {
             //todo
         }
+        //start running the manager
+        Intent intent = new Intent(this, ManagerService.class);
+        startService(intent);
 
         test();
     }
@@ -76,11 +79,19 @@ public class MainActivity extends AppCompatActivity {
         final Msg fsmsMessage2 = new WhatsappMessage("Amit", "5556", date, "inFuture2", this);
         final Msg fsmsMessage3 = new Call("Amit", "5556", date, "", this);
         final Msg fsmsMessage4 = new SmsMessage("Eyal", "5556", date, "inFuture4", this);
+        final Msg fsmsMessage = new SmsMessage("Amit", "5556", date, "inFuture", this, false);
+        final Msg fsmsMessage2 = new WhatsappMessage("Amit", "5556", date, "inFuture2", this, false);
+        final Msg fsmsMessage3 = new Call("Amit", "5556", date, "", this, false);
+        final Msg fsmsMessage4 = new SmsMessage("Eyal", "5556", date, "inFuture4", this, false);
 
         final Msg hsmsMessage = new SmsMessage("Amit", "5556", date, "inHistory", this);
         final Msg hsmsMessage2 = new WhatsappMessage("Amit", "5556", date, "inHistory2", this);
         final Msg hsmsMessage3 = new Call("Amit", "5556", date, "inHistory3", this);
         final Msg hsmsMessage4 = new Call("Amit", "5556", date, "inHistory4", this);
+        final Msg hsmsMessage = new SmsMessage("Amit", "5556", date, "inHistory", this, false);
+        final Msg hsmsMessage2 = new WhatsappMessage("Amit", "5556", date, "inHistory2", this, false);
+        final Msg hsmsMessage3 = new Call("Amit", "5556", date, "inHistory3", this, false);
+        final Msg hsmsMessage4 = new Call("Amit", "5556", date, "inHistory4", this, false);
 
 //        final Handler handler = new Handler();
 //        // Define the code block to be executed
@@ -101,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
         mUser.addContact(new Contact("Amit Tropp", "5", "Amitush", true, true, true, 2));
         mUser.addContact(new Contact("Avi Hendler", "7", "avush", false, true, false, 5));
         mUser.addContact(new Contact("Eyal Cohen", "7", "", false, false, true, 8));
+        mUser.addContact(new Contact("Amit Tropp", "5", "Amitush", true, true, true, 2, getApplicationContext()));
+        mUser.addContact(new Contact("Avi Hendler", "7", "avush", false, true, false, 5, getApplicationContext()));
+        mUser.addContact(new Contact("Eyal Cohen", "7", "", false, false, true, 8, getApplicationContext()));
         mUser.getContacts().get(0).addFutureMessages(fsmsMessage);
         mUser.getContacts().get(0).addFutureMessages(fsmsMessage2);
         mUser.getContacts().get(0).addFutureMessages(fsmsMessage3);

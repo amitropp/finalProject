@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 
+import java.util.Random;
 /**
  * Created by amitropp on 13/05/2017.
  */
@@ -13,6 +15,7 @@ import java.util.HashMap;
 public class User {
     private ArrayList<Contact> contactsList;
     private HashMap<Day, ArrayList<ArrayList<Integer>>> availableTimes;
+    private HashMap<Integer, ArrayList<String>> availableTimes;
     private ArrayList<String> msgTemplate;
     private ArrayList<Msg> allFutureMessages;
     private ArrayList<Msg> allHistoryMessages;
@@ -21,6 +24,7 @@ public class User {
     public User() {
         contactsList = new ArrayList<Contact>();
         availableTimes = new HashMap<Day, ArrayList<ArrayList<Integer>>>(); //day os week and times from 0 to 23
+        availableTimes = new HashMap<Integer, ArrayList<String>>(); //day os week and times from 0 to 23
         msgTemplate = new ArrayList<String>();
         allFutureMessages = new ArrayList<>();
         allHistoryMessages = new ArrayList<>();
@@ -33,9 +37,20 @@ public class User {
         availableTimes.put(Day.THURSDAY, null);
         availableTimes.put(Day.FRIDAY, null);
         availableTimes.put(Day.SATURDAY, null);
+        availableTimes.put(Calendar.SUNDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.MONDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.TUESDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.WEDNESDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.THURSDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.FRIDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.SATURDAY, new ArrayList<String>());
     }
 
     public void addContact(Contact newContact){
+        //add first future msgs to this contact
+        //newContact.
+
+        //add it to contactsList
         contactsList.add(newContact);
     }
 
@@ -46,6 +61,11 @@ public class User {
     }
 
     public void deleteContact(int pos){
+        //delete his future messages //TODO remove from comment after avi update
+//        Contact c = contactsList.get(pos);
+//        for (Msg msg : c.getFutureMessages()){
+//            allFutureMessages.remove(msg);
+//        }
         contactsList.remove(pos);
     }
 
@@ -57,29 +77,22 @@ public class User {
         msgTemplate.add(msgToAdd);
     }
 
-    //give the user an option to edit an existing msg
-    //need to save the original msg (before the change) in order to delete it
-    public void editTemplate(String msgToEdit, String newMsg){
-        msgTemplate.remove(msgToEdit);
-        msgTemplate.add(newMsg);
-    }
-
     /**
      * set a day in the availableTimes hashMap. each setting require to update the range of the
      * specified day
      * @param dayName - the day we want to chang is range
-     * @param range - ArrayList<ArrayList<Integer>>, each inner ArrayList contain two numbers
-     *              from 00 to 23 which represent a range og hours.
-     *              for example, if the user available in Sunday from 12pm to 5pm and from 8pm
-     *              to 10pm this param will by <<12,17>,<20,22>>
+     * @param range - String, range of hours : MORNING = "8-12", NOON = "12-17", EVNING = "17-22"
      * @throws IOException
      */
-    public void setAvailableTimes(Day dayName, ArrayList<ArrayList<Integer>> range) throws IOException {
-        if(Day.isDay(dayName)){
-            availableTimes.put(dayName, range);
-        } else {
-            throw new IOException("Wrong Day!!!");
-        }
+    public void setAvailableTimes(int dayName, String range) throws IOException {
+        ArrayList<String> current = availableTimes.get(dayName);
+        //update the current
+        current.add(range);
+        availableTimes.put(dayName, current);
+    }
+
+    public ArrayList<String> getAvailableTimes(int dayName) {
+        return availableTimes.get(dayName);
     }
 
     public void addToAllFutureMsg(Msg m) {
@@ -127,6 +140,18 @@ public class User {
 
 
     public ArrayList<Msg> getAllFutureMessages() { return allFutureMessages; }
+
     public ArrayList<Msg> getAllHistoryMessages() { return allHistoryMessages; }
+
+    public String getRandomMsgTemplate() {
+        Random random = new Random();
+        if (msgTemplate.size() != 0){
+            int index = random.nextInt(msgTemplate.size()-1);
+            return msgTemplate.get(index);
+        } else {
+            return "Hi :)";
+        }
+    }
+
 
 }

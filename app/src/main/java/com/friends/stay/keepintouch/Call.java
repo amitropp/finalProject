@@ -20,6 +20,8 @@ public class Call extends Msg {
 
     public Call(String name, String number, Date date, String content, Context context) {
         super(name, number, date, content, context);
+    public Call(String name, String number, Date date, String content, Context context, boolean isManual) {
+        super(name, number, date, content, context, isManual);
     }
 
     @Override
