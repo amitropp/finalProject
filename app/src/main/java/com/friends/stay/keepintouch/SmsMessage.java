@@ -27,8 +27,6 @@ public class SmsMessage extends Msg {
      * @param content content of the message
      * @param context context of the calling activity
      */
-    public SmsMessage(String name, String number, Date date, String content, Context context) {
-        super(name, number, date, content, context);
     public SmsMessage(String name, String number, Date date, String content, Context context, boolean isManual) {
         super(name, number, date, content, context, isManual);
     }

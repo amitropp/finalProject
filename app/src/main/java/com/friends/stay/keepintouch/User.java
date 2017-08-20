@@ -6,7 +6,6 @@ import java.util.ArrayList;
 //import java.util.Date;
 import java.util.Calendar;
 import java.util.HashMap;
-
 import java.util.Random;
 /**
  * Created by amitropp on 13/05/2017.
@@ -14,7 +13,6 @@ import java.util.Random;
 
 public class User {
     private ArrayList<Contact> contactsList;
-    private HashMap<Day, ArrayList<ArrayList<Integer>>> availableTimes;
     private HashMap<Integer, ArrayList<String>> availableTimes;
     private ArrayList<String> msgTemplate;
     private ArrayList<Msg> allFutureMessages;
@@ -23,20 +21,12 @@ public class User {
 
     public User() {
         contactsList = new ArrayList<Contact>();
-        availableTimes = new HashMap<Day, ArrayList<ArrayList<Integer>>>(); //day os week and times from 0 to 23
         availableTimes = new HashMap<Integer, ArrayList<String>>(); //day os week and times from 0 to 23
         msgTemplate = new ArrayList<String>();
         allFutureMessages = new ArrayList<>();
         allHistoryMessages = new ArrayList<>();
 
         //initialize all days
-        availableTimes.put(Day.SUNDAY, null);
-        availableTimes.put(Day.MONDAY, null);
-        availableTimes.put(Day.TUESDAY, null);
-        availableTimes.put(Day.WEDNESDAY, null);
-        availableTimes.put(Day.THURSDAY, null);
-        availableTimes.put(Day.FRIDAY, null);
-        availableTimes.put(Day.SATURDAY, null);
         availableTimes.put(Calendar.SUNDAY, new ArrayList<String>());
         availableTimes.put(Calendar.MONDAY, new ArrayList<String>());
         availableTimes.put(Calendar.TUESDAY, new ArrayList<String>());

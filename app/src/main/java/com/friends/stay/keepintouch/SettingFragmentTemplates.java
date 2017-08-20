@@ -38,7 +38,6 @@ public class SettingFragmentTemplates extends Fragment {
     private static final String TAB_NAME = "templates";
     private ArrayList<String> msgTemplate;
     private ListView listView;
-    private  ArrayAdapter<String> adapter;
     private ArrayAdapter<String> adapter;
     private View rootView;
 
@@ -55,11 +54,12 @@ public class SettingFragmentTemplates extends Fragment {
         rootView = inflater.inflate(R.layout.fregment_setting_templates, container, false);
 
         msgTemplate = new ArrayList<String>();
+//        msgTemplate.add("Hey <nickname>, How are yoy?");
+//        msgTemplate.add("whats up <nickname>?");
+//        msgTemplate.add("<nickname>, I miss you!! \uD83E\uDD17");
 
         String[] mStringArray = new String[msgTemplate.size()];
-        mStringArray = msgTemplate.toArray(mStringArray);
         readItems();
-        adapter = new ArrayAdapter<String>(getContext(), R.layout.activity_listview, mStringArray);
         adapter = new ArrayAdapter<String>(getContext(), R.layout.activity_listview, msgTemplate);
 
 
@@ -73,7 +73,6 @@ public class SettingFragmentTemplates extends Fragment {
 
     private void setupListViewListener() {
 
-        //on long click - open dialog with delete button
         //on click - open dialog with delete button
 
         listView.setOnItemClickListener(
@@ -85,10 +84,6 @@ public class SettingFragmentTemplates extends Fragment {
                         Log.d("msgTemplate length", String.valueOf(msgTemplate.size()));
                         Log.d("setOnItemClickListener", String.valueOf(pos));
                         CharSequence dl = "Delete";
-                        CharSequence ed = "Edit";
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle(msgTemplate.get(pos).toString()) //
-                                .setNegativeButton(ed, new DialogInterface.OnClickListener() {
                         CharSequence sv = "Save";
                         final CharSequence nn = "<nickname>";
 
@@ -106,7 +101,6 @@ public class SettingFragmentTemplates extends Fragment {
                         builder.setTitle("Edit Template") //
                                 .setNegativeButton(dl, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        // TODO
                                     // Remove the item within array at position
                                     final String itemToRemoved = msgTemplate.get(index);
                                     Log.d("firebaseLog", "~~~delete item");
@@ -123,14 +117,8 @@ public class SettingFragmentTemplates extends Fragment {
                                         Log.d("firebaseLog", "~~~edit item");
                                     }
                                 })
-                                .setPositiveButton(dl, new DialogInterface.OnClickListener() {
                                 .setNeutralButton(nn, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        // Remove the item within array at position
-                                        final String itemToRemoved = msgTemplate.get(index);
-                                        Log.d("firebaseLog", "~~~delete item");
-                                        removeItemFromScreen(itemToRemoved);
-                                        dialog.dismiss();
                                         input.append(" <nickname> ");
                                         Log.d("firebaseLog", "~~~add nick name");
                                     }});
@@ -139,11 +127,8 @@ public class SettingFragmentTemplates extends Fragment {
                         dialog.show();
                         dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new CustomListener(dialog, input));
 
-                                    }
-                                });
 
 
-                        builder.show();
 
                         //prevent <nickname> btn to close the dialog
 //                        final AlertDialog dialog = builder.create();
@@ -163,8 +148,6 @@ public class SettingFragmentTemplates extends Fragment {
     public void onButtonClick(Button view) {
         CharSequence can = "Cancel";
         CharSequence add = "Add";
-        CharSequence msg = "Add new Template";
-
         final CharSequence nn = "<nickname>";
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -186,11 +169,9 @@ public class SettingFragmentTemplates extends Fragment {
 
 
         builder.setTitle("Add new Template")
-                .setMessage(msg)
                 .setPositiveButton(add, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // add the item to the cloud
-                        Log.d("firebaseLog", "~~~addItemToScreen");
                         String itemText = input.getText().toString();// + ",\t" + date.getText().toString();
                         Log.d("itemText = ", itemText);
                         addItemToScreen(itemText);
@@ -201,13 +182,11 @@ public class SettingFragmentTemplates extends Fragment {
                 .setNegativeButton(can, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Refresh the adapter
-                        Log.d("firebaseLog", "~~~removeItemFromScreen");
 //                        String itemText = input.getText().toString();// + ",\t" + date.getText().toString();
 //                        removeItemFromScreen(itemText);
                         adapter.notifyDataSetChanged();
                         dialog.dismiss();
                     }
-                });
                 })
                 .setNeutralButton(nn, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -215,7 +194,6 @@ public class SettingFragmentTemplates extends Fragment {
                         Log.d("firebaseLog", "~~~add nick name");
                 }});
 
-        builder.show();
         AlertDialog dialog = builder.create();
         dialog.show();
         dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new CustomListener(dialog, input));
@@ -223,7 +201,6 @@ public class SettingFragmentTemplates extends Fragment {
 
     }
 
-    public void addNewTemplate(View v) {
     public void addNewTemplate() {
         Button addBtn = (Button) rootView.findViewById(R.id.btnAddItem);
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -247,10 +224,8 @@ public class SettingFragmentTemplates extends Fragment {
 
     private void writeItems() {
         File filesDir = getActivity().getFilesDir();
-        File todoFile = new File(filesDir, "templates.txt");
         File dataFile = new File(filesDir, "templates.txt");
         try {
-            FileUtils.writeLines(todoFile, msgTemplate);
             FileUtils.writeLines(dataFile, msgTemplate);
         } catch (IOException e) {
             e.printStackTrace();
@@ -268,9 +243,7 @@ public class SettingFragmentTemplates extends Fragment {
     }
 
     public void addItemToScreen(String newItem) { //TODO call
-
         // Refresh the adapter
-
         adapter.notifyDataSetChanged();
         adapter.add(newItem);
         //add to user templates
@@ -284,41 +257,14 @@ public class SettingFragmentTemplates extends Fragment {
     }
 
     public void removeItemFromScreen(String item){
-        Log.d("removeItemFromScreen", "~~~1");
         msgTemplate.remove(item);
-        Log.d("removeItemFromScreen", "~~~2");
         //remove to user templates
         MainActivity.getUser().deleteTemplate(item);
         // Refresh the adapter
         adapter.notifyDataSetChanged();
         writeItems();
-        Log.d("removeItemFromScreen", "~~~3");
-
     }
 
-//    private int getIndex(String item) {
-//        for (int pos = 0; pos < msgTemplate.size(); pos++) {
-//            String it = msgTemplate.get(pos);
-//            if (it.equals(item)) {
-//                return pos;
-//            }
-//        }
-//        return -1;
-//    }
-
-//    public String getRandomMsgTemplate() {
-//        Random random = new Random();
-//        int index = random.nextInt(msgTemplate.size()-1);
-//        return msgTemplate.get(index);
-//    }
-//
-//    public void addMsgTemplate(String template) {
-//        msgTemplate.add(template);
-//    }
-//
-//    public void deleteMsgTemplate(int index) {
-//        msgTemplate.remove(index);
-//    }
 }
 
 class CustomListener implements View.OnClickListener {

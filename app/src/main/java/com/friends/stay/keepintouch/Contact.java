@@ -5,7 +5,6 @@ import android.content.Context;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Random;
@@ -34,7 +33,6 @@ class Contact {
     }
 
     public Contact(String name,  String number, String nickname, boolean isCall,
-                   boolean isSMS, boolean isWatsApp, int communicationRate) {
                    boolean isSMS, boolean isWatsApp, int communicationRate, Context context) {
         this.name = name;
         this.number = number;

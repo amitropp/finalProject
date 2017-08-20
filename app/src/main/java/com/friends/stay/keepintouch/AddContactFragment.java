@@ -216,7 +216,6 @@ public class AddContactFragment extends Fragment {
                 }
                 else {
                     Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
-                            isCall, isMsg, isWhatsapp, mChosenRate);
                             isCall, isMsg, isWhatsapp, mChosenRate, getActivity());
                     //add new contact to list
                     activity.addContactAndUpdeateRecyclerV(newContact);
