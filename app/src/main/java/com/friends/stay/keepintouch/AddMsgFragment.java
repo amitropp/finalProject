@@ -137,7 +137,7 @@ public class AddMsgFragment extends Fragment {
             @Override
             public void onClick(View v) {
             MainActivity activity = (MainActivity)getActivity();
-            activity.deleteMsgAndUpdeateRecyclerV (getArguments().getInt("indexOfMsgToEdit", 0), mIsFuture);
+            activity.deleteMsgAndUpdeateRecyclerV(getArguments().getInt("indexOfMsgToEdit", 0), mIsFuture);
             getFragmentManager().popBackStack(FutureHistoryFragment.TAG_MESSAGES, 1);
             }
         });

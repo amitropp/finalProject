@@ -212,7 +212,6 @@ public class AddContactFragment extends Fragment {
                     mExistingContact.setNickname(nickname);
                     mExistingContact.setCommunicationRate(mChosenRate);
                     ContactAdapter.updateContactIcons();
-                    //todo update future messages?
                 }
                 else {
                     Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
@@ -220,7 +219,6 @@ public class AddContactFragment extends Fragment {
                     //add new contact to list
                     activity.addContactAndUpdeateRecyclerV(newContact);
                 }
-
                 //return to last fragment
                 getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
             }

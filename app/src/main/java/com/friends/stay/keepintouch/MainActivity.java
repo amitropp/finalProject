@@ -175,11 +175,12 @@ public class MainActivity extends AppCompatActivity {
     public void deleteMsgAndUpdeateRecyclerV(int pos, boolean isFuture) {
         if (isFuture) {
             mUser.delFromFutureMsg(pos);
+            mFutureFrag.updateRecyclerViewOnRemove(pos);
         }
         else {
             mUser.delFromHistoryMsg(pos);
+            mHistoryFrag.updateRecyclerViewOnRemove(pos);
         }
-        mFutureFrag.updateRecyclerViewOnRemove(pos);
     }
 
 
