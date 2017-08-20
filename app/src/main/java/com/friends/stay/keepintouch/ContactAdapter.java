@@ -47,7 +47,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                  //call a new activity which has 3 tabs: Settings, Future, History
 //                 Intent myIntent = new Intent(activity, EditContactActivity.class);
 //                 activity.startActivity(myIntent);
-                 
+
                  AddContactFragment addContactFrag = AddContactFragment.newInstance(pos);
                  // raise the addContact for editing the settings of the contact
                  activity.getFragmentManager().beginTransaction()

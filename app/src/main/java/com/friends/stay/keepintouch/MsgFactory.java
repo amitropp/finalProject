@@ -10,15 +10,15 @@ import java.util.Date;
 
 public class MsgFactory {
     public static Msg newMsg(String name, String number, Date date, String content, Context context, boolean isCall,
-                                         boolean isSms, boolean isWhatsapp) {
+                                         boolean isSms, boolean isWhatsapp, boolean isManual) {
         if (isCall) {
-            return new Call(name, number, date, content, context);
+            return new Call(name, number, date, content, context, isManual);
         }
         if (isSms) {
-            return new SmsMessage(name, number, date, content, context);
+            return new SmsMessage(name, number, date, content, context, isManual);
         }
         if (isWhatsapp) {
-            return new WhatsappMessage(name, number, date, content, context);
+            return new WhatsappMessage(name, number, date, content, context, isManual);
         }
         return null;
     }

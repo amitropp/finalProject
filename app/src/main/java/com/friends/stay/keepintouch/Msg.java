@@ -39,7 +39,6 @@ public abstract class Msg {
      * @param content content of message
      * @param context context of the calling activity
      */
-    public Msg(String name, String number, Date date, String content, Context context)
     public Msg(String name, String number, Date date, String content, Context context, boolean isManual)
     {
         this.number = number;
