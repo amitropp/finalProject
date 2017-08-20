@@ -63,4 +63,13 @@ public abstract class Msg {
     }
 
     public String getName() { return name; }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
 }

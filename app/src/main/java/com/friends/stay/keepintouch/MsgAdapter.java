@@ -1,5 +1,6 @@
 package com.friends.stay.keepintouch;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -8,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
+    public boolean mIsFuture;
     public ArrayList<Msg> mMessages;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -36,16 +40,23 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
                 public void onClick(View v) {
                     // get the relevant contact by it's position
                     int pos = getAdapterPosition();
-//                    mCurEditingContact = mDataset.get(pos);
-//                    mCurVH = MyAdapter.ViewHolder.this;
-//                    AddContactFragment addContactFrag = AddContactFragment.newInstance(pos);
-//                    final Activity activity = (Activity) v.getContext();
-                    // raise the addContact for editing the settings of the contact
-//                    activity.getFragmentManager().beginTransaction()
-//                            .replace(R.id.frag_contact_list, addContactFrag)
-//                            .addToBackStack(ContactsListFragment.TAG_CONATCT)
-//                            .commit();
-                    //wait for the transaction to end
+                    AddMsgFragment addMsgFrag = AddMsgFragment.newInstance(pos, mIsFuture);
+                    final Activity activity = (Activity) v.getContext();
+
+                    if (mIsFuture) {
+                        activity.getFragmentManager().beginTransaction()
+                                .replace(R.id.frag_future, addMsgFrag)
+                                .addToBackStack(FutureHistoryFragment.TAG_MESSAGES)
+                                .commit();
+                    }
+
+                    else {
+                        activity.getFragmentManager().beginTransaction()
+                                .replace(R.id.frag_history, addMsgFrag)
+                                .addToBackStack(FutureHistoryFragment.TAG_MESSAGES)
+                                .commit();
+                    }
+
                 }
             });
         }
@@ -54,8 +65,9 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MsgAdapter(ArrayList<Msg> myDataset) {
+    public MsgAdapter(ArrayList<Msg> myDataset, boolean isFuture) {
         mMessages = myDataset;
+        mIsFuture = isFuture;
     }
 
     // Create new views (invoked by the layout manager)

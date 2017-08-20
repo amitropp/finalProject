@@ -7,27 +7,30 @@
 
     <ImageButton
         android:id="@+id/ib_add_contact"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
         android:src="@mipmap/ic_add_contact"
         android:background="#0000"
         android:layout_weight="0.18"
-        android:layout_marginTop="13dp"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/ib_settings"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="29dp"
+        android:layout_marginEnd="29dp" />
 
     <ImageButton
         android:id="@+id/ib_settings"
-        android:layout_width="160dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_preferences"
         android:background="#0000"
         android:layout_weight="0.18"
-        android:layout_alignBottom="@+id/ib_add_contact"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/ib_add_contact" />
+        android:layout_marginTop="12dp" />
 
 
     <!--<TextView-->
@@ -50,8 +53,6 @@
         android:scrollbars="vertical"
         android:layout_width="wrap_content"
         android:layout_height="450dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
         android:layout_marginTop="29dp"
         android:layout_below="@+id/ib_settings"
         android:layout_alignParentLeft="true"

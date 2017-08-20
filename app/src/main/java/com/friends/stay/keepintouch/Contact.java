@@ -20,6 +20,11 @@ class Contact {
     private ArrayList<Msg> futureMessages;
     private ArrayList<Msg> historyMessages;
 
+
+    public ArrayList<Msg> getFutureMessages() {
+        return futureMessages;
+    }
+
     public Contact(String name,  String number, String nickname, boolean isCall,
                    boolean isSMS, boolean isWatsApp, int communicationRate) {
         this.name = name;
@@ -104,6 +109,13 @@ class Contact {
         historyMessages.add(newMessages);
         MainActivity.getUser().addToAllHistoryMsg(newMessages);
 
+    }
+
+    public void delFromHistoryMessages(int pos) {
+        historyMessages.remove(pos);
+    }
+    public void delFromFutureMessages(int pos) {
+        futureMessages.remove(pos);
     }
 
 

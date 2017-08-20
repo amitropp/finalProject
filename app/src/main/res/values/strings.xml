@@ -3,7 +3,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="choose_contact">Choose Contact</string>
+    <string name="choose_contact">Choose A Contact</string>
     <string name="contact_chosen">Contact Chosen</string>
     <string name="call">Call</string>
     <string name="message">Message</string>

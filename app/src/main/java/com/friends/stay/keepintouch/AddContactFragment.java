@@ -2,12 +2,12 @@ package com.friends.stay.keepintouch;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,8 +22,6 @@ import android.widget.Spinner;
  * of contacts
  */
 public class AddContactFragment extends Fragment {
-
-    public static final int RESULT_PICK_CONTACT = 2;
     private Button mDoneBtn;
     private Button mChooseContactBtn;
     private Button mDelBtm;
@@ -65,11 +63,18 @@ public class AddContactFragment extends Fragment {
             mExistingContact = activity.getUser().getContacts().get(indexOfContact);
             mDelBtm.setVisibility(View.VISIBLE);
             setContact();
+            _setDelListener();
         }
         _setRateSpinnerListener();
-        _setDoneListener();
         _setPickConatctListener();
-        _setDelListener();
+        _setDoneListener();
+
+        thisView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
         return view;
 
     }
@@ -104,24 +109,23 @@ public class AddContactFragment extends Fragment {
     }
 
     private void _setPickConatctListener() {
-        mChooseContactBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mExistingContact != null) {
-                    return;
+        if (mExistingContact == null) { //no contact chosen yet
+            mChooseContactBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+                    startActivityForResult(contactPickerIntent, MainActivity.RESULT_PICK_CONTACT);
                 }
-                Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                startActivityForResult(contactPickerIntent, RESULT_PICK_CONTACT);
-            }
-        });
+            });
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check for the request code, we might be usign multiple startActivityForReslut
         switch (requestCode) {
-            case RESULT_PICK_CONTACT:
+            case MainActivity.RESULT_PICK_CONTACT:
                 contactPicked(data);
                 break;
         }
@@ -207,7 +211,7 @@ public class AddContactFragment extends Fragment {
                     }
                     mExistingContact.setNickname(nickname);
                     mExistingContact.setCommunicationRate(mChosenRate);
-                    MyAdapter.updateContactIcons();
+                    ContactAdapter.updateContactIcons();
                     //todo update future messages?
                 }
                 else {
@@ -234,7 +238,7 @@ public class AddContactFragment extends Fragment {
 
 
     public void setContact() {
-         Contact contact = mExistingContact;
+        Contact contact = mExistingContact;
         String name = contact.getName();
         mChooseContactBtn.setText(name);
         mChosenName = name;

@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int PERMISSION_REQUEST_CALL = 1;
     public static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 2;
     public static final int REQUEST_READ_PHONE_STATE = 3;
+    public static final int RESULT_PICK_CONTACT = 2;
     private static final String[] tabsNames = {"CONTACTS", "FUTURE", "HISTORY"};
     private static boolean firstEntrance = true;
 
@@ -158,4 +159,26 @@ public class MainActivity extends AppCompatActivity {
         mUser.deleteContact(pos);
         mContactListFrag.updateRecyclerViewOnRemove(pos);
     }
+
+    public void addFutureMsgAndUpdeateRecyclerV(Msg newMsg) {
+        mUser.addToAllFutureMsg(newMsg);
+        mFutureFrag.updateRecyclerViewOnAdd();
+    }
+
+    public void updeateFutureRecyclerV(int pos) {
+        mFutureFrag.updateRVOnUpdate(pos);
+    }
+
+    public void deleteMsgAndUpdeateRecyclerV(int pos, boolean isFuture) {
+        if (isFuture) {
+            mUser.delFromFutureMsg(pos);
+        }
+        else {
+            mUser.delFromHistoryMsg(pos);
+        }
+        mFutureFrag.updateRecyclerViewOnRemove(pos);
+    }
+
+
+
 }

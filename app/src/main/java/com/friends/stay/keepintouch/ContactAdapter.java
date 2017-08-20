@@ -1,9 +1,8 @@
 package com.friends.stay.keepintouch;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-import static com.friends.stay.keepintouch.ContactsListFragment.TAG_CONATCT;
-
 /**
  * Created by user on 8/11/2017.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
     public static ArrayList<Contact> mDataset;
     private static Contact mCurEditingContact;
     private static ViewHolder mCurVH;
@@ -44,15 +41,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                  // get the relevant contact by it's position
                  int pos = getAdapterPosition();
                  mCurEditingContact = mDataset.get(pos);
-                 mCurVH = MyAdapter.ViewHolder.this;
-                 AddContactFragment addContactFrag = AddContactFragment.newInstance(pos);
+                 mCurVH = ContactAdapter.ViewHolder.this;
+
                  final Activity activity = (Activity) v.getContext();
+                 //call a new activity which has 3 tabs: Settings, Future, History
+//                 Intent myIntent = new Intent(activity, EditContactActivity.class);
+//                 activity.startActivity(myIntent);
+                 
+                 AddContactFragment addContactFrag = AddContactFragment.newInstance(pos);
                  // raise the addContact for editing the settings of the contact
                  activity.getFragmentManager().beginTransaction()
                          .replace(R.id.frag_contact_list, addContactFrag)
                          .addToBackStack(ContactsListFragment.TAG_CONATCT)
                          .commit();
-                 //wait for the transaction to end
              }
             });
         }
@@ -81,14 +82,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(ArrayList<Contact> myDataset) {
+    public ContactAdapter(ArrayList<Contact> myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public ContactAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                        int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_contact_view, parent, false);
         ViewHolder vh = new ViewHolder(v);
