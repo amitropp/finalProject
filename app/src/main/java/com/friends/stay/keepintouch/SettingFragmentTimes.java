@@ -108,6 +108,9 @@ public class SettingFragmentTimes extends Fragment {
                 CheckBox cvSaturdayEvening = (CheckBox)thisView.findViewById(R.id.saturday_evening);
                 boolean isSaturdayEvening = cvSaturdayEvening.isChecked();
 
+                //reset to all available times before updating
+                MainActivity.getUser().clearAvailableTimes();
+
                 //update existing contact's details - Sunday
                 if (isSundayMorning){
                     try {
@@ -292,8 +295,6 @@ public class SettingFragmentTimes extends Fragment {
                         e.printStackTrace();
                     }
                 }
-
-
 
             }
         });

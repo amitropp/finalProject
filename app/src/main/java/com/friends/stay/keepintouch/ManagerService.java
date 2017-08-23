@@ -2,6 +2,7 @@ package com.friends.stay.keepintouch;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * Created by amitropp on 19/08/2017.
@@ -18,9 +19,9 @@ public class ManagerService extends IntentService {
         // Normally we would do some work here, like download a file.
         // For our sample, we just sleep for 5 seconds.
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1);
             while (true) {
-                //TODO
+                Log.d("here", "here");
             }
         } catch (InterruptedException e) {
             // Restore interrupt status.
