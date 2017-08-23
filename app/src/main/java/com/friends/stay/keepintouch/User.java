@@ -27,13 +27,7 @@ public class User {
         allHistoryMessages = new ArrayList<>();
 
         //initialize all days
-        availableTimes.put(Calendar.SUNDAY, new ArrayList<String>());
-        availableTimes.put(Calendar.MONDAY, new ArrayList<String>());
-        availableTimes.put(Calendar.TUESDAY, new ArrayList<String>());
-        availableTimes.put(Calendar.WEDNESDAY, new ArrayList<String>());
-        availableTimes.put(Calendar.THURSDAY, new ArrayList<String>());
-        availableTimes.put(Calendar.FRIDAY, new ArrayList<String>());
-        availableTimes.put(Calendar.SATURDAY, new ArrayList<String>());
+        clearAvailableTimes();
     }
 
     public void addContact(Contact newContact){
@@ -46,16 +40,13 @@ public class User {
 
     public ArrayList<Contact> getContacts() {return  contactsList;}
 
-    public void deleteContact(Contact contactToDelete){
-        contactsList.remove(contactToDelete);
-    }
 
     public void deleteContact(int pos){
-        //delete his future messages //TODO remove from comment after avi update
-//        Contact c = contactsList.get(pos);
-//        for (Msg msg : c.getFutureMessages()){
-//            allFutureMessages.remove(msg);
-//        }
+        //delete contact future messages
+        Contact c = contactsList.get(pos);
+        for (Msg msg : c.getFutureMessages()){
+            allFutureMessages.remove(msg);
+        }
         contactsList.remove(pos);
     }
 
@@ -79,6 +70,16 @@ public class User {
         //update the current
         current.add(range);
         availableTimes.put(dayName, current);
+    }
+
+    public void clearAvailableTimes(){
+        availableTimes.put(Calendar.SUNDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.MONDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.TUESDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.WEDNESDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.THURSDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.FRIDAY, new ArrayList<String>());
+        availableTimes.put(Calendar.SATURDAY, new ArrayList<String>());
     }
 
     public ArrayList<String> getAvailableTimes(int dayName) {
@@ -127,7 +128,6 @@ public class User {
         }
         return null;
     }
-
 
     public ArrayList<Msg> getAllFutureMessages() { return allFutureMessages; }
 

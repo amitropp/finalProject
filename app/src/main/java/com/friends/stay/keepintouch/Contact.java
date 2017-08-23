@@ -2,12 +2,11 @@ package com.friends.stay.keepintouch;
 
 import android.content.Context;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Random;
+
 /**
  * Created by Avi on 11/05/2017.
  */
@@ -43,12 +42,6 @@ class Contact {
         this.communicationRate = communicationRate;
         futureMessages = new ArrayList<Msg>();
         historyMessages = new ArrayList<Msg>();
-
-        //add first 4 future msgs
-//        addFutureMessages(createFutureMsg());
-//        addFutureMessages(createFutureMsg());
-//        addFutureMessages(createFutureMsg());
-//        addFutureMessages(createFutureMsg());
 
     }
 
@@ -116,7 +109,7 @@ class Contact {
     }
 
 
-    //TODO make sure isManual=true wehn creating manual msg
+    //TODO make sure isManual=true when creating manual msg
     public Msg createFutureMsg(){
         //check existing msgs
         Calendar c = Calendar.getInstance();
@@ -146,7 +139,7 @@ class Contact {
             content = content.replace("<nickname>", nickname);
         }
 
-        //TODO update hour of day according to availability of user
+        //update hour of day according to availability of user
 
         //Select the type of message sent
         //get the current day
@@ -181,7 +174,7 @@ class Contact {
         boolean[] communicationTypeArray = {isWatsApp, isSMS, isCall};
 
         index = random.nextInt(3);
-        while (communicationTypeArray[index] == false){
+        while (!communicationTypeArray[index]){
             //continue to the next cell
             index += 1;
             index = index % 3;
@@ -213,6 +206,7 @@ class Contact {
     public void delFromHistoryMessages(int pos) {
         historyMessages.remove(pos);
     }
+
     public void delFromFutureMessages(int pos) {
         futureMessages.remove(pos);
     }
