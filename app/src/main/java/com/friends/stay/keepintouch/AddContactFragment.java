@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -52,7 +52,6 @@ public class AddContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_contact, container, false);
         thisView = view;
-        MainActivity activity = (MainActivity)getActivity();
         mChooseContactBtn = (Button)view.findViewById(R.id.btn_pick_contact);
         mDoneBtn = (Button)view.findViewById(R.id.btn_done);
         mRateDropdown = (Spinner)thisView.findViewById(R.id.sp_days);
@@ -60,7 +59,7 @@ public class AddContactFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             int indexOfContact = args.getInt("indexOfContact", 0);
-            mExistingContact = activity.getUser().getContacts().get(indexOfContact);
+            mExistingContact = MainActivity.getUser().getContacts().get(indexOfContact);
             mDelBtm.setVisibility(View.VISIBLE);
             setContact();
             _setDelListener();
@@ -83,9 +82,9 @@ public class AddContactFragment extends Fragment {
         mDelBtm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity activity = (MainActivity)getActivity();
-                activity.deleteCntactAndUpdeateRecyclerV(getArguments().getInt("indexOfContact", 0));
-                getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
+                MainActivity.getInstance().deleteCntactAndUpdeateRecyclerV(getArguments().getInt("indexOfContact", 0));
+//                getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
+                getActivity().finish();
             }
         });
     }
@@ -173,7 +172,6 @@ public class AddContactFragment extends Fragment {
                     thisView.findViewById(R.id.tv_err_no_chosen_contact).setVisibility(View.INVISIBLE);
                 }
 
-                MainActivity activity = (MainActivity)getActivity();
                 //get nickname
                 EditText edNickname = (EditText)thisView.findViewById(R.id.et_nickname);
                 String nickname = edNickname.getText().toString();
@@ -212,15 +210,17 @@ public class AddContactFragment extends Fragment {
                     mExistingContact.setNickname(nickname);
                     mExistingContact.setCommunicationRate(mChosenRate);
                     ContactAdapter.updateContactIcons();
+                    getActivity().finish();
                 }
                 else {
                     Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
                             isCall, isMsg, isWhatsapp, mChosenRate, getActivity());
                     //add new contact to list
-                    activity.addContactAndUpdeateRecyclerV(newContact);
+//                    MainActivity activity = MainActivity.getInstance();
+                    MainActivity.getInstance().addContactAndUpdeateRecyclerV(newContact);
+                    getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
                 }
                 //return to last fragment
-                getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
             }
         });
     }

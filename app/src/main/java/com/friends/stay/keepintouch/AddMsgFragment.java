@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,12 +45,14 @@ public class AddMsgFragment extends Fragment {
     private final static int CALL = 0;
     private final static int SMS = 1;
     private final static int WA = 2;
+    private int mposOfContact;
 
-    public static AddMsgFragment newInstance(int indexOfMsgToEdit, boolean isFuture) {
+    public static AddMsgFragment newInstance(int indexOfMsgToEdit, boolean isFuture, int posOfContact) {
         AddMsgFragment newFrag = new AddMsgFragment();
         Bundle args = new Bundle();
         args.putInt("indexOfMsgToEdit", indexOfMsgToEdit);
         args.putBoolean("isFuture", isFuture);
+        args.putInt("posOfContact", posOfContact);
         newFrag.setArguments(args);
         return newFrag;
     }
@@ -74,18 +77,26 @@ public class AddMsgFragment extends Fragment {
         mAllCb[SMS] = (CheckBox)view.findViewById(R.id.cb_message);
         mAllCb[WA] = (CheckBox)view.findViewById(R.id.cb_whatsapp);
         mMsgTypeIcon = (ImageButton)view.findViewById(R.id.ib_type_icon);
-
-        mChosenDate =  new Date(); //todo!!!!!
         Bundle args = getArguments();
+        mChosenDate =  new Date(); //todo!!!!!
         if (args != null) {
             mindexOfMsgToEdit = args.getInt("indexOfMsgToEdit", 0);
             mIsFuture =  args.getBoolean("isFuture", false);
-            if (mIsFuture) {
-                mExistingMsg = MainActivity.getUser().getAllFutureMessages().get(mindexOfMsgToEdit);
+            mposOfContact = args.getInt("posOfContact", -1);
+            Log.d("addmsg", "pos index: " +  String.valueOf(mposOfContact) + ", message index:" + String.valueOf(mindexOfMsgToEdit));
+            if (mIsFuture && mposOfContact == -1) {
+                mExistingMsg = MainActivity.getUser().getAllFutureMessages().get(mindexOfMsgToEdit);;
             }
-            else {
+            else if (!mIsFuture && mposOfContact == -1) {
                 mExistingMsg = MainActivity.getUser().getAllHistoryMessages().get(mindexOfMsgToEdit);
             }
+            else if (mIsFuture && mposOfContact != -1) {
+                mExistingMsg = MainActivity.getUser().getContacts().get(mposOfContact).getFutureMessages().get(mindexOfMsgToEdit);;
+            }
+            else {
+                mExistingMsg = MainActivity.getUser().getContacts().get(mposOfContact).getHistoryMessages().get(mindexOfMsgToEdit);;
+            }
+
             mDelBtm.setVisibility(View.VISIBLE);
             _setDisplayFromMsg();
             _setDelListener();
@@ -136,8 +147,8 @@ public class AddMsgFragment extends Fragment {
         mDelBtm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            MainActivity activity = (MainActivity)getActivity();
-            activity.deleteMsgAndUpdeateRecyclerV(getArguments().getInt("indexOfMsgToEdit", 0), mIsFuture);
+            MainActivity activity = MainActivity.getInstance();
+            activity.deleteMsgAndUpdeateRecyclerV(getArguments().getInt("indexOfMsgToEdit", 0), mIsFuture, getArguments().getInt("posOfContact", -1));
             getFragmentManager().popBackStack(FutureHistoryFragment.TAG_MESSAGES, 1);
             }
         });
@@ -226,8 +237,8 @@ public class AddMsgFragment extends Fragment {
                 if (!isChosenBox || !isChosenName) {
                     return;
                 }
-                MainActivity activity = (MainActivity)getActivity();
-                //update existing contact's details
+                MainActivity activity = MainActivity.getInstance();
+                //update existing message
                 if (mExistingMsg != null) {
                     mExistingMsg.setContent(msgContent);
                     mExistingMsg.setDate(mChosenDate);
@@ -236,7 +247,7 @@ public class AddMsgFragment extends Fragment {
                 else {
                     Msg newMsg = MsgFactory.newMsg(mChosenName, mChosenPhoneNumber, mChosenDate,
                             msgContent, getActivity().getApplicationContext(), isCall, isMsg, isWhatsapp, true);
-                    //add new contact to list
+                    //add new message to list
                     activity.addFutureMsgAndUpdeateRecyclerV(newMsg);
                 }
 

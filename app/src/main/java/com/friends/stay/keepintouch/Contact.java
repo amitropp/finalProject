@@ -112,8 +112,7 @@ class Contact {
 
     public void addFutureMessages(Msg newMessages) {
         futureMessages.add(newMessages);
-        MainActivity.getUser().addToAllFutureMsg(newMessages);
-
+        MainActivity.getUser().getAllFutureMessages().add(newMessages);
     }
 
 //    public ArrayList<Msg> getFutureMessages() {
@@ -202,15 +201,13 @@ class Contact {
 //    }
 
 
-
-
     public ArrayList<Msg> getHistoryMessages() {
         return historyMessages;
     }
 
     public void addHistoryMessages(Msg newMessages) {
         historyMessages.add(newMessages);
-        MainActivity.getUser().addToAllHistoryMsg(newMessages);
+        MainActivity.getUser().getAllHistoryMessages().add(newMessages);
 
     }
 
@@ -219,6 +216,13 @@ class Contact {
     }
     public void delFromFutureMessages(int pos) {
         futureMessages.remove(pos);
+    }
+
+    public void delFromHistoryMessages(Msg msg) {
+        historyMessages.remove(msg);
+    }
+    public void delFromFutureMessages(Msg msg) {
+        futureMessages.remove(msg);
     }
 
 

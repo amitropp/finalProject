@@ -20,11 +20,13 @@ public class FutureHistoryFragment extends Fragment {
     private MsgRecyclerView mMsgRecyclerView;
     public static final String TAG_MESSAGES = "msgFragTag";
     private ArrayList<Msg> mAllMsgs;
+    private int mPosOfContact = -1;
 
-    public static FutureHistoryFragment newInstance(boolean isFuture) {
+    public static FutureHistoryFragment newInstance(boolean isFuture, int posOfContact) {
         FutureHistoryFragment  newFrag = new FutureHistoryFragment();
         Bundle args = new Bundle();
         args.putBoolean("isFuture", isFuture);
+        args.putInt("posOfContact", posOfContact);
         newFrag.setArguments(args);
         return newFrag;
     }
@@ -34,14 +36,23 @@ public class FutureHistoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        boolean isFutureFrag = args.getBoolean("isFuture", false);
-        if (isFutureFrag) {
-            this.isFuture = true;
-            mAllMsgs = MainActivity.getUser().getAllFutureMessages();
-        }
-        else {
-            this.isFuture = false;
-            mAllMsgs = MainActivity.getUser().getAllHistoryMessages();
+        if (args != null) {
+            boolean isFutureFrag = args.getBoolean("isFuture", false);
+            this.isFuture = isFutureFrag;
+            mPosOfContact = args.getInt("posOfContact", -1);
+            if (isFutureFrag && mPosOfContact == -1) {
+                mAllMsgs = MainActivity.getUser().getAllFutureMessages();
+            }
+            else if (!isFutureFrag && mPosOfContact == -1) {
+                mAllMsgs = MainActivity.getUser().getAllHistoryMessages();
+            }
+            else if (isFutureFrag && mPosOfContact != -1) {
+                mAllMsgs = MainActivity.getUser().getContacts().get(mPosOfContact).getFutureMessages();
+            }
+            else {
+                mAllMsgs = MainActivity.getUser().getContacts().get(mPosOfContact).getHistoryMessages();
+            }
+
         }
     }
 
@@ -55,22 +66,14 @@ public class FutureHistoryFragment extends Fragment {
             // Inflate the layout for this fragment
             if (isFuture) {
                 view = inflater.inflate(R.layout.fragment_future, container, false);
+                mAddMessageBtn = (ImageButton)view.findViewById(R.id.ib_add_message);
+                _setAddListener();
             }
             else {
                 view = inflater.inflate(R.layout.fragment_history, container, false);
             }
             myView = view;
-            mAddMessageBtn = (ImageButton)view.findViewById(R.id.ib_add_message);
-            MainActivity mainActivity = (MainActivity)getActivity();
-            ArrayList<Msg> msgs;
-            if (isFuture) {
-                msgs = MainActivity.getUser().getAllFutureMessages();
-                _setAddListener();
-            }
-            else {
-                msgs = MainActivity.getUser().getAllHistoryMessages();
-            }
-            mMsgRecyclerView = new MsgRecyclerView(view, mainActivity, msgs, isFuture);
+            mMsgRecyclerView = new MsgRecyclerView(view, getActivity(), mAllMsgs, isFuture, mPosOfContact);
             return view;
         }
         return myView;
@@ -92,7 +95,7 @@ public class FutureHistoryFragment extends Fragment {
     }
 
     public void updateRecyclerViewOnAdd() {
-        int position =   mAllMsgs.size() - 1;
+        int position = mAllMsgs.size() - 1;
         mMsgRecyclerView.mAdapter.notifyItemInserted(position);
         //scroll to the bottom of the list
         mMsgRecyclerView.mRecyclerView.scrollToPosition(position);

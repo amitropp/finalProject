@@ -3,6 +3,7 @@ package com.friends.stay.keepintouch;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.Date;
 public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
     public boolean mIsFuture;
     public ArrayList<Msg> mMessages;
+    public int mPosOcContact;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -40,7 +42,8 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
                 public void onClick(View v) {
                     // get the relevant contact by it's position
                     int pos = getAdapterPosition();
-                    AddMsgFragment addMsgFrag = AddMsgFragment.newInstance(pos, mIsFuture);
+//                    Log.d("onclickMsgAdapter", String.valueOf(mPosOcContact));
+                    AddMsgFragment addMsgFrag = AddMsgFragment.newInstance(pos, mIsFuture, mPosOcContact);
                     final Activity activity = (Activity) v.getContext();
 
                     if (mIsFuture) {
@@ -65,9 +68,10 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MsgAdapter(ArrayList<Msg> myDataset, boolean isFuture) {
+    public MsgAdapter(ArrayList<Msg> myDataset, boolean isFuture, int posOfContact) {
         mMessages = myDataset;
         mIsFuture = isFuture;
+        mPosOcContact = posOfContact;
     }
 
     // Create new views (invoked by the layout manager)

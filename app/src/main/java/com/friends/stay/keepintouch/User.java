@@ -87,39 +87,40 @@ public class User {
 
     public void addToAllFutureMsg(Msg m) {
         allFutureMessages.add(m);
-        Contact contact = _findContactByMsg(m);
+        Contact contact = findContactByMsg(m);
         if (contact != null) {
             // the message is to an existing conatct
-            contact.addFutureMessages(m);
+            contact.getFutureMessages().add(m);
         }
     }
 
     public void addToAllHistoryMsg(Msg m) {
         allHistoryMessages.add(m);
-        Contact contact = _findContactByMsg(m);
+        Contact contact = findContactByMsg(m);
         if (contact != null) {
-            contact.addHistoryMessages(m);
+            contact.getHistoryMessages().add(m);
         }
     }
 
-    public void delFromFutureMsg(int pos) {
-        Contact contact = _findContactByMsg(allFutureMessages.get(pos));
+    public Contact delFromFutureMsg(int pos) {
+        Contact contact = findContactByMsg(allFutureMessages.get(pos));
         if (contact != null) {
-            contact.delFromFutureMessages(pos);
+            contact.delFromFutureMessages(allFutureMessages.get(pos));
         }
         allFutureMessages.remove(pos);
-
+        return contact;
     }
 
-    public void delFromHistoryMsg(int pos) {
-        Contact contact = _findContactByMsg(allFutureMessages.get(pos));
+    public Contact delFromHistoryMsg(int pos) {
+        Contact contact = findContactByMsg(allHistoryMessages.get(pos));
         if (contact != null) {
-            contact.delFromHistoryMessages(pos);
+            contact.delFromHistoryMessages(allHistoryMessages.get(pos));
         }
         allHistoryMessages.remove(pos);
+        return contact;
     }
 
-    private Contact _findContactByMsg(Msg m) {
+    public Contact findContactByMsg(Msg m) {
         for (Contact curContact : contactsList) {
             if (curContact.getName().equals(m.getName()) && curContact.getNumber().equals(m.getNumber())) {
                 return curContact;

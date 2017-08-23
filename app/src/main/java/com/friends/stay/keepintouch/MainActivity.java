@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int RESULT_PICK_CONTACT = 2;
     private static final String[] tabsNames = {"CONTACTS", "FUTURE", "HISTORY"};
     private static boolean firstEntrance = true;
+    private static MainActivity mainActivity = null;
 
     public static Intent mNextCallIntent;
     public static SmsMessage mNextSmsMessage;
@@ -41,14 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (mainActivity == null) {
+            mainActivity = this;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAddBtn = (ImageButton) findViewById(R.id.ib_add_contact);
         mUser = new User();
         mContactListFrag = new ContactsListFragment();
-        mFutureFrag = FutureHistoryFragment.newInstance(true);
-        mHistoryFrag = FutureHistoryFragment.newInstance(false);
-        Fragment[] tabFragments = {mContactListFrag, mFutureFrag , mHistoryFrag};
+        mFutureFrag = FutureHistoryFragment.newInstance(true, -1);
+        mHistoryFrag = FutureHistoryFragment.newInstance(false, -1);
+        Fragment[] tabFragments = {mContactListFrag, mFutureFrag, mHistoryFrag};
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
 
@@ -62,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
         test();
     }
 
+    public static MainActivity getInstance() {
+        return mainActivity;
+    }
 
     //test the program
     private void test() {
@@ -75,15 +82,13 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MONTH, Calendar.AUGUST);
         calendar.set(Calendar.DAY_OF_MONTH, 16);
         calendar.set(Calendar.YEAR, 2017);
-        final Msg fsmsMessage = new SmsMessage("Amit", "5556", date, "inFuture", this, false);
-        final Msg fsmsMessage2 = new WhatsappMessage("Amit", "5556", date, "inFuture2", this, false);
-        final Msg fsmsMessage3 = new Call("Amit", "5556", date, "", this, false);
-        final Msg fsmsMessage4 = new SmsMessage("Eyal", "5556", date, "inFuture4", this, false);
+        final Msg fsmsMessage = new SmsMessage("Amit Tropp", "1", date, "inFutureAmit", this, false);
+        final Msg fsmsMessage2 = new WhatsappMessage("Arella Bloom", "2", date, "inFutureArella", this, false);
+        final Msg fsmsMessage3 = new Call("Eyal Cohen", "3", date, "", this, false);
 
-        final Msg hsmsMessage = new SmsMessage("Amit", "5556", date, "inHistory", this, false);
-        final Msg hsmsMessage2 = new WhatsappMessage("Amit", "5556", date, "inHistory2", this, false);
-        final Msg hsmsMessage3 = new Call("Amit", "5556", date, "inHistory3", this, false);
-        final Msg hsmsMessage4 = new Call("Amit", "5556", date, "inHistory4", this, false);
+        final Msg hsmsMessage = new SmsMessage("Amit Tropp", "1", date, "inHistoryAmit", this, false);
+        final Msg hsmsMessage2 = new WhatsappMessage("Arella Bloom", "2", date, "inHistoryArella", this, false);
+        final Msg hsmsMessage3 = new Call("Eyal Cohen", "3", date, "inHistoryEyal", this, false);
 
 //        final Handler handler = new Handler();
 //        // Define the code block to be executed
@@ -101,19 +106,17 @@ public class MainActivity extends AppCompatActivity {
 //        smsMessage.send();
 //        Call mCall = new Call("5556", date, null, this);
 //        mCall.callNow();
-        mUser.addContact(new Contact("Amit Tropp", "5", "Amitush", true, true, true, 2, getApplicationContext()));
-        mUser.addContact(new Contact("Avi Hendler", "7", "avush", false, true, false, 5, getApplicationContext()));
-        mUser.addContact(new Contact("Eyal Cohen", "7", "", false, false, true, 8, getApplicationContext()));
+        mUser.addContact(new Contact("Amit Tropp", "1", "Amitush", true, true, true, 2, getApplicationContext()));
+        mUser.addContact(new Contact("Arella Bloom", "2", "Relz", false, true, false, 5, getApplicationContext()));
+        mUser.addContact(new Contact("Eyal Cohen", "3", "", false, false, true, 8, getApplicationContext()));
         mUser.getContacts().get(0).addFutureMessages(fsmsMessage);
-        mUser.getContacts().get(0).addFutureMessages(fsmsMessage2);
-        mUser.getContacts().get(0).addFutureMessages(fsmsMessage3);
-        mUser.getContacts().get(0).addFutureMessages(fsmsMessage4);
+        mUser.getContacts().get(1).addFutureMessages(fsmsMessage2);
+        mUser.getContacts().get(2).addFutureMessages(fsmsMessage3);
+
 
         mUser.getContacts().get(0).addHistoryMessages(hsmsMessage);
-        mUser.getContacts().get(0).addHistoryMessages(hsmsMessage2);
-        mUser.getContacts().get(0).addHistoryMessages(hsmsMessage3);
-        mUser.getContacts().get(0).addHistoryMessages(hsmsMessage4);
-
+        mUser.getContacts().get(1).addHistoryMessages(hsmsMessage2);
+        mUser.getContacts().get(2).addHistoryMessages(hsmsMessage3);
 
     }
 
@@ -172,14 +175,35 @@ public class MainActivity extends AppCompatActivity {
         mFutureFrag.updateRVOnUpdate(pos);
     }
 
-    public void deleteMsgAndUpdeateRecyclerV(int pos, boolean isFuture) {
-        if (isFuture) {
-            mUser.delFromFutureMsg(pos);
+    public void deleteMsgAndUpdeateRecyclerV(int pos, boolean isFuture, int contactPos) {
+        if (isFuture && contactPos == -1) {
+            Contact c = mUser.delFromFutureMsg(pos);
             mFutureFrag.updateRecyclerViewOnRemove(pos);
+            if (c != null && EditContactActivity.getFutureFrag() != null) {
+                EditContactActivity.getFutureFrag().updateRecyclerViewOnRemove(c.getFutureMessages().size());
+            }
+        }
+        else if (!isFuture && contactPos == -1) {
+            Contact c = mUser.delFromHistoryMsg(pos);
+            mHistoryFrag.updateRecyclerViewOnRemove(pos);
+            if (c != null && EditContactActivity.getFutureFrag() != null) {
+                EditContactActivity.getHistoryFrag().updateRecyclerViewOnRemove(c.getHistoryMessages().size());
+            }
+        }
+        else if (isFuture && contactPos != -1) {
+            Msg m = mUser.getContacts().get(contactPos).getFutureMessages().get(pos);
+            mUser.getAllFutureMessages().remove(m);
+            mUser.getContacts().get(contactPos).delFromFutureMessages(pos);
+            EditContactActivity.getFutureFrag().updateRecyclerViewOnRemove(pos);
+            mFutureFrag.updateRecyclerViewOnRemove(mUser.getAllFutureMessages().size() - 1);
+
         }
         else {
-            mUser.delFromHistoryMsg(pos);
-            mHistoryFrag.updateRecyclerViewOnRemove(pos);
+            Msg m = mUser.getContacts().get(contactPos).getHistoryMessages().get(pos);
+            mUser.getAllHistoryMessages().remove(m);
+            mUser.getContacts().get(contactPos).delFromHistoryMessages(pos);
+            EditContactActivity.getHistoryFrag().updateRecyclerViewOnRemove(pos);
+            mHistoryFrag.updateRecyclerViewOnRemove(mUser.getAllHistoryMessages().size() - 1);
         }
     }
 

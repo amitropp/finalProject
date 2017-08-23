@@ -13,13 +13,13 @@ public class MsgRecyclerView {
     public RecyclerView.LayoutManager mLayoutManager;
     public ArrayList<Msg> mMessages;
 
-    public MsgRecyclerView(View view, Context context, ArrayList<Msg> messages, boolean isFuture) {
+    public MsgRecyclerView(View view, Context context, ArrayList<Msg> messages, boolean isFuture, int posOfContact) {
         mMessages = messages;
         mRecyclerView = (RecyclerView) view.findViewById(R.id.display_messages_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MsgAdapter(mMessages, isFuture);
+        mAdapter = new MsgAdapter(mMessages, isFuture, posOfContact);
         mRecyclerView.setAdapter(mAdapter);
     }
 

@@ -2,6 +2,7 @@ package com.friends.stay.keepintouch;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,16 +45,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                  mCurVH = ContactAdapter.ViewHolder.this;
 
                  final Activity activity = (Activity) v.getContext();
-                 //call a new activity which has 3 tabs: Settings, Future, History
-//                 Intent myIntent = new Intent(activity, EditContactActivity.class);
-//                 activity.startActivity(myIntent);
+//                 call a new activity which has 3 tabs: Settings, Future, History
+                 Intent myIntent = new Intent(activity, EditContactActivity.class);
+                 Bundle b = new Bundle();
+                 b.putInt("pos", pos); //Your id
+                 myIntent.putExtras(b);
+                 activity.startActivity(myIntent);
 
-                 AddContactFragment addContactFrag = AddContactFragment.newInstance(pos);
-                 // raise the addContact for editing the settings of the contact
-                 activity.getFragmentManager().beginTransaction()
-                         .replace(R.id.frag_contact_list, addContactFrag)
-                         .addToBackStack(ContactsListFragment.TAG_CONATCT)
-                         .commit();
+//                 AddContactFragment addContactFrag = AddContactFragment.newInstance(pos);
+//                 // raise the addContact for editing the settings of the contact
+//                 activity.getFragmentManager().beginTransaction()
+//                         .replace(R.id.frag_contact_list, addContactFrag)
+//                         .addToBackStack(ContactsListFragment.TAG_CONATCT)
+//                         .commit();
              }
             });
         }
