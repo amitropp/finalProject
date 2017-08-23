@@ -209,5 +209,13 @@ class Contact {
         futureMessages.remove(pos);
     }
 
+    public void delFromHistoryMessages(Msg msg) {
+        historyMessages.remove(msg);
+    }
+    public void delFromFutureMessages(Msg msg) {
+        futureMessages.remove(msg);
+    }
+
 
 }
+

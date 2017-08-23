@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private FutureHistoryFragment mFutureFrag;
     private FutureHistoryFragment mHistoryFrag;
 
+
     private static User mUser;
 
 
