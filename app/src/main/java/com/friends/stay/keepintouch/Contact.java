@@ -191,8 +191,6 @@ class Contact {
     }
 
 
-
-
     public ArrayList<Msg> getHistoryMessages() {
         return historyMessages;
     }

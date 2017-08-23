@@ -296,8 +296,6 @@ public class SettingFragmentTimes extends Fragment {
                     }
                 }
 
-
-
             }
         });
     }
