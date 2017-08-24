@@ -80,26 +80,36 @@ public class AddMsgFragment extends Fragment {
         Bundle args = getArguments();
         mChosenDate =  new Date(); //todo!!!!!
         if (args != null) {
-            mindexOfMsgToEdit = args.getInt("indexOfMsgToEdit", 0);
+            mindexOfMsgToEdit = args.getInt("indexOfMsgToEdit", -1);
             mIsFuture =  args.getBoolean("isFuture", false);
             mposOfContact = args.getInt("posOfContact", -1);
-            Log.d("addmsg", "pos index: " +  String.valueOf(mposOfContact) + ", message index:" + String.valueOf(mindexOfMsgToEdit));
-            if (mIsFuture && mposOfContact == -1) {
-                mExistingMsg = MainActivity.getUser().getAllFutureMessages().get(mindexOfMsgToEdit);;
+            if (mindexOfMsgToEdit != -1) {
+                if (mIsFuture && mposOfContact == -1) {
+                    mExistingMsg = MainActivity.getUser().getAllFutureMessages().get(mindexOfMsgToEdit);
+                }
+                else if (!mIsFuture && mposOfContact == -1) {
+                    mExistingMsg = MainActivity.getUser().getAllHistoryMessages().get(mindexOfMsgToEdit);
+                }
+                else if (mIsFuture && mposOfContact != -1) { // edit future msg of specific contact
+                    Contact curContact = MainActivity.getUser().getContacts().get(mposOfContact);
+                    mExistingMsg = curContact.getFutureMessages().get(mindexOfMsgToEdit);
+                }
+                else { // edit history msgs of specific contact
+                    mExistingMsg = MainActivity.getUser().getContacts().get(mposOfContact).getHistoryMessages().get(mindexOfMsgToEdit);
+                }
+                _setDisplayFromMsg();
+                mDelBtm.setVisibility(View.VISIBLE);
+                _setDelListener();
             }
-            else if (!mIsFuture && mposOfContact == -1) {
-                mExistingMsg = MainActivity.getUser().getAllHistoryMessages().get(mindexOfMsgToEdit);
-            }
-            else if (mIsFuture && mposOfContact != -1) {
-                mExistingMsg = MainActivity.getUser().getContacts().get(mposOfContact).getFutureMessages().get(mindexOfMsgToEdit);;
-            }
-            else {
-                mExistingMsg = MainActivity.getUser().getContacts().get(mposOfContact).getHistoryMessages().get(mindexOfMsgToEdit);;
+            else { //add a new message
+                if (mposOfContact != -1) { //if we are inside future messages of a specific conact
+                    Contact curContact = MainActivity.getUser().getContacts().get(mposOfContact);
+                    mChosenName = curContact.getName();
+                    mChooseContactBtn.setText(mChosenName);
+                    mChosenPhoneNumber = curContact.getNumber();
+                }
             }
 
-            mDelBtm.setVisibility(View.VISIBLE);
-            _setDisplayFromMsg();
-            _setDelListener();
         }
         _setPickConatctListener();
         _setDoneListener();
@@ -156,7 +166,7 @@ public class AddMsgFragment extends Fragment {
 
 
     private void _setPickConatctListener() {
-        if (mExistingMsg == null) { // creating new message
+        if (mExistingMsg == null && mposOfContact == -1) { // creating new message for an unknown contact
             mChooseContactBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

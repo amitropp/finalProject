@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private FutureHistoryFragment mFutureFrag;
     private FutureHistoryFragment mHistoryFrag;
 
-
     private static User mUser;
 
 
@@ -170,6 +169,10 @@ public class MainActivity extends AppCompatActivity {
     public void addFutureMsgAndUpdeateRecyclerV(Msg newMsg) {
         mUser.addToAllFutureMsg(newMsg);
         mFutureFrag.updateRecyclerViewOnAdd();
+        if (EditContactActivity.getHistoryFrag() != null) {
+            EditContactActivity.getFutureFrag().updateRecyclerViewOnAdd();
+        }
+
     }
 
     public void updeateFutureRecyclerV(int pos) {
@@ -183,23 +186,20 @@ public class MainActivity extends AppCompatActivity {
             if (c != null && EditContactActivity.getFutureFrag() != null) {
                 EditContactActivity.getFutureFrag().updateRecyclerViewOnRemove(c.getFutureMessages().size());
             }
-        }
-        else if (!isFuture && contactPos == -1) {
+        } else if (!isFuture && contactPos == -1) {
             Contact c = mUser.delFromHistoryMsg(pos);
             mHistoryFrag.updateRecyclerViewOnRemove(pos);
             if (c != null && EditContactActivity.getFutureFrag() != null) {
                 EditContactActivity.getHistoryFrag().updateRecyclerViewOnRemove(c.getHistoryMessages().size());
             }
-        }
-        else if (isFuture && contactPos != -1) {
+        } else if (isFuture && contactPos != -1) {
             Msg m = mUser.getContacts().get(contactPos).getFutureMessages().get(pos);
             mUser.getAllFutureMessages().remove(m);
             mUser.getContacts().get(contactPos).delFromFutureMessages(pos);
             EditContactActivity.getFutureFrag().updateRecyclerViewOnRemove(pos);
             mFutureFrag.updateRecyclerViewOnRemove(mUser.getAllFutureMessages().size() - 1);
 
-        }
-        else {
+        } else {
             Msg m = mUser.getContacts().get(contactPos).getHistoryMessages().get(pos);
             mUser.getAllHistoryMessages().remove(m);
             mUser.getContacts().get(contactPos).delFromHistoryMessages(pos);
@@ -207,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
             mHistoryFrag.updateRecyclerViewOnRemove(mUser.getAllHistoryMessages().size() - 1);
         }
     }
-
 
 
 }
