@@ -42,7 +42,6 @@ public class MsgAdapter extends RecyclerView.Adapter<MsgAdapter.ViewHolder> {
                 public void onClick(View v) {
                     // get the relevant contact by it's position
                     int pos = getAdapterPosition();
-//                    Log.d("onclickMsgAdapter", String.valueOf(mPosOcContact));
                     AddMsgFragment addMsgFrag = AddMsgFragment.newInstance(pos, mIsFuture, mPosOcContact);
                     final Activity activity = (Activity) v.getContext();
 

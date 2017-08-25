@@ -90,8 +90,8 @@ public class User {
     }
 
     public void addToAllFutureMsg(Msg m) {
-        allFutureMessages.add(m);
         Contact contact = findContactByMsg(m);
+        allFutureMessages.add(m);
         if (contact != null) {
             // the message is to an existing conatct
             contact.getFutureMessages().add(m);
