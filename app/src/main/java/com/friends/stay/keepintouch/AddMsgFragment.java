@@ -61,6 +61,7 @@ public class AddMsgFragment extends Fragment {
     int mDay;
     int mHour;
     int mMinute;
+    private boolean mIsExistingCall = false;
 
     public static AddMsgFragment newInstance(int indexOfMsgToEdit, boolean isFuture, int posOfContact) {
         AddMsgFragment newFrag = new AddMsgFragment();
@@ -338,7 +339,7 @@ public class AddMsgFragment extends Fragment {
                 } else {
                     thisView.findViewById(R.id.tv_err_no_chosen_box).setVisibility(View.INVISIBLE);
                 }
-                if (!isChosenBox || !isChosenName || !isMsgContent || !isDateChosen) {
+                if (!isChosenBox || !isChosenName || (!isMsgContent && !mIsExistingCall) || !isDateChosen) {
                     return;
                 }
                 MainActivity activity = MainActivity.getInstance();
@@ -377,6 +378,7 @@ public class AddMsgFragment extends Fragment {
         mChooseContactBtn.setText(mExistingMsg.getName());
         if (mExistingMsg instanceof Call) {
             (thisView.findViewById(R.id.ll_message_content)).setVisibility(View.INVISIBLE);
+            mIsExistingCall = true;
         }
 
     }
