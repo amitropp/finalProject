@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             //todo
         }
         //start running the manager
-//        Intent intent = new Intent(this, ManagerService.class);
+        Intent intent = new Intent(this, ManagerService.class);
 //        startService(intent);
 
         test();

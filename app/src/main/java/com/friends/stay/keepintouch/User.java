@@ -68,7 +68,7 @@ public class User {
      * @param range - String, range of hours : MORNING = "8-12", NOON = "12-17", EVNING = "17-22"
      * @throws IOException
      */
-    public void setAvailableTimes(int dayName, String range) throws IOException {
+    public void setAvailableTimes(int dayName, String range){
         ArrayList<String> current = availableTimes.get(dayName);
         //update the current
         current.add(range);
