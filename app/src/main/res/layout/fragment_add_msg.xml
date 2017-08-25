@@ -132,7 +132,8 @@
     <!--Time-->
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:weightSum="1">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -160,6 +161,15 @@
                 android:layout_toEndOf="@+id/textView3" />
 
         </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_err_no_date"
+            android:text="Please Choose A Date!"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="invisible"
+            android:textSize="10dp"
+            android:layout_weight="0.72" />
 
     </LinearLayout>
 
@@ -191,6 +201,14 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:scrollbars="vertical"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_err_no_msg"
+            android:text="Please Write A Message!"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="invisible"
             />
 
     </LinearLayout>

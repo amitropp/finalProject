@@ -48,7 +48,7 @@ public class AddMsgFragment extends Fragment {
     private Msg mExistingMsg = null;
     private String mChosenName;
     private String mChosenPhoneNumber;
-    private Date mChosenDate;
+    private Date mChosenDate = null;
     private int mindexOfMsgToEdit;
     private CheckBox[] mAllCb;
     private final static int CALL = 0;
@@ -306,14 +306,27 @@ public class AddMsgFragment extends Fragment {
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String msgContent = mMessageTextEt.getText().toString();
                 boolean isChosenName = mChosenName != null;
+                boolean isDateChosen = mChosenDate != null;
+                boolean isMsgContent = msgContent.length() > 0;
                 if (!isChosenName) {
                     thisView.findViewById(R.id.tv_err_no_chosen_contact).setVisibility(View.VISIBLE);
                 } else {
                     thisView.findViewById(R.id.tv_err_no_chosen_contact).setVisibility(View.INVISIBLE);
                 }
+                if (!isDateChosen) {
+                    thisView.findViewById(R.id.tv_err_no_date).setVisibility(View.VISIBLE);
+                } else {
+                    thisView.findViewById(R.id.tv_err_no_date).setVisibility(View.INVISIBLE);
+                }
+                if (!isMsgContent) {
+                    thisView.findViewById(R.id.tv_err_no_msg).setVisibility(View.VISIBLE);
+                } else {
+                    thisView.findViewById(R.id.tv_err_no_msg).setVisibility(View.INVISIBLE);
+                }
 
-                String msgContent = mMessageTextEt.getText().toString();
+
                 //get which medias are pressed is pressed
                 boolean isCall = mAllCb[CALL].isChecked();
                 boolean isMsg = mAllCb[SMS].isChecked();
@@ -326,7 +339,7 @@ public class AddMsgFragment extends Fragment {
                 } else {
                     thisView.findViewById(R.id.tv_err_no_chosen_box).setVisibility(View.INVISIBLE);
                 }
-                if (!isChosenBox || !isChosenName) {
+                if (!isChosenBox || !isChosenName || !isMsgContent || !isDateChosen) {
                     return;
                 }
                 MainActivity activity = MainActivity.getInstance();
