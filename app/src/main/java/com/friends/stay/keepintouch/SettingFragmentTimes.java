@@ -303,192 +303,93 @@ public class SettingFragmentTimes extends Fragment {
         MainActivity.getUser().clearAvailableTimes();
 
         //update existing contact's details - Sunday
+        //update existing contact's details - Sunday
         if (isSundayMorning){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, MORNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, MORNING);
         }
         if (isSundayNoon){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, NOON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, NOON);
         }
         if (isSundayEvening){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, EVNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, EVNING);
         }
 
         //update existing contact's details - Monday
         if (isMondayMorning){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, MORNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, MORNING);
         }
         if (isMondayNoon){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, NOON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, NOON);
         }
         if (isMondayEvening){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, EVNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.MONDAY, EVNING);
         }
 
         //update existing contact's details - Tuesday
         if (isTuesdayMorning){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, MORNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, MORNING);
         }
         if (isTuesdayNoon){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, NOON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, NOON);
         }
         if (isTuesdayEvening){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, EVNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, EVNING);
         }
 
         //update existing contact's details - Tuesday
         if (isTuesdayMorning){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, MORNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, MORNING);
         }
         if (isTuesdayNoon){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, NOON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, NOON);
         }
         if (isTuesdayEvening){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, EVNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.TUESDAY, EVNING);
 
         }
 
         //update existing contact's details - Wednesday
         if (isWednesdayMorning){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, MORNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, MORNING);
         }
         if (isWednesdayNoon){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, NOON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, NOON);
         }
         if (isWednesdayEvening){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, EVNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.WEDNESDAY, EVNING);
         }
 
         //update existing contact's details - Thursday
         if (isThursdayMorning){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, MORNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, MORNING);
         }
         if (isThursdayNoon){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, NOON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, NOON);
         }
         if (isThursdayEvening){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, EVNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.THURSDAY, EVNING);
         }
 
         //update existing contact's details - Friday
         if (isFridayMorning){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, MORNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, MORNING);
         }
         if (isFridayNoon){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, NOON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, NOON);
         }
         if (isFridayEvening){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, EVNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.FRIDAY, EVNING);
         }
 
         //update existing contact's details - Saturday
         if (isSaturdayMorning){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, MORNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, MORNING);
         }
         if (isSaturdayNoon){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, NOON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, NOON);
         }
         if (isSaturdayEvening){
-            try {
-                MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, EVNING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, EVNING);
         }
-
     }
-
 }
-
-
