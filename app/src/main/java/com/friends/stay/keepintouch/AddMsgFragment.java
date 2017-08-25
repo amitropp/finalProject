@@ -1,7 +1,10 @@
 package com.friends.stay.keepintouch;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,11 +20,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -46,6 +55,12 @@ public class AddMsgFragment extends Fragment {
     private final static int SMS = 1;
     private final static int WA = 2;
     private int mposOfContact;
+    private Button mChooseDateBtn;
+    int mYear;
+    int mMonth;
+    int mDay;
+    int mHour;
+    int mMinute;
 
     public static AddMsgFragment newInstance(int indexOfMsgToEdit, boolean isFuture, int posOfContact) {
         AddMsgFragment newFrag = new AddMsgFragment();
@@ -71,26 +86,33 @@ public class AddMsgFragment extends Fragment {
         mChooseContactBtn = (Button)view.findViewById(R.id.btn_pick_contact);
         mDoneBtn = (Button)view.findViewById(R.id.btn_done);
         mDelBtm = (Button)view.findViewById(R.id.btn_del);
+        mChooseDateBtn = (Button)view.findViewById(R.id.btn_date);
         mMessageTextEt = (EditText)view.findViewById(R.id.et_message_content);
         mAllCb = new CheckBox[3];
         mAllCb[CALL] = (CheckBox)view.findViewById(R.id.cb_call);
         mAllCb[SMS] = (CheckBox)view.findViewById(R.id.cb_message);
         mAllCb[WA] = (CheckBox)view.findViewById(R.id.cb_whatsapp);
         mMsgTypeIcon = (ImageButton)view.findViewById(R.id.ib_type_icon);
+
         Bundle args = getArguments();
-        mChosenDate =  new Date(); //todo!!!!!
         if (args != null) {
             mindexOfMsgToEdit = args.getInt("indexOfMsgToEdit", -1);
             mIsFuture =  args.getBoolean("isFuture", false);
             mposOfContact = args.getInt("posOfContact", -1);
-            if (mindexOfMsgToEdit != -1) {
-                if (mIsFuture && mposOfContact == -1) {
+            if (!mIsFuture) {
+                mMessageTextEt.setKeyListener(null);
+            }
+
+            boolean isInEditMsg = mindexOfMsgToEdit != -1;
+            boolean isInSpecificContact = mposOfContact != -1;
+            if (isInEditMsg) { // in messages of specific contact
+                if (mIsFuture && !isInSpecificContact) {
                     mExistingMsg = MainActivity.getUser().getAllFutureMessages().get(mindexOfMsgToEdit);
                 }
-                else if (!mIsFuture && mposOfContact == -1) {
+                else if (!mIsFuture && !isInSpecificContact) {
                     mExistingMsg = MainActivity.getUser().getAllHistoryMessages().get(mindexOfMsgToEdit);
                 }
-                else if (mIsFuture && mposOfContact != -1) { // edit future msg of specific contact
+                else if (mIsFuture && isInSpecificContact) { // edit future msg of specific contact
                     Contact curContact = MainActivity.getUser().getContacts().get(mposOfContact);
                     mExistingMsg = curContact.getFutureMessages().get(mindexOfMsgToEdit);
                 }
@@ -101,7 +123,7 @@ public class AddMsgFragment extends Fragment {
                 mDelBtm.setVisibility(View.VISIBLE);
                 _setDelListener();
             }
-            else { //add a new message
+            else { //add a new message, don't edit an existing one
                 if (mposOfContact != -1) { //if we are inside future messages of a specific conact
                     Contact curContact = MainActivity.getUser().getContacts().get(mposOfContact);
                     mChosenName = curContact.getName();
@@ -113,6 +135,7 @@ public class AddMsgFragment extends Fragment {
         }
         _setPickConatctListener();
         _setDoneListener();
+        _setChooseDateListener();
 
         if (mExistingMsg == null) {
             // force only one checkbox to be checked at every time
@@ -124,6 +147,65 @@ public class AddMsgFragment extends Fragment {
         return view;
 
     }
+
+    private void _setChooseDateListener() {
+        mChooseDateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerFragment date = new DatePickerFragment();
+                Bundle args = new Bundle();
+                Calendar calender = Calendar.getInstance();
+                args.putInt("year", calender.get(Calendar.YEAR));
+                args.putInt("month", calender.get(Calendar.MONTH));
+                args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+                date.setArguments(args);
+                date.setCallBack(ondate);
+                date.show(getFragmentManager(), "datePicker");
+
+
+            }});
+    }
+
+    DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int month,
+                              int day) {
+            Calendar c = Calendar.getInstance();
+            c.set(year, month, day);
+            mYear = year;
+            mMonth = month;
+            mDay = day;
+            timePicker();
+        }
+    };
+
+    private void timePicker() {
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mHour = hourOfDay;
+                        mMinute = minute;
+                        Date d = new GregorianCalendar(mYear, mMonth, mDay, mHour, mMinute).getTime();
+                        if (d.before(new Date())) {
+                            Toast.makeText(getActivity(), "Please choose a future date instead!", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            mChosenDate = d;
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy, HH:mm");
+                            String formattedDate = sdf.format(mChosenDate);
+                            mChooseDateBtn.setText(formattedDate);
+                        }
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+    }
+
 
     private void _setUniqVInCheckBox(CheckBox cb) {
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -252,7 +334,7 @@ public class AddMsgFragment extends Fragment {
                 if (mExistingMsg != null) {
                     mExistingMsg.setContent(msgContent);
                     mExistingMsg.setDate(mChosenDate);
-                    activity.updeateFutureRecyclerV(mindexOfMsgToEdit);
+                    activity.updeateFutureRecyclerV(mindexOfMsgToEdit, mposOfContact);
                 }
                 else {
                     Msg newMsg = MsgFactory.newMsg(mChosenName, mChosenPhoneNumber, mChosenDate,
@@ -271,7 +353,10 @@ public class AddMsgFragment extends Fragment {
         mMsgTypeIcon.setImageResource(mExistingMsg.getIconId());
         mMsgTypeIcon.setVisibility(View.VISIBLE);
         thisView.findViewById(R.id.ll_type_checkboxes).setVisibility(View.INVISIBLE);
-        mChosenDate.setTime(mExistingMsg.getDate().getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy, HH:mm");
+        String formattedDate = sdf.format(mExistingMsg.getDate());
+        mChooseDateBtn.setText(formattedDate);
+        mChosenDate = mExistingMsg.getDate();
         mMessageTextEt.setText(mExistingMsg.getContent());
         mChosenName = mExistingMsg.getName();
         mChooseContactBtn.setText(mExistingMsg.getName());

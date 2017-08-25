@@ -109,5 +109,4 @@ public class FutureHistoryFragment extends Fragment {
         mMsgRecyclerView.mAdapter.notifyItemRemoved(pos);
         mMsgRecyclerView.mAdapter.notifyItemRangeChanged(pos, mAllMsgs.size());
     }
-
 }

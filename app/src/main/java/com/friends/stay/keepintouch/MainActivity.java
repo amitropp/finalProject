@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
             //todo
         }
         //start running the manager
-        Intent intent = new Intent(this, ManagerService.class);
-        startService(intent);
+//        Intent intent = new Intent(this, ManagerService.class);
+//        startService(intent);
 
         test();
     }
@@ -109,14 +109,13 @@ public class MainActivity extends AppCompatActivity {
         mUser.addContact(new Contact("Amit Tropp", "1", "Amitush", true, true, true, 2, getApplicationContext()));
         mUser.addContact(new Contact("Arella Bloom", "2", "Relz", false, true, false, 5, getApplicationContext()));
         mUser.addContact(new Contact("Eyal Cohen", "3", "", false, false, true, 8, getApplicationContext()));
-        mUser.getContacts().get(0).addFutureMessages(fsmsMessage);
-        mUser.getContacts().get(1).addFutureMessages(fsmsMessage2);
-        mUser.getContacts().get(2).addFutureMessages(fsmsMessage3);
+        mUser.addToAllFutureMsg(fsmsMessage);
+        mUser.addToAllFutureMsg(fsmsMessage2);
+        mUser.addToAllFutureMsg(fsmsMessage3);
 
-
-        mUser.getContacts().get(0).addHistoryMessages(hsmsMessage);
-        mUser.getContacts().get(1).addHistoryMessages(hsmsMessage2);
-        mUser.getContacts().get(2).addHistoryMessages(hsmsMessage3);
+        mUser.addToAllHistoryMsg(hsmsMessage);
+        mUser.addToAllHistoryMsg(hsmsMessage2);
+        mUser.addToAllHistoryMsg(hsmsMessage3);
 
     }
 
@@ -175,8 +174,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void updeateFutureRecyclerV(int pos) {
-        mFutureFrag.updateRVOnUpdate(pos);
+    public void updeateFutureRecyclerV(int pos, int contactPos) {
+        if (contactPos == -1) {
+            mFutureFrag.updateRVOnUpdate(pos);
+        }
+        else {
+            if (EditContactActivity.getFutureFrag() != null) {
+                EditContactActivity.getFutureFrag().updateRVOnUpdate(pos);
+                Msg m = getUser().getContacts().get(contactPos).getFutureMessages().get(pos);
+                int posInAllFutureMsgs = _getPosOfFutureMsg(m);
+                if (posInAllFutureMsgs != -1) {
+                    mFutureFrag.updateRVOnUpdate(posInAllFutureMsgs);
+                }
+            }
+        }
+    }
+
+    private int _getPosOfFutureMsg(Msg m) {
+        for (int i = 0; i < getUser().getAllFutureMessages().size(); i++) {
+            Msg curMsg = getUser().getAllFutureMessages().get(i);
+            if (m == curMsg) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void deleteMsgAndUpdeateRecyclerV(int pos, boolean isFuture, int contactPos) {
