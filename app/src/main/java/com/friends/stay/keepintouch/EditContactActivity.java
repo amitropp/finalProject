@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 public class EditContactActivity extends AppCompatActivity {
     private static final String[] tabsNames = {"SETTINGS", "FUTURE", "HISTORY"};
@@ -36,6 +37,21 @@ public class EditContactActivity extends AppCompatActivity {
 
     public static FutureHistoryFragment getHistoryFrag() {
         return mHistoryFrag;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
 }

@@ -326,7 +326,6 @@ public class AddMsgFragment extends Fragment {
                     thisView.findViewById(R.id.tv_err_no_msg).setVisibility(View.INVISIBLE);
                 }
 
-
                 //get which medias are pressed is pressed
                 boolean isCall = mAllCb[CALL].isChecked();
                 boolean isMsg = mAllCb[SMS].isChecked();
@@ -345,9 +344,12 @@ public class AddMsgFragment extends Fragment {
                 MainActivity activity = MainActivity.getInstance();
                 //update existing message
                 if (mExistingMsg != null) {
-                    mExistingMsg.setContent(msgContent);
-                    mExistingMsg.setDate(mChosenDate);
-                    activity.updeateFutureRecyclerV(mindexOfMsgToEdit, mposOfContact);
+                    if (mIsFuture)
+                    {
+                        mExistingMsg.setContent(msgContent);
+                        mExistingMsg.setDate(mChosenDate);
+                        activity.updeateFutureRecyclerV(mindexOfMsgToEdit, mposOfContact);
+                    }
                 }
                 else {
                     Msg newMsg = MsgFactory.newMsg(mChosenName, mChosenPhoneNumber, mChosenDate,

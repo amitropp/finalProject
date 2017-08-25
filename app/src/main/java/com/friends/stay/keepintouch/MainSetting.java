@@ -3,6 +3,7 @@ package com.friends.stay.keepintouch;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 /**
  * Created by amitropp on 05/08/2017.
@@ -23,5 +24,20 @@ public class MainSetting extends AppCompatActivity {
         mTabs = new Tabs(this, tabsNames, tabFragments);
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return(super.onOptionsItemSelected(item));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
