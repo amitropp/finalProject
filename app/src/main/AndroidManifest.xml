@@ -23,10 +23,13 @@
 
         <activity android:name=".MainSetting" />
         <activity android:name=".EditContactActivity"></activity>
-        <activity android:name=".SettingFragmentTimes"></activity>
         <service android:name=".ManagerService"
                     android:exported="false">
         </service>
+        <receiver android:name=".sendMsgsReceiver"
+            android:enabled="true"
+            >
+        </receiver>
     </application>
 
 </manifest>

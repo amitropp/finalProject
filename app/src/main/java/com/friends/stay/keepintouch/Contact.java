@@ -1,6 +1,9 @@
 package com.friends.stay.keepintouch;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +28,19 @@ class Contact {
     private Context context;
     private Random random = new Random();
 
+    public Contact(SimpleContact sc, Context context) {
+        this.name = sc.name;
+        this.number = sc.number;
+        this.nickname = sc.nickname;
+        this.isWatsApp = sc.isWatsApp;
+        this.isSMS = sc.isSMS;
+        this.isCall = sc.isCall;
+        this.context = context;
+        this.communicationRate = sc.communicationRate;
+        futureMessages = new ArrayList<Msg>();
+        historyMessages = new ArrayList<Msg>();
+    }
+
 
     public ArrayList<Msg> getFutureMessages() {
         return futureMessages;
@@ -42,6 +58,12 @@ class Contact {
         this.communicationRate = communicationRate;
         futureMessages = new ArrayList<Msg>();
         historyMessages = new ArrayList<Msg>();
+
+        //add first 4 future msgs
+        MainActivity.getUser().addToAllFutureMsg(createFutureMsg());
+        MainActivity.getUser().addToAllFutureMsg(createFutureMsg());
+        MainActivity.getUser().addToAllFutureMsg(createFutureMsg());
+        MainActivity.getUser().addToAllFutureMsg(createFutureMsg());
 
     }
 
@@ -105,10 +127,18 @@ class Contact {
     public void addFutureMessages(Msg newMessages) {
         futureMessages.add(newMessages);
         MainActivity.getUser().getAllFutureMessages().add(newMessages);
+        addMsgToManager(newMessages);
     }
 
+    private void addMsgToManager(Msg msg){
+        Intent intent = MainActivity.sendMsgintent;
+        intent.putExtra("time", msg.getDateInMillis());
+        PendingIntent pendingIntent = MainActivity.pendingIntent;
+        AlarmManager alarmMgr = MainActivity.am;
+        PendingIntent.getBroadcast(context, 0,  intent, 0);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis(), pendingIntent);
+    }
 
-    //TODO make sure isManual=true when creating manual msg
     public Msg createFutureMsg(){
         //check existing msgs
         Calendar c = Calendar.getInstance();
@@ -178,14 +208,18 @@ class Contact {
             index += 1;
             index = index % 3;
         }
+        Msg msg;
         if (index == 0){
-            return new WhatsappMessage(name, number, newMsgDate, content, context, false);
+            msg = new WhatsappMessage(name, number, newMsgDate, content, context, false);
+
         } else if (index == 1){
-            return new SmsMessage(name, number, newMsgDate, content, context, false);
+            msg = new SmsMessage(name, number, newMsgDate, content, context, false);
         } else {
             //index == 2
-            return new Call(name, number, newMsgDate, content, context, false);
+            msg = new Call(name, number, newMsgDate, content, context, false);
         }
+        addMsgToManager(msg);
+        return msg;
 
     }
 
@@ -214,6 +248,32 @@ class Contact {
         futureMessages.remove(msg);
     }
 
+
+    public SimpleContact makeSimpleContact() {
+        return new SimpleContact(name,  number, nickname, isCall, isSMS, isWatsApp, communicationRate);
+    }
+}
+
+class SimpleContact {
+    public String name;
+    public String number;
+    public String nickname;
+    public boolean isWatsApp;
+    public boolean isSMS;
+    public boolean isCall;
+    public int communicationRate;
+
+    //a dummy class for serialization
+    public SimpleContact(String name,  String number, String nickname, boolean isCall,
+                         boolean isSMS, boolean isWatsApp, int communicationRate) {
+        this.name = name;
+        this.number = number;
+        this.nickname = nickname;
+        this.isWatsApp = isWatsApp;
+        this.isSMS = isSMS;
+        this.isCall = isCall;
+        this.communicationRate = communicationRate;
+    }
 
 }
 

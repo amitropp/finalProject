@@ -2,6 +2,9 @@ package com.friends.stay.keepintouch;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.provider.Telephony;
+
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -71,9 +74,53 @@ public abstract class Msg {
         this.date = date;
     }
 
+    public long getDateInMillis(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.getTimeInMillis();
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
 
     public boolean isManual() { return isManual;  }
+
+    public SimpleMsg makeSimpleMsg() {
+        boolean isCall = this instanceof Call;
+        boolean isSms = this instanceof SmsMessage;
+        boolean isWhatsapp = this instanceof WhatsappMessage;
+
+        return new SimpleMsg(name, number, date, content, isManual, isCall, isSms, isWhatsapp);
+    }
+}
+
+class SimpleMsg {
+    //the contact the message is for
+    public String number;
+    //date message is timed to
+    public Date date;
+    //content of message
+    public String content;
+    //main activity context
+    public Context context;
+    //name of contact
+    public String name;
+    public boolean isCall;
+    public boolean isMsg;
+    public boolean isWa;
+    //is manual msg
+    public boolean isManual;
+    public SimpleMsg (String name, String number, Date date, String content, boolean isManual,
+                      boolean isCall, boolean isSms, boolean isWa) {
+        this.name = name;
+        this.number = number;
+        this.date = date;
+        this.content = content;
+        this.isManual = isManual;
+        this.isCall = isCall;
+        this.isMsg = isSms;
+        this.isWa = isWa;
+    }
+
 }

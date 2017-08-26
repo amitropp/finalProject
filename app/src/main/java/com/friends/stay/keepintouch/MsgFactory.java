@@ -23,4 +23,7 @@ public class MsgFactory {
         return null;
     }
 
+    public static Msg newMsg(SimpleMsg sm, Context context) {
+        return newMsg(sm.name, sm.number, sm.date, sm.content, context, sm.isCall, sm.isMsg, sm.isWa, sm.isManual);
+    }
 }

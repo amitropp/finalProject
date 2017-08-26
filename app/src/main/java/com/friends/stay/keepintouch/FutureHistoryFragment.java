@@ -102,7 +102,15 @@ public class FutureHistoryFragment extends Fragment {
     }
 
     public void updateRVOnUpdate(int pos) {
-        mMsgRecyclerView.mAdapter.notifyItemChanged(pos);
+        if (mMsgRecyclerView != null) {
+            mMsgRecyclerView.mAdapter.notifyItemChanged(pos);
+        }
+    }
+
+    public void updateRVOnUpdate() {
+        if (mMsgRecyclerView != null) {
+            mMsgRecyclerView.mAdapter.notifyDataSetChanged();
+        }
     }
 
     public void updateRecyclerViewOnRemove(int pos) {

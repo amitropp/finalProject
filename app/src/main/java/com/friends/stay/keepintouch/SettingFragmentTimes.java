@@ -153,10 +153,8 @@ public class SettingFragmentTimes extends Fragment {
 
         //Sunday
         isSundayMorning = preferences.getBoolean("isSundayMorning", false);
-        Log.d("isSundayMorning = ", String.valueOf(isSundayMorning));
         cvSundayMorning.setChecked(isSundayMorning);
         isSundayNoon = preferences.getBoolean("isSundayNoon", false);
-        Log.d("isSundayNoon = ", String.valueOf(isSundayNoon));
         cvSundayNoon.setChecked(isSundayNoon);
         isSundayEvening = preferences.getBoolean("isSundayEvening", false);
         cvSundayEvening.setChecked(isSundayEvening);
@@ -264,9 +262,7 @@ public class SettingFragmentTimes extends Fragment {
         //save times
         //Sunday
         preferences.edit().putBoolean("isSundayMorning", isSundayMorning).commit();
-        Log.d("save isSundayMorning = ", String.valueOf(isSundayMorning));
         preferences.edit().putBoolean("isSundayNoon", isSundayNoon).commit();
-        Log.d("save isSundayNoon = ", String.valueOf(isSundayNoon));
         preferences.edit().putBoolean("isSundayEvening", isSundayEvening).commit();
 
         //Monday

@@ -1,10 +1,14 @@
 package com.friends.stay.keepintouch;
 
+import android.content.Context;
+
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 /**
@@ -30,6 +34,49 @@ public class User {
         clearAvailableTimes();
     }
 
+    public User(ArrayList<SimpleContact> simpleContactArrayList, ArrayList<SimpleMsg> simpleFutureMsgs,
+                ArrayList<SimpleMsg> simpleHistoryMsgs, Context context) {
+        contactsList = new ArrayList<Contact>();
+        availableTimes = new HashMap<Integer, ArrayList<String>>(); //day os week and times from 0 to 23
+        msgTemplate = new ArrayList<String>();
+        allFutureMessages = new ArrayList<>();
+        allHistoryMessages = new ArrayList<>();
+        //initialize all days
+        clearAvailableTimes();
+        makeContactlist(simpleContactArrayList, context);
+        makeFutureHistoryList(simpleFutureMsgs, context, true);
+        makeFutureHistoryList(simpleHistoryMsgs, context, false);
+    }
+
+    private void makeFutureHistoryList(ArrayList<SimpleMsg> simpleFutureMsgs, Context context, boolean isFuture) {
+        ArrayList<Msg> allMsgs = isFuture ? allFutureMessages : allHistoryMessages;
+        for (SimpleMsg sm : simpleFutureMsgs) {
+            Msg newmsg = MsgFactory.newMsg(sm, context);
+            allMsgs.add(newmsg);
+            Contact c = findContactByMsg(newmsg);
+            if (c != null) {
+                if (isFuture) {
+                    c.getFutureMessages().add(newmsg);
+                }
+                else {
+                    c.getHistoryMessages().add(newmsg);
+                }
+            }
+
+
+        }
+    }
+
+    private void makeContactlist(ArrayList<SimpleContact> simpleContactArrayList, Context context) {
+        for (SimpleContact sc : simpleContactArrayList) {
+            contactsList.add(new Contact(sc, context));
+        }
+    }
+
+    public HashMap<Integer, ArrayList<String>> getAvailableTimes() {
+        return availableTimes;
+    }
+
     public void addContact(Contact newContact){
         //add first future msgs to this contact
         //newContact.
@@ -41,16 +88,16 @@ public class User {
     public ArrayList<Contact> getContacts() {return  contactsList;}
 
     public void deleteContact(Contact contactToDelete){
+        for (Msg msg : contactToDelete.getFutureMessages()){
+            allFutureMessages.remove(msg);
+        }
         contactsList.remove(contactToDelete);
     }
 
     public void deleteContact(int pos){
         //delete contact future messages
         Contact c = contactsList.get(pos);
-        for (Msg msg : c.getFutureMessages()){
-            allFutureMessages.remove(msg);
-        }
-        contactsList.remove(pos);
+        deleteContact(c);
     }
 
     public void deleteTemplate(String msgToDelete){
@@ -115,6 +162,15 @@ public class User {
         return contact;
     }
 
+    public Contact delFromFutureMsgByMsg(Msg msg) {
+        Contact contact = findContactByMsg(msg);
+        if (contact != null) {
+            contact.delFromFutureMessages(msg);
+        }
+        allFutureMessages.remove(msg);
+        return contact;
+    }
+
     public Contact delFromHistoryMsg(int pos) {
         Contact contact = findContactByMsg(allHistoryMessages.get(pos));
         if (contact != null) {
@@ -133,6 +189,19 @@ public class User {
         return null;
     }
 
+    public Msg getFuturMsgByDate(long milliSeconds){
+//        Calendar c = Calendar.getInstance();
+//        c.setTimeInMillis(milliSeconds);
+//        Date date = c.getTime();
+        for (Msg msg : allFutureMessages) {
+            if (msg.getDateInMillis() ==milliSeconds){
+                return msg;
+            }
+        }
+        return null;
+
+    }
+
     public ArrayList<Msg> getAllFutureMessages() { return allFutureMessages; }
 
     public ArrayList<Msg> getAllHistoryMessages() { return allHistoryMessages; }
@@ -145,6 +214,25 @@ public class User {
         } else {
             return "Hi :)";
         }
+    }
+
+
+    public ArrayList<SimpleContact> getSimpleContacts() {
+        ArrayList<SimpleContact> res = new ArrayList<>();
+        for (Contact c : contactsList) {
+            res.add(c.makeSimpleContact());
+        }
+    return res;
+    }
+
+    public ArrayList<SimpleMsg> getSimpleMsgs(boolean isFuture) {
+        ArrayList<SimpleMsg> res = new ArrayList<>();
+        ArrayList<Msg> myMsgs;
+        myMsgs = isFuture ?  allFutureMessages : allHistoryMessages;
+        for (Msg m : myMsgs) {
+            res.add(m.makeSimpleMsg());
+        }
+        return res;
     }
 
 
