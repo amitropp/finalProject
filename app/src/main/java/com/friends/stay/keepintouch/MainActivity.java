@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         _readUser();
         _readMsgTemplate();
         _readAvailableTimes();
+        am = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
         mAddBtn = (ImageButton) findViewById(R.id.ib_add_contact);
         mContactListFrag = new ContactsListFragment();
         mFutureFrag = FutureHistoryFragment.newInstance(true, -1);
@@ -204,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void addFutureMsgAndUpdeateRecyclerV(Msg newMsg) {
         mUser.addToAllFutureMsg(newMsg);
+        Contact contact = mUser.findContactByMsg(newMsg);
+        contact.addMsgToManager(newMsg);
         mFutureFrag.updateRecyclerViewOnAdd();
         if (EditContactActivity.getFutureFrag() != null) {
             EditContactActivity.getFutureFrag().updateRecyclerViewOnAdd();
@@ -467,8 +470,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
 
 }

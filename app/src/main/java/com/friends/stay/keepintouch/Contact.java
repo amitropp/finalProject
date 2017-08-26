@@ -126,17 +126,25 @@ class Contact {
         addMsgToManager(newMessages);
     }
 
-    private void addMsgToManager(Msg msg){
+    public void addMsgToManager(Msg msg){
+        Log.d("here", "1");
         Intent intent = MainActivity.sendMsgintent;
+        Log.d("here", "2");
         intent.putExtra("time", msg.getDateInMillis());
+        Log.d("here", "3");
         PendingIntent pendingIntent = MainActivity.pendingIntent;
+        Log.d("here", "4");
         AlarmManager alarmMgr = MainActivity.am;
+        Log.d("here", "5");
         PendingIntent.getBroadcast(context, 0,  intent, 0);
+        Log.d("here", "6");
+        Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
+        Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
         alarmMgr.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis(), pendingIntent);
+        Log.d("here", "7");
     }
 
     public Msg createFutureMsg(){
-        Log.d("here", "1");
         //check existing msgs
         Calendar c = Calendar.getInstance();
         Date newMsgDate;
@@ -145,7 +153,6 @@ class Contact {
         String content;
         Context context = this.context;
         int size = futureMessages.size();
-        Log.d("here", "2");
         //calculate date
         if (size != 0){
             //there is futureMessages
@@ -161,12 +168,10 @@ class Contact {
             c.setTime(currentDate);
             c.add(Calendar.DAY_OF_MONTH, communicationRate);
         }
-        Log.d("here", "3");
         content = MainActivity.getUser().getRandomMsgTemplate();
         if (content.contains("<nickname>")){
             content = content.replace("<nickname>", nickname);
         }
-        Log.d("here", "4");
         //update hour of day according to availability of user
 
         //Select the type of message sent
@@ -175,7 +180,6 @@ class Contact {
         //check availability
         ArrayList<String> currentDayRange = MainActivity.getUser().getAvailableTimes(DayOfResult);
         //change day if needed (no available times that day)
-        Log.d("here", "5");
         while (currentDayRange.size() == 0){
             Log.d("DayOfResult", String.valueOf(DayOfResult));
             Log.d("currentDayRange", String.valueOf(currentDayRange));
@@ -191,8 +195,7 @@ class Contact {
         }
         //update to day with availability
         c.add(Calendar.DAY_OF_WEEK, DayOfResult);
-        Log.d("here", "6");
-        //change time
+        //change time TODO date not right
         Log.d("currentDayRange", String.valueOf(currentDayRange));
         int index = random.nextInt(currentDayRange.size());
         Log.d("index", String.valueOf(index));
@@ -205,7 +208,6 @@ class Contact {
         c.set(Calendar.MINUTE, minute);
         newMsgDate = c.getTime();
         Log.d("newMsgDate", String.valueOf(newMsgDate));
-        Log.d("here", "7");
         boolean[] communicationTypeArray = {isWatsApp, isSMS, isCall};
 
         index = random.nextInt(3);
@@ -214,7 +216,6 @@ class Contact {
             index += 1;
             index = index % 3;
         }
-        Log.d("here", "8");
         Msg msg;
         if (index == 0){
             msg = new WhatsappMessage(name, number, newMsgDate, content, context, false);
@@ -225,9 +226,7 @@ class Contact {
             //index == 2
             msg = new Call(name, number, newMsgDate, content, context, false);
         }
-        Log.d("here", "9");
 //        addMsgToManager(msg); //TODO
-        Log.d("here", "10");
         return msg;
 
     }
