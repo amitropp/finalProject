@@ -3,6 +3,7 @@ package com.friends.stay.keepintouch;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -96,50 +97,9 @@ public class MainActivity extends AppCompatActivity {
 
     //test the program
     private void test() {
-//        Contact me = new Contact("avi",  "5556", "", false, false, false, true, 2);
         Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 10);
-        calendar.set(Calendar.MINUTE, 30);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MONTH, Calendar.AUGUST);
-        calendar.set(Calendar.DAY_OF_MONTH, 16);
-        calendar.set(Calendar.YEAR, 2017);
-//        final Msg fsmsMessage = new SmsMessage("Amit Tropp", "1", date, "inFutureAmit", this, false);
-//        final Msg fsmsMessage2 = new WhatsappMessage("Arella Bloom", "2", date, "inFutureArella", this, false);
-//        final Msg fsmsMessage3 = new Call("Eyal Cohen", "3", date, "", this, false);
-//
-//        final Msg hsmsMessage = new SmsMessage("Amit Tropp", "1", date, "inHistoryAmit", this, false);
-//        final Msg hsmsMessage2 = new WhatsappMessage("Arella Bloom", "2", date, "inHistoryArella", this, false);
-//        final Msg hsmsMessage3 = new Call("Eyal Cohen", "3", date, "inHistoryEyal", this, false);
-
-//        final Handler handler = new Handler();
-//        // Define the code block to be executed
-//        final Runnable runnableCode = new Runnable() {
-//            @Override
-//            public void run() {
-//                // Do something here on the main thread
-//                smsMessage.send();
-//                Toast.makeText(getApplicationContext(), "runnableCode executed.",
-//                        Toast.LENGTH_LONG).show();
-//            }
-//        };
-//        // Start the initial runnable task by posting through the handler
-////        handler.postDelayed(runnableCode, 2000);
-//        smsMessage.send();
-//        Call mCall = new Call("5556", date, null, this);
-//        mCall.callNow();
-//        mUser.addContact(new Contact("Amit Tropp", "1", "Amitush", true, true, true, 2, getApplicationContext()));
-//        mUser.addContact(new Contact("Arella Bloom", "2", "Relz", false, true, false, 5, getApplicationContext()));
-//        mUser.addContact(new Contact("Eyal Cohen", "3", "", false, false, true, 8, getApplicationContext()));
-//        mUser.addToAllFutureMsg(fsmsMessage);
-//        mUser.addToAllFutureMsg(fsmsMessage2);
-//        mUser.addToAllFutureMsg(fsmsMessage3);
-//
-//        mUser.addToAllHistoryMsg(hsmsMessage);
-//        mUser.addToAllHistoryMsg(hsmsMessage2);
-//        mUser.addToAllHistoryMsg(hsmsMessage3);
+        Msg msg = new Call("Charlie", "0509332148", date, "", this, true);
+//        msg.send();
 
     }
 

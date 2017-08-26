@@ -2,6 +2,7 @@ package com.friends.stay.keepintouch;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -11,21 +12,25 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This fragment appears when user clicks on the add button - adding a new contact to his list
  * of contacts
  */
 public class AddContactFragment extends Fragment {
-    private Button mDoneBtn;
-    private Button mChooseContactBtn;
-    private Button mDelBtm;
+    private ImageButton mDoneBtn;
+    private TextView mChooseContactTv;
+    private ImageButton mDelBtm;
     private Spinner mRateDropdown;
     private View thisView = null;
     private String mChosenPhoneNumber = null;
@@ -33,6 +38,7 @@ public class AddContactFragment extends Fragment {
     private int mChosenRate = 7;
     private Contact mExistingContact = null;
     private static String [] mNumbers1_21 = null;
+    private EditText mNicknameEt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,22 +57,31 @@ public class AddContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         View view = inflater.inflate(R.layout.fragment_add_contact, container, false);
         thisView = view;
-        mChooseContactBtn = (Button)view.findViewById(R.id.btn_pick_contact);
-        mDoneBtn = (Button)view.findViewById(R.id.btn_done);
+        mChooseContactTv = (TextView) view.findViewById(R.id.btn_pick_contact);
+        mDoneBtn = (ImageButton)view.findViewById(R.id.btn_done);
         mRateDropdown = (Spinner)thisView.findViewById(R.id.sp_days);
-        mDelBtm = (Button)view.findViewById(R.id.btn_del);
+        mDelBtm = (ImageButton)view.findViewById(R.id.btn_del);
+        mDelBtm.setColorFilter(Color.RED);
+        mNicknameEt = (EditText)view.findViewById(R.id.et_nickname);
         Bundle args = getArguments();
         if (args != null) {
-            int indexOfContact = args.getInt("indexOfContact", 0);
-            mExistingContact = MainActivity.getUser().getContacts().get(indexOfContact);
-            mDelBtm.setVisibility(View.VISIBLE);
-            setContact();
-            _setDelListener();
+            mChosenName = args.getString("name", "");
+            mChosenPhoneNumber = args.getString("number", "");
+            if (mChosenName == "") {
+                mChosenName = null;
+                mChosenPhoneNumber = null;
+                int indexOfContact = args.getInt("indexOfContact", -1);
+                mExistingContact = MainActivity.getUser().getContacts().get(indexOfContact);
+                mDelBtm.setVisibility(View.VISIBLE);
+                setContact();
+                _setDelListener();
+            }
+            mChooseContactTv.setText(mChosenName);
         }
         _setRateSpinnerListener();
-        _setPickConatctListener();
         _setDoneListener();
 
         thisView.setOnTouchListener(new View.OnTouchListener() {
@@ -108,57 +123,7 @@ public class AddContactFragment extends Fragment {
         });
     }
 
-    private void _setPickConatctListener() {
-        if (mExistingContact == null) { //no contact chosen yet
-            mChooseContactBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                    startActivityForResult(contactPickerIntent, MainActivity.RESULT_PICK_CONTACT);
-                }
-            });
-        }
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check for the request code, we might be usign multiple startActivityForReslut
-        switch (requestCode) {
-            case MainActivity.RESULT_PICK_CONTACT:
-                contactPicked(data);
-                break;
-        }
-    }
-
-    /**
-     * Query the Uri and read contact details. Handle the picked contact data.
-     * @param data
-     */
-    private void contactPicked(Intent data) {
-        Cursor cursor = null;
-        try {
-            String phoneNo = null ;
-            String name = null;
-            // getData() method will have the Content Uri of the selected contact
-            Uri uri = data.getData();
-            //Query the content uri
-            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-            cursor.moveToFirst();
-            // column index of the phone number
-            int  phoneIndex =cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-            // column index of the contact name
-            int  nameIndex =cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            phoneNo = cursor.getString(phoneIndex);
-            name = cursor.getString(nameIndex);
-            // Set the value to the textviews
-            mChooseContactBtn.setText(name);
-            mChosenName = name;
-            mChosenPhoneNumber = phoneNo;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     // wait for the user to click the done button
     private void _setDoneListener() {
@@ -174,8 +139,7 @@ public class AddContactFragment extends Fragment {
                 }
 
                 //get nickname
-                EditText edNickname = (EditText)thisView.findViewById(R.id.et_nickname);
-                String nickname = edNickname.getText().toString();
+                String nickname = mNicknameEt.getText().toString();
                 //get which medias are pressed is pressed
                 CheckBox cvIsWhatsapp = (CheckBox)thisView.findViewById(R.id.cb_whatsapp);
                 boolean isWhatsapp = cvIsWhatsapp.isChecked();
@@ -242,11 +206,20 @@ public class AddContactFragment extends Fragment {
         return newFrag;
     }
 
+    public static AddContactFragment newInstance(String name, String number) {
+        AddContactFragment newFrag = new AddContactFragment();
+        Bundle args = new Bundle();
+        args.putString("name", name);
+        args.putString("number", number);
+        newFrag.setArguments(args);
+        return newFrag;
+    }
+
 
     public void setContact() {
         Contact contact = mExistingContact;
         String name = contact.getName();
-        mChooseContactBtn.setText(name);
+        mChooseContactTv.setText(name);
         mChosenName = name;
         mChosenRate = contact.getCommunicationRate();
 
@@ -263,11 +236,7 @@ public class AddContactFragment extends Fragment {
             ch.setChecked(true);
         }
 
-        if (!contact.getNickname().equals("")) {
-            EditText et = (EditText)thisView.findViewById(R.id.et_nickname);
-            et.setText(contact.getNickname());
-        }
-
+        mNicknameEt.setText(contact.getNickname());
 
     }
 
