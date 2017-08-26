@@ -2,19 +2,20 @@ package com.friends.stay.keepintouch;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.widget.EditText;
 
 import java.util.Date;
 
-/**
- * Created by Avi on 11/05/2017.
- */
 
 public class Call extends Msg {
 
@@ -24,6 +25,26 @@ public class Call extends Msg {
 
     @Override
     public void send() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setTitle("Call " + getName() + "?")
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Remove the item within array at position
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("Call", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        callNow();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void callNow() {
         Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + getNumber()));
         //check for permission
@@ -38,7 +59,6 @@ public class Call extends Msg {
             ActivityCompat.requestPermissions((MainActivity)getContext(),new String[]{Manifest.permission.CALL_PHONE},
                     MainActivity.PERMISSION_REQUEST_CALL);
         }
-
     }
 
     public int getIconId() {
