@@ -1,6 +1,7 @@
 package com.friends.stay.keepintouch;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -208,6 +209,7 @@ public class User {
 
     public String getRandomMsgTemplate() {
         Random random = new Random();
+        Log.d("msgTemplate", String.valueOf(msgTemplate));
         if (msgTemplate.size() != 0){
             int index = random.nextInt(msgTemplate.size()-1);
             return msgTemplate.get(index);

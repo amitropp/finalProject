@@ -34,9 +34,9 @@ import java.util.ArrayList;
 
 public class SettingFragmentTimes extends Fragment {
 
-    private String MORNING = "8-12";
-    private String NOON = "12-17";
-    private String EVNING = "17-22";
+    public static String MORNING = "8-12";
+    public static String NOON = "12-17";
+    public static String EVNING = "17-22";
 
     private Button mDoneBtn;
     private View thisView = null;
@@ -215,14 +215,14 @@ public class SettingFragmentTimes extends Fragment {
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                _setDoneListener();
+                setDoneListener();
             }
         });
     }
 
     // wait for the user to click the done button
-    private void _setDoneListener() {
-        Log.d("", "_setDoneListener");
+    public void setDoneListener() {
+        Log.d("", "setDoneListener");
         //get times - Sunday
         isSundayMorning = cvSundayMorning.isChecked();
         isSundayNoon = cvSundayNoon.isChecked();
@@ -298,7 +298,6 @@ public class SettingFragmentTimes extends Fragment {
         //reset to all available times before updating
         MainActivity.getUser().clearAvailableTimes();
 
-        //update existing contact's details - Sunday
         //update existing contact's details - Sunday
         if (isSundayMorning){
             MainActivity.getUser().setAvailableTimes(Calendar.SUNDAY, MORNING);

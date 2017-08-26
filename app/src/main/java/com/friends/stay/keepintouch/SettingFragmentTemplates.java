@@ -19,6 +19,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -278,6 +279,6 @@ class CustomListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        input.append(" <nickname> ");
+        input.append("<nickname>");
     }
 }
