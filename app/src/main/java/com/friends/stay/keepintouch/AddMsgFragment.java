@@ -127,30 +127,32 @@ public class AddMsgFragment extends Fragment {
                 mChooseContactBtn.setText(mChosenName);
             }
 
-            if (!mIsFuture) {
-                mMessageTextEt.setKeyListener(null);
+            else {
+                if (!mIsFuture) {
+                    mMessageTextEt.setKeyListener(null);
+                }
+
+                boolean isInEditMsg = mindexOfMsgToEdit != -1;
+                boolean isInSpecificContact = mposOfContact != -1;
+                if (isInEditMsg) { // in messages of specific contact
+                    if (mIsFuture && !isInSpecificContact) {
+                        mExistingMsg = MainActivity.getUser().getAllFutureMessages().get(mindexOfMsgToEdit);
+                    }
+                    else if (!mIsFuture && !isInSpecificContact) {
+                        mExistingMsg = MainActivity.getUser().getAllHistoryMessages().get(mindexOfMsgToEdit);
+                    }
+                    else if (mIsFuture && isInSpecificContact) { // edit future msg of specific contact
+                        Contact curContact = MainActivity.getUser().getContacts().get(mposOfContact);
+                        mExistingMsg = curContact.getFutureMessages().get(mindexOfMsgToEdit);
+                    }
+                    else { // edit history msgs of specific contact
+                        mExistingMsg = MainActivity.getUser().getContacts().get(mposOfContact).getHistoryMessages().get(mindexOfMsgToEdit);
+                    }
+                    _setDisplayFromMsg();
+                    mDelBtm.setVisibility(View.VISIBLE);
+                    _setDelListener();
             }
 
-            boolean isInEditMsg = mindexOfMsgToEdit != -1;
-            boolean isInSpecificContact = mposOfContact != -1;
-            if (isInEditMsg) { // in messages of specific contact
-                if (mIsFuture && !isInSpecificContact) {
-                    mExistingMsg = MainActivity.getUser().getAllFutureMessages().get(mindexOfMsgToEdit);
-                }
-                else if (!mIsFuture && !isInSpecificContact) {
-                    mExistingMsg = MainActivity.getUser().getAllHistoryMessages().get(mindexOfMsgToEdit);
-                }
-                else if (mIsFuture && isInSpecificContact) { // edit future msg of specific contact
-                    Contact curContact = MainActivity.getUser().getContacts().get(mposOfContact);
-                    mExistingMsg = curContact.getFutureMessages().get(mindexOfMsgToEdit);
-                }
-                else { // edit history msgs of specific contact
-                    mExistingMsg = MainActivity.getUser().getContacts().get(mposOfContact).getHistoryMessages().get(mindexOfMsgToEdit);
-                }
-                _setDisplayFromMsg();
-                mDelBtm.setVisibility(View.VISIBLE);
-                _setDelListener();
-            }
             else { //add a new message, don't edit an existing one
                 if (mposOfContact != -1) { //if we are inside future messages of a specific conact
                     Contact curContact = MainActivity.getUser().getContacts().get(mposOfContact);
@@ -158,6 +160,7 @@ public class AddMsgFragment extends Fragment {
                     mChooseContactBtn.setText(mChosenName);
                     mChosenPhoneNumber = curContact.getNumber();
                 }
+            }
             }
 
         }
