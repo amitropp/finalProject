@@ -10,6 +10,30 @@
 
     <!--to-->
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_done"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:src="@mipmap/ic_accept" />
+
+        <ImageButton
+            android:id="@+id/btn_del"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:background="#0000"
+            android:src="@android:drawable/ic_menu_delete"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,18 +52,18 @@
                 android:textSize="25dp"
                 android:id="@+id/textView2" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_pick_contact"
                 android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/choose_contact"
                 android:textSize="25dp"
+                android:layout_marginLeft="53dp"
+                android:layout_marginStart="53dp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/textView2"
-                android:layout_toEndOf="@+id/textView2"
-                android:layout_marginLeft="21dp"
-                android:layout_marginStart="21dp" />
+                android:layout_toEndOf="@+id/textView2" />
 
         </RelativeLayout>
         <TextView
@@ -115,7 +139,7 @@
         <ImageButton
             android:id="@+id/ib_type_icon"
             android:layout_width="37dp"
-            android:layout_height="38dp"
+            android:layout_height="37dp"
             android:visibility="invisible"
             android:background="#0000"
             android:layout_centerHorizontal="true"
@@ -133,43 +157,56 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:weightSum="1">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time:"
-                android:textSize="25dp"
                 android:layout_marginRight="30dp"
-                android:id="@+id/textView3" />
+                android:text="Time:"
+                android:textSize="25dp" />
 
-            <Button
-                android:id="@+id/btn_date"
+            <ImageButton
+                android:id="@+id/ib_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/choose_date"
-                android:textSize="25dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/textView3"
-                android:layout_toEndOf="@+id/textView3" />
+                android:layout_marginLeft="75dp"
+                android:layout_marginStart="75dp"
+                android:layout_weight="1"
+                android:background="#0000"
+                android:src="@drawable/ic_action_name" />
 
+            <TextView
+                android:id="@+id/tv_time_chosen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:layout_marginLeft="28dp"
+                android:layout_marginStart="28dp"
+                android:textSize="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/ib_date"
+                android:layout_toEndOf="@+id/ib_date" />
         </RelativeLayout>
+
+
         <TextView
+            android:id="@+id/tv_err_no_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_err_no_date"
+            android:layout_weight="0.72"
             android:text="Please Choose A Date!"
             android:textColor="@android:color/holo_red_dark"
-            android:visibility="invisible"
             android:textSize="10dp"
-            android:layout_weight="0.72" />
+            android:visibility="invisible" />
 
     </LinearLayout>
 
@@ -199,6 +236,7 @@
         <EditText
             android:inputType="textMultiLine"
             android:id="@+id/et_message_content"
+            android:hint="                                        "
             android:lines="3"
             android:minLines="2"
             android:gravity="top|left"
@@ -225,29 +263,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_alignParentLeft="true"
-            android:text="Done" />
-
-        <Button
-            android:id="@+id/btn_del"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_alignParentRight="true"
-            android:text="Delete Message"
-            android:visibility="invisible"
-            />
-    </RelativeLayout>
 
 </LinearLayout>

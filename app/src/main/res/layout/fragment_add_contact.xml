@@ -8,6 +8,35 @@
     android:background="?android:windowBackground"
     tools:context="com.friends.stay.keepintouch.AddContactFragment">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_done"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:background="#0000"
+            android:src="@mipmap/ic_accept" />
+
+        <ImageButton
+            android:id="@+id/btn_del"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_weight="1"
+            android:background="#0000"
+            android:src="@android:drawable/ic_menu_delete"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,12 +45,14 @@
         android:layout_gravity="center"
         >
 
-        <Button
+        <TextView
             android:id="@+id/btn_pick_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/choose_contact"
+            android:textColor="@color/textColorPrimary"
             android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
             />
 
         <TextView
@@ -146,29 +177,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_alignParentLeft="true"
-            android:text="Done" />
-
-        <Button
-            android:id="@+id/btn_del"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_alignParentRight="true"
-            android:text="delete Contact"
-            android:visibility="invisible"
-            />
-    </RelativeLayout>
 
 </LinearLayout>

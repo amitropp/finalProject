@@ -1,6 +1,10 @@
 package com.friends.stay.keepintouch;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,15 +85,15 @@ public class FutureHistoryFragment extends Fragment {
     }
 
     private void _setAddListener() {
+        mAddMessageBtn.bringToFront();
         mAddMessageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //switch to new fragment - request to add a new contact
-                AddMsgFragment addMsgFragment = AddMsgFragment.newInstance(-1, isFuture, mPosOfContact);
-                getActivity().getFragmentManager().beginTransaction()
-                        .replace(R.id.frag_future, addMsgFragment)
-                        .addToBackStack(TAG_MESSAGES)
-                        .commit();
+                Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+                startActivityForResult(contactPickerIntent, MainActivity.RESULT_PICK_CONTACT);
+
             }
         });
     }
@@ -117,4 +121,51 @@ public class FutureHistoryFragment extends Fragment {
         mMsgRecyclerView.mAdapter.notifyItemRemoved(pos);
         mMsgRecyclerView.mAdapter.notifyItemRangeChanged(pos, mAllMsgs.size());
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check for the request code, we might be usign multiple startActivityForReslut
+        switch (requestCode) {
+            case MainActivity.RESULT_PICK_CONTACT:
+                AddMsgFragment addMsgFragment = contactPicked(data);
+                if (addMsgFragment != null) {
+                    getActivity().getFragmentManager().beginTransaction()
+                            .replace(R.id.frag_future, addMsgFragment)
+                            .addToBackStack(TAG_MESSAGES)
+                            .commit();
+                }
+
+                break;
+        }
+    }
+
+    /**
+     * Query the Uri and read contact details. Handle the picked contact data.
+     * @param data
+     */
+    private AddMsgFragment contactPicked(Intent data) {
+        Cursor cursor = null;
+        try {
+            String phoneNo = null ;
+            String name = null;
+            // getData() method will have the Content Uri of the selected contact
+            Uri uri = data.getData();
+            //Query the content uri
+            cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToFirst();
+            // column index of the phone number
+            int  phoneIndex =cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            // column index of the contact name
+            int  nameIndex =cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            phoneNo = cursor.getString(phoneIndex);
+            name = cursor.getString(nameIndex);
+            // Set the value to the textviews
+            return AddMsgFragment.newInstance(-1, isFuture, mPosOfContact, name, phoneNo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

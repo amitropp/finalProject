@@ -11,10 +11,9 @@ android:orientation="vertical" >
     android:scrollbars="vertical"
     android:layout_width="wrap_content"
     android:layout_height="450dp"
-    android:layout_marginTop="25dp"
-    android:layout_below="@+id/ib_add_message"
-    android:layout_alignLeft="@+id/ib_add_message"
-    android:layout_alignStart="@+id/ib_add_message" />
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

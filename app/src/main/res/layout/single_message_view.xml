@@ -9,8 +9,8 @@
 
     <ImageButton
         android:id="@+id/ib_message_icon"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
         android:src="@mipmap/ic_jog_dial_answer"
         android:background="#0000"
         android:layout_centerVertical="true"

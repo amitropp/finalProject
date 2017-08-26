@@ -12,8 +12,6 @@
         android:src="@android:drawable/ic_input_add"
         android:background="#0000"
         android:layout_weight="0.18"
-        android:layout_marginRight="25dp"
-        android:layout_marginEnd="25dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -27,9 +25,7 @@
         android:layout_weight="0.18"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/ib_add_contact"
-        android:layout_toStartOf="@+id/ib_add_contact"
-        android:layout_marginRight="11dp"
-        android:layout_marginEnd="11dp" />
+        android:layout_toStartOf="@+id/ib_add_contact" />
 
 
     <android.support.v7.widget.RecyclerView
@@ -37,8 +33,7 @@
         android:scrollbars="vertical"
         android:layout_width="wrap_content"
         android:layout_height="450dp"
-        android:layout_marginTop="29dp"
-        android:layout_below="@+id/ib_settings"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

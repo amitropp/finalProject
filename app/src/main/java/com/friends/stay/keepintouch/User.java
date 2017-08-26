@@ -238,4 +238,12 @@ public class User {
     }
 
 
+    public boolean isExistContact(String name, String phoneNo) {
+        for (Contact c : contactsList) {
+            if (c.getName().equals(name) && c.getNumber().equals(phoneNo)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
