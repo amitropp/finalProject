@@ -191,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
         mContactListFrag.updateRecyclerViewOnRemove(pos);
         mFutureFrag.updateRVOnUpdate();
         mHistoryFrag.updateRVOnUpdate();
-
     }
 
     public void addFutureMsgAndUpdeateRecyclerV(Msg newMsg) {

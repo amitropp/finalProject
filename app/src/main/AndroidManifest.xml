@@ -16,14 +16,12 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity android:name=".MainSetting" />
-        <activity android:name=".EditContactActivity"></activity>
-        <activity android:name=".SettingFragmentTimes"></activity>
+        <activity android:name=".EditContactActivity"/>
         <service android:name=".ManagerService"
                     android:exported="false">
         </service>

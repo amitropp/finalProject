@@ -182,7 +182,12 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ll_message_content"
+        android:orientation="vertical"
+        android:id="@+id/ll_message_content" >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
         >
         <TextView
             android:layout_width="wrap_content"
@@ -202,15 +207,16 @@
             android:layout_width="wrap_content"
             android:scrollbars="vertical"
             />
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_err_no_msg"
+            android:layout_marginLeft="120dp"
             android:text="Please Write A Message!"
             android:textColor="@android:color/holo_red_dark"
             android:visibility="invisible"
             />
-
     </LinearLayout>
 
 

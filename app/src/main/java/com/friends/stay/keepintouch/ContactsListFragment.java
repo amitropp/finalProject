@@ -42,7 +42,7 @@ public class ContactsListFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_contact_list, container, false);
             mAddContactBtn = (ImageButton)view.findViewById(R.id.ib_add_contact);
             mSettingsBtn = (ImageButton)view.findViewById(R.id.ib_settings);
-            mSettingsBtn.setColorFilter(Color.BLUE);
+            mSettingsBtn.setColorFilter(Color.GREEN);
             MainActivity mainActivity = (MainActivity)getActivity();
             mContacts = MainActivity.getUser().getContacts();
             mContactsRecyclerView = new ContactsRecyclerView(view, mainActivity, mContacts);
