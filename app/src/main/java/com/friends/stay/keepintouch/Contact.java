@@ -25,6 +25,19 @@ class Contact {
     private Context context;
     private Random random = new Random();
 
+    public Contact(SimpleContact sc, Context context) {
+        this.name = sc.name;
+        this.number = sc.number;
+        this.nickname = sc.nickname;
+        this.isWatsApp = sc.isWatsApp;
+        this.isSMS = sc.isSMS;
+        this.isCall = sc.isCall;
+        this.context = context;
+        this.communicationRate = sc.communicationRate;
+        futureMessages = new ArrayList<Msg>();
+        historyMessages = new ArrayList<Msg>();
+    }
+
 
     public ArrayList<Msg> getFutureMessages() {
         return futureMessages;
@@ -214,6 +227,32 @@ class Contact {
         futureMessages.remove(msg);
     }
 
+
+    public SimpleContact makeSimpleContact() {
+        return new SimpleContact(name,  number, nickname, isCall, isSMS, isWatsApp, communicationRate);
+    }
+}
+
+class SimpleContact {
+    public String name;
+    public String number;
+    public String nickname;
+    public boolean isWatsApp;
+    public boolean isSMS;
+    public boolean isCall;
+    public int communicationRate;
+
+    //a dummy class for serialization
+    public SimpleContact(String name,  String number, String nickname, boolean isCall,
+                         boolean isSMS, boolean isWatsApp, int communicationRate) {
+        this.name = name;
+        this.number = number;
+        this.nickname = nickname;
+        this.isWatsApp = isWatsApp;
+        this.isSMS = isSMS;
+        this.isCall = isCall;
+        this.communicationRate = communicationRate;
+    }
 
 }
 

@@ -339,7 +339,7 @@ public class AddMsgFragment extends Fragment {
                 } else {
                     thisView.findViewById(R.id.tv_err_no_chosen_box).setVisibility(View.INVISIBLE);
                 }
-                if (!isChosenBox || !isChosenName || (!isMsgContent && !mIsExistingCall) || !isDateChosen) {
+                if (!isChosenBox || !isChosenName || (!isMsgContent && !(mIsExistingCall||isCall) ) || !isDateChosen) {
                     return;
                 }
                 MainActivity activity = MainActivity.getInstance();

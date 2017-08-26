@@ -3,12 +3,14 @@ package com.friends.stay.keepintouch;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -16,6 +18,16 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -37,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ContactsListFragment mContactListFrag;
     private FutureHistoryFragment mFutureFrag;
     private FutureHistoryFragment mHistoryFrag;
-
+    private SharedPreferences mPrefs;
     private static User mUser;
 
 
@@ -47,9 +59,10 @@ public class MainActivity extends AppCompatActivity {
             mainActivity = this;
         }
         super.onCreate(savedInstanceState);
+         mPrefs = getPreferences(MODE_PRIVATE);
         setContentView(R.layout.activity_main);
+        _readUser();
         mAddBtn = (ImageButton) findViewById(R.id.ib_add_contact);
-        mUser = new User();
         mContactListFrag = new ContactsListFragment();
         mFutureFrag = FutureHistoryFragment.newInstance(true, -1);
         mHistoryFrag = FutureHistoryFragment.newInstance(false, -1);
@@ -83,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MONTH, Calendar.AUGUST);
         calendar.set(Calendar.DAY_OF_MONTH, 16);
         calendar.set(Calendar.YEAR, 2017);
-        final Msg fsmsMessage = new SmsMessage("Amit Tropp", "1", date, "inFutureAmit", this, false);
-        final Msg fsmsMessage2 = new WhatsappMessage("Arella Bloom", "2", date, "inFutureArella", this, false);
-        final Msg fsmsMessage3 = new Call("Eyal Cohen", "3", date, "", this, false);
-
-        final Msg hsmsMessage = new SmsMessage("Amit Tropp", "1", date, "inHistoryAmit", this, false);
-        final Msg hsmsMessage2 = new WhatsappMessage("Arella Bloom", "2", date, "inHistoryArella", this, false);
-        final Msg hsmsMessage3 = new Call("Eyal Cohen", "3", date, "inHistoryEyal", this, false);
+//        final Msg fsmsMessage = new SmsMessage("Amit Tropp", "1", date, "inFutureAmit", this, false);
+//        final Msg fsmsMessage2 = new WhatsappMessage("Arella Bloom", "2", date, "inFutureArella", this, false);
+//        final Msg fsmsMessage3 = new Call("Eyal Cohen", "3", date, "", this, false);
+//
+//        final Msg hsmsMessage = new SmsMessage("Amit Tropp", "1", date, "inHistoryAmit", this, false);
+//        final Msg hsmsMessage2 = new WhatsappMessage("Arella Bloom", "2", date, "inHistoryArella", this, false);
+//        final Msg hsmsMessage3 = new Call("Eyal Cohen", "3", date, "inHistoryEyal", this, false);
 
 //        final Handler handler = new Handler();
 //        // Define the code block to be executed
@@ -107,16 +120,16 @@ public class MainActivity extends AppCompatActivity {
 //        smsMessage.send();
 //        Call mCall = new Call("5556", date, null, this);
 //        mCall.callNow();
-        mUser.addContact(new Contact("Amit Tropp", "1", "Amitush", true, true, true, 2, getApplicationContext()));
-        mUser.addContact(new Contact("Arella Bloom", "2", "Relz", false, true, false, 5, getApplicationContext()));
-        mUser.addContact(new Contact("Eyal Cohen", "3", "", false, false, true, 8, getApplicationContext()));
-        mUser.addToAllFutureMsg(fsmsMessage);
-        mUser.addToAllFutureMsg(fsmsMessage2);
-        mUser.addToAllFutureMsg(fsmsMessage3);
-
-        mUser.addToAllHistoryMsg(hsmsMessage);
-        mUser.addToAllHistoryMsg(hsmsMessage2);
-        mUser.addToAllHistoryMsg(hsmsMessage3);
+//        mUser.addContact(new Contact("Amit Tropp", "1", "Amitush", true, true, true, 2, getApplicationContext()));
+//        mUser.addContact(new Contact("Arella Bloom", "2", "Relz", false, true, false, 5, getApplicationContext()));
+//        mUser.addContact(new Contact("Eyal Cohen", "3", "", false, false, true, 8, getApplicationContext()));
+//        mUser.addToAllFutureMsg(fsmsMessage);
+//        mUser.addToAllFutureMsg(fsmsMessage2);
+//        mUser.addToAllFutureMsg(fsmsMessage3);
+//
+//        mUser.addToAllHistoryMsg(hsmsMessage);
+//        mUser.addToAllHistoryMsg(hsmsMessage2);
+//        mUser.addToAllHistoryMsg(hsmsMessage3);
 
     }
 
@@ -152,6 +165,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        _saveUser();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        _saveUser();
+        super.onStop();
+    }
+
     public static User getUser() {
         return mUser;
     }
@@ -164,12 +189,15 @@ public class MainActivity extends AppCompatActivity {
     public void deleteCntactAndUpdeateRecyclerV(int pos) {
         mUser.deleteContact(pos);
         mContactListFrag.updateRecyclerViewOnRemove(pos);
+        mFutureFrag.updateRVOnUpdate();
+        mHistoryFrag.updateRVOnUpdate();
+
     }
 
     public void addFutureMsgAndUpdeateRecyclerV(Msg newMsg) {
         mUser.addToAllFutureMsg(newMsg);
         mFutureFrag.updateRecyclerViewOnAdd();
-        if (EditContactActivity.getHistoryFrag() != null) {
+        if (EditContactActivity.getFutureFrag() != null) {
             EditContactActivity.getFutureFrag().updateRecyclerViewOnAdd();
         }
 
@@ -246,5 +274,53 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+
+    private void _readUser() {
+        Gson gson = new Gson();
+        Type typeSimpleContactArray = new TypeToken<ArrayList<SimpleContact>>(){}.getType();
+        Type typeSimpleMsgArray = new TypeToken<ArrayList<SimpleMsg>>(){}.getType();
+
+
+        String stringSimpleContacts = mPrefs.getString("simpleContacts", "");
+        String stringSimpleFutureMsg = mPrefs.getString("simpleFutureMsg", "");
+        String stringSimpleHistoryMsg = mPrefs.getString("simpleHistoryMsg", "");
+
+        ArrayList<SimpleContact> simpleContactArrayList = gson.fromJson(stringSimpleContacts, typeSimpleContactArray);
+        ArrayList<SimpleMsg> simpleFutureMsgs = gson.fromJson(stringSimpleFutureMsg, typeSimpleMsgArray);
+        ArrayList<SimpleMsg> simpleHistoryMsgs = gson.fromJson(stringSimpleHistoryMsg, typeSimpleMsgArray);
+
+        if (simpleContactArrayList == null) {
+            mUser = new User();
+        }
+        else {
+            mUser = new User(simpleContactArrayList, simpleFutureMsgs, simpleHistoryMsgs, this);
+        }
+    }
+
+    private void _saveUser() {
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        Type typeSimpleContactArray = new TypeToken<ArrayList<SimpleContact>>(){}.getType();
+        Type typeSimpleMsgArray = new TypeToken<ArrayList<SimpleMsg>>(){}.getType();
+
+        prefsEditor.putString("simpleContacts", gson.toJson(mUser.getSimpleContacts(), typeSimpleContactArray));
+        prefsEditor.putString("simpleFutureMsg", gson.toJson(mUser.getSimpleMsgs(true), typeSimpleMsgArray));
+        prefsEditor.putString("simpleHistoryMsg", gson.toJson(mUser.getSimpleMsgs(false), typeSimpleMsgArray));
+        prefsEditor.commit();
+
+//        ArrayList<SimpleContact> ac = new ArrayList<>();
+//        ac.add(new SimpleContact("abc", "efg"));
+//        ac.add(new SimpleContact("bbb", "fff"));
+//
+//        Type type2 = new TypeToken<ArrayList<SimpleContact>>(){}.getType();
+//        String json = gson.toJson(ac,type2);
+//        ArrayList<SimpleContact> fromjson = gson.fromJson(json, type2);
+
+
+    }
+
+
+
 
 }
