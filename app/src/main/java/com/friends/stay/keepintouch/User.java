@@ -23,7 +23,7 @@ public class User {
     private ArrayList<Msg> allHistoryMessages;
 
 
-    public User() {
+    public User()  {
         contactsList = new ArrayList<Contact>();
         availableTimes = new HashMap<Integer, ArrayList<String>>(); //day os week and times from 0 to 23
         msgTemplate = new ArrayList<String>();
