@@ -1,12 +1,14 @@
 package com.friends.stay.keepintouch;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -43,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity mainActivity = null;
 
     public static Intent mNextCallIntent;
+    public static Intent sendMsgintent;
+    public static PendingIntent pendingIntent;
+    public static AlarmManager am;
     public static SmsMessage mNextSmsMessage;
     private ImageButton mAddBtn;
     private Tabs mTabs;
@@ -62,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
          mPrefs = getPreferences(MODE_PRIVATE);
         setContentView(R.layout.activity_main);
         _readUser();
+        _readMsgTemplate();
+        _readAvailableTimes();
         mAddBtn = (ImageButton) findViewById(R.id.ib_add_contact);
         mContactListFrag = new ContactsListFragment();
         mFutureFrag = FutureHistoryFragment.newInstance(true, -1);
@@ -73,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
         if (firstEntrance) {
             //todo
         }
+
+        sendMsgintent =  new Intent(this, sendMsgsReceiver.class);
         //start running the manager
-        Intent intent = new Intent(this, ManagerService.class);
+//        Intent intent = new Intent(this, ManagerService.class);
 //        startService(intent);
 
         test();
@@ -274,6 +283,146 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    private void _readMsgTemplate() {
+        File filesDir = getFilesDir();
+        File dataFile = new File(filesDir, "templates.txt");
+        try {
+            for (Object line : FileUtils.readLines(dataFile)){
+                Log.d("%%line", String.valueOf(line));
+                MainActivity.getUser().addTemplate((String) line);
+            }
+        } catch (IOException e) {
+            //
+        }
+    }
+
+    private void _readAvailableTimes() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //Sunday
+        boolean isSundayMorning = preferences.getBoolean("isSundayMorning", false);
+        boolean isSundayNoon = preferences.getBoolean("isSundayNoon", false);
+        boolean isSundayEvening = preferences.getBoolean("isSundayEvening", false);
+
+        //Monday
+        boolean isMondayMorning = preferences.getBoolean("isMondayMorning", false);
+        boolean isMondayNoon = preferences.getBoolean("isMondayNoon", false);
+        boolean isMondayEvening = preferences.getBoolean("isMondayEvening", false);
+
+        //Tuesday
+        boolean isTuesdayMorning = preferences.getBoolean("isTuesdayMorning", false);
+        boolean isTuesdayNoon = preferences.getBoolean("isTuesdayNoon", false);
+        boolean isTuesdayEvening = preferences.getBoolean("isTuesdayEvening", false);
+
+        //Wednesday
+        boolean isWednesdayMorning = preferences.getBoolean("isWednesdayMorning", false);
+        boolean isWednesdayNoon = preferences.getBoolean("isWednesdayNoon", false);
+        boolean isWednesdayEvening = preferences.getBoolean("isWednesdayEvening", false);
+
+        //Thursday
+        boolean isThursdayMorning = preferences.getBoolean("isThursdayMorning", false);
+        boolean isThursdayNoon = preferences.getBoolean("isThursdayNoon", false);
+        boolean isThursdayEvening = preferences.getBoolean("isThursdayEvening", false);
+
+        //Friday
+        boolean isFridayMorning = preferences.getBoolean("isFridayMorning", false);
+        boolean isFridayNoon = preferences.getBoolean("isFridayNoon", false);
+        boolean isFridayEvening = preferences.getBoolean("isFridayEvening", false);
+
+        //Saturday
+        boolean isSaturdayMorning = preferences.getBoolean("isSaturdayMorning", false);
+        boolean isSaturdayNoon = preferences.getBoolean("isSaturdayNoon", false);
+        boolean isSaturdayEvening = preferences.getBoolean("isSaturdayEvening", false);
+
+        //update existing contact's details - Sunday
+        if (isSundayMorning){
+            mUser.setAvailableTimes(Calendar.SUNDAY, SettingFragmentTimes.MORNING);
+        }
+        if (isSundayNoon){
+            mUser.setAvailableTimes(Calendar.SUNDAY, SettingFragmentTimes.NOON);
+        }
+        if (isSundayEvening){
+            mUser.setAvailableTimes(Calendar.SUNDAY, SettingFragmentTimes.EVNING);
+        }
+
+        //update existing contact's details - Monday
+        if (isMondayMorning){
+            mUser.setAvailableTimes(Calendar.MONDAY, SettingFragmentTimes.MORNING);
+        }
+        if (isMondayNoon){
+            mUser.setAvailableTimes(Calendar.MONDAY, SettingFragmentTimes.NOON);
+        }
+        if (isMondayEvening){
+            mUser.setAvailableTimes(Calendar.MONDAY, SettingFragmentTimes.EVNING);
+        }
+
+        //update existing contact's details - Tuesday
+        if (isTuesdayMorning){
+            mUser.setAvailableTimes(Calendar.TUESDAY, SettingFragmentTimes.MORNING);
+        }
+        if (isTuesdayNoon){
+            mUser.setAvailableTimes(Calendar.TUESDAY, SettingFragmentTimes.NOON);
+        }
+        if (isTuesdayEvening){
+            mUser.setAvailableTimes(Calendar.TUESDAY, SettingFragmentTimes.EVNING);
+        }
+
+        //update existing contact's details - Tuesday
+        if (isTuesdayMorning){
+            mUser.setAvailableTimes(Calendar.TUESDAY, SettingFragmentTimes.MORNING);
+        }
+        if (isTuesdayNoon){
+            mUser.setAvailableTimes(Calendar.TUESDAY, SettingFragmentTimes.NOON);
+        }
+        if (isTuesdayEvening){
+            mUser.setAvailableTimes(Calendar.TUESDAY, SettingFragmentTimes.EVNING);
+
+        }
+
+        //update existing contact's details - Wednesday
+        if (isWednesdayMorning){
+            mUser.setAvailableTimes(Calendar.WEDNESDAY, SettingFragmentTimes.MORNING);
+        }
+        if (isWednesdayNoon){
+            mUser.setAvailableTimes(Calendar.WEDNESDAY, SettingFragmentTimes.NOON);
+        }
+        if (isWednesdayEvening){
+            mUser.setAvailableTimes(Calendar.WEDNESDAY, SettingFragmentTimes.EVNING);
+        }
+
+        //update existing contact's details - Thursday
+        if (isThursdayMorning){
+            mUser.setAvailableTimes(Calendar.THURSDAY, SettingFragmentTimes.MORNING);
+        }
+        if (isThursdayNoon){
+            mUser.setAvailableTimes(Calendar.THURSDAY, SettingFragmentTimes.NOON);
+        }
+        if (isThursdayEvening){
+            mUser.setAvailableTimes(Calendar.THURSDAY, SettingFragmentTimes.EVNING);
+        }
+
+        //update existing contact's details - Friday
+        if (isFridayMorning){
+            mUser.setAvailableTimes(Calendar.FRIDAY, SettingFragmentTimes.MORNING);
+        }
+        if (isFridayNoon){
+            mUser.setAvailableTimes(Calendar.FRIDAY, SettingFragmentTimes.NOON);
+        }
+        if (isFridayEvening){
+            mUser.setAvailableTimes(Calendar.FRIDAY, SettingFragmentTimes.EVNING);
+        }
+
+        //update existing contact's details - Saturday
+        if (isSaturdayMorning){
+            mUser.setAvailableTimes(Calendar.SATURDAY, SettingFragmentTimes.MORNING);
+        }
+        if (isSaturdayNoon){
+            mUser.setAvailableTimes(Calendar.SATURDAY, SettingFragmentTimes.NOON);
+        }
+        if (isSaturdayEvening){
+            mUser.setAvailableTimes(Calendar.SATURDAY, SettingFragmentTimes.EVNING);
+        }
+
+    }
 
     private void _readUser() {
         Gson gson = new Gson();

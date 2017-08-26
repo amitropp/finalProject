@@ -1,6 +1,10 @@
 package com.friends.stay.keepintouch;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,6 +59,7 @@ class Contact {
         this.communicationRate = communicationRate;
         futureMessages = new ArrayList<Msg>();
         historyMessages = new ArrayList<Msg>();
+
 
     }
 
@@ -118,11 +123,20 @@ class Contact {
     public void addFutureMessages(Msg newMessages) {
         futureMessages.add(newMessages);
         MainActivity.getUser().getAllFutureMessages().add(newMessages);
+        addMsgToManager(newMessages);
     }
 
+    private void addMsgToManager(Msg msg){
+        Intent intent = MainActivity.sendMsgintent;
+        intent.putExtra("time", msg.getDateInMillis());
+        PendingIntent pendingIntent = MainActivity.pendingIntent;
+        AlarmManager alarmMgr = MainActivity.am;
+        PendingIntent.getBroadcast(context, 0,  intent, 0);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis(), pendingIntent);
+    }
 
-    //TODO make sure isManual=true when creating manual msg
     public Msg createFutureMsg(){
+        Log.d("here", "1");
         //check existing msgs
         Calendar c = Calendar.getInstance();
         Date newMsgDate;
@@ -131,13 +145,15 @@ class Contact {
         String content;
         Context context = this.context;
         int size = futureMessages.size();
-
+        Log.d("here", "2");
         //calculate date
         if (size != 0){
             //there is futureMessages
             Msg last = futureMessages.get(size -1);
             Date lastMsgDate = last.getDate();
             c.setTime(lastMsgDate);
+            Log.d("lastMsgDate", String.valueOf(lastMsgDate));
+            Log.d("communicationRate", String.valueOf(communicationRate));
             c.add(Calendar.DAY_OF_MONTH, communicationRate);
         } else {
             //there is no futureMessages
@@ -145,12 +161,12 @@ class Contact {
             c.setTime(currentDate);
             c.add(Calendar.DAY_OF_MONTH, communicationRate);
         }
-
+        Log.d("here", "3");
         content = MainActivity.getUser().getRandomMsgTemplate();
         if (content.contains("<nickname>")){
             content = content.replace("<nickname>", nickname);
         }
-
+        Log.d("here", "4");
         //update hour of day according to availability of user
 
         //Select the type of message sent
@@ -159,7 +175,11 @@ class Contact {
         //check availability
         ArrayList<String> currentDayRange = MainActivity.getUser().getAvailableTimes(DayOfResult);
         //change day if needed (no available times that day)
+        Log.d("here", "5");
         while (currentDayRange.size() == 0){
+            Log.d("DayOfResult", String.valueOf(DayOfResult));
+            Log.d("currentDayRange", String.valueOf(currentDayRange));
+            Log.d("here", "5.1");
             //move to the next day
             DayOfResult += 1;
             DayOfResult = DayOfResult % 8;
@@ -171,18 +191,21 @@ class Contact {
         }
         //update to day with availability
         c.add(Calendar.DAY_OF_WEEK, DayOfResult);
-
+        Log.d("here", "6");
         //change time
+        Log.d("currentDayRange", String.valueOf(currentDayRange));
         int index = random.nextInt(currentDayRange.size());
+        Log.d("index", String.valueOf(index));
         String range = currentDayRange.get(index);
-        int start = Integer.valueOf(range.charAt(0));
-        int end = Integer.valueOf(range.charAt(2));
+        int start = Integer.valueOf(range.split("-")[0]);
+        int end = Integer.valueOf(range.split("-")[1]);
         int hour = random.nextInt((end - start) + 1) + start;
         c.set(Calendar.HOUR_OF_DAY, hour);
         int minute = random.nextInt((59 - 0) + 1) + 0;
         c.set(Calendar.MINUTE, minute);
         newMsgDate = c.getTime();
-
+        Log.d("newMsgDate", String.valueOf(newMsgDate));
+        Log.d("here", "7");
         boolean[] communicationTypeArray = {isWatsApp, isSMS, isCall};
 
         index = random.nextInt(3);
@@ -191,14 +214,21 @@ class Contact {
             index += 1;
             index = index % 3;
         }
+        Log.d("here", "8");
+        Msg msg;
         if (index == 0){
-            return new WhatsappMessage(name, number, newMsgDate, content, context, false);
+            msg = new WhatsappMessage(name, number, newMsgDate, content, context, false);
+
         } else if (index == 1){
-            return new SmsMessage(name, number, newMsgDate, content, context, false);
+            msg = new SmsMessage(name, number, newMsgDate, content, context, false);
         } else {
             //index == 2
-            return new Call(name, number, newMsgDate, content, context, false);
+            msg = new Call(name, number, newMsgDate, content, context, false);
         }
+        Log.d("here", "9");
+//        addMsgToManager(msg); //TODO
+        Log.d("here", "10");
+        return msg;
 
     }
 

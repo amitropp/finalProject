@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.provider.Telephony;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -71,6 +72,12 @@ public abstract class Msg {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public long getDateInMillis(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.getTimeInMillis();
     }
 
     public void setContent(String content) {

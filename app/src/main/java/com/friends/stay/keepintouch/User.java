@@ -1,6 +1,7 @@
 package com.friends.stay.keepintouch;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 /**
@@ -161,6 +163,15 @@ public class User {
         return contact;
     }
 
+    public Contact delFromFutureMsgByMsg(Msg msg) {
+        Contact contact = findContactByMsg(msg);
+        if (contact != null) {
+            contact.delFromFutureMessages(msg);
+        }
+        allFutureMessages.remove(msg);
+        return contact;
+    }
+
     public Contact delFromHistoryMsg(int pos) {
         Contact contact = findContactByMsg(allHistoryMessages.get(pos));
         if (contact != null) {
@@ -179,12 +190,26 @@ public class User {
         return null;
     }
 
+    public Msg getFuturMsgByDate(long milliSeconds){
+//        Calendar c = Calendar.getInstance();
+//        c.setTimeInMillis(milliSeconds);
+//        Date date = c.getTime();
+        for (Msg msg : allFutureMessages) {
+            if (msg.getDateInMillis() ==milliSeconds){
+                return msg;
+            }
+        }
+        return null;
+
+    }
+
     public ArrayList<Msg> getAllFutureMessages() { return allFutureMessages; }
 
     public ArrayList<Msg> getAllHistoryMessages() { return allHistoryMessages; }
 
     public String getRandomMsgTemplate() {
         Random random = new Random();
+        Log.d("msgTemplate", String.valueOf(msgTemplate));
         if (msgTemplate.size() != 0){
             int index = random.nextInt(msgTemplate.size()-1);
             return msgTemplate.get(index);

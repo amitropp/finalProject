@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -218,6 +219,13 @@ public class AddContactFragment extends Fragment {
                     //add new contact to list
 //                    MainActivity activity = MainActivity.getInstance();
                     MainActivity.getInstance().addContactAndUpdeateRecyclerV(newContact);
+
+                    //add first 4 future msgs
+                    MainActivity.getInstance().addFutureMsgAndUpdeateRecyclerV(newContact.createFutureMsg());
+                    MainActivity.getInstance().addFutureMsgAndUpdeateRecyclerV(newContact.createFutureMsg());
+                    MainActivity.getInstance().addFutureMsgAndUpdeateRecyclerV(newContact.createFutureMsg());
+                    MainActivity.getInstance().addFutureMsgAndUpdeateRecyclerV(newContact.createFutureMsg());
+
                     getFragmentManager().popBackStack(ContactsListFragment.TAG_CONATCT, 1);
                 }
                 //return to last fragment
