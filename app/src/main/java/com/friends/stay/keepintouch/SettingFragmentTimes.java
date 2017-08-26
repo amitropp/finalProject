@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -38,7 +39,7 @@ public class SettingFragmentTimes extends Fragment {
     public static String NOON = "12-17";
     public static String EVNING = "17-22";
 
-    private Button mDoneBtn;
+    private ImageButton mDoneBtn;
     private View thisView = null;
 
     SharedPreferences preferences;
@@ -211,7 +212,7 @@ public class SettingFragmentTimes extends Fragment {
 
     public void setTimes(){
         Log.d("", "setTimes");
-        mDoneBtn = (Button) thisView.findViewById(R.id.btn_done);
+        mDoneBtn = (ImageButton) thisView.findViewById(R.id.btn_done);
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

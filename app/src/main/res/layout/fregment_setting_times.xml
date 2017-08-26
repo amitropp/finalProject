@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/textColorPrimary"
+        android:textSize="11.5pt"
         android:text="@string/timesExplanation"
         />
 
@@ -25,7 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
+            android:textStyle="bold"
             android:text="@string/sunday"
+            android:textSize="9.5pt"
             />
 
     </LinearLayout>
@@ -40,18 +43,21 @@
             android:id="@+id/sunday_morning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/morning" />
 
         <CheckBox
             android:id="@+id/sunday_noon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/noon" />
 
         <CheckBox
             android:id="@+id/sunday_evening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/evening" />
 
 
@@ -69,6 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
+            android:textSize="9.5pt"
+            android:textStyle="bold"
             android:text="@string/monday"
             />
 
@@ -84,18 +92,21 @@
             android:id="@+id/monday_morning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/morning" />
 
         <CheckBox
             android:id="@+id/monday_noon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/noon" />
 
         <CheckBox
             android:id="@+id/monday_evening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/evening" />
 
 
@@ -112,6 +123,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
+            android:textSize="9.5pt"
+            android:textStyle="bold"
             android:text="@string/tuesday"
             />
 
@@ -127,18 +140,21 @@
             android:id="@+id/tuesday_morning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/morning" />
 
         <CheckBox
             android:id="@+id/tuesday_noon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/noon" />
 
         <CheckBox
             android:id="@+id/tuesday_evening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/evening" />
 
 
@@ -155,6 +171,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
+            android:textSize="9.5pt"
+            android:textStyle="bold"
             android:text="@string/wednesday"
             />
 
@@ -170,18 +188,21 @@
             android:id="@+id/wednesday_morning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/morning" />
 
         <CheckBox
             android:id="@+id/wednesday_noon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/noon" />
 
         <CheckBox
             android:id="@+id/wednesday_evening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/evening" />
 
 
@@ -200,6 +221,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
+            android:textSize="9.5pt"
+            android:textStyle="bold"
             android:text="@string/thursday"
             />
 
@@ -215,18 +238,21 @@
             android:id="@+id/thursday_morning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/morning" />
 
         <CheckBox
             android:id="@+id/thursday_noon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/noon" />
 
         <CheckBox
             android:id="@+id/thursday_evening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/evening" />
 
 
@@ -243,6 +269,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
+            android:textSize="9.5pt"
+            android:textStyle="bold"
             android:text="@string/friday"
             />
 
@@ -258,18 +286,21 @@
             android:id="@+id/friday_morning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/morning" />
 
         <CheckBox
             android:id="@+id/friday_noon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/noon" />
 
         <CheckBox
             android:id="@+id/friday_evening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/evening" />
 
 
@@ -286,6 +317,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
+            android:textSize="9.5pt"
+            android:textStyle="bold"
             android:text="@string/saturday"
             />
 
@@ -301,20 +334,22 @@
             android:id="@+id/saturday_morning"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/morning" />
 
         <CheckBox
             android:id="@+id/saturday_noon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/noon" />
 
         <CheckBox
             android:id="@+id/saturday_evening"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="8.5pt"
             android:text="@string/evening" />
-
 
 
     </LinearLayout>
@@ -324,13 +359,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+
+        <ImageButton
             android:id="@+id/btn_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
             android:layout_alignParentLeft="true"
-            android:text="Done" />
+            android:layout_weight="1"
+            android:background="#0000"
+            android:src="@mipmap/ic_accept" />
 
     </RelativeLayout>
 </LinearLayout>
