@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     private void test() {
         Date date = new Date();
         Msg msg = new Call("Charlie", "0509332148", date, "", this, true);
-        msg.send();
+//        msg.send();
 
     }
 
