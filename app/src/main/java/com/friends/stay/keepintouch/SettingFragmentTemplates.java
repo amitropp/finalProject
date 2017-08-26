@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import org.apache.commons.io.FileUtils;
@@ -146,7 +147,7 @@ public class SettingFragmentTemplates extends Fragment {
     }
 
 
-    public void onButtonClick(Button view) {
+    public void onButtonClick() {
         CharSequence can = "Cancel";
         CharSequence add = "Add";
         final CharSequence nn = "<nickname>";
@@ -203,11 +204,12 @@ public class SettingFragmentTemplates extends Fragment {
     }
 
     public void addNewTemplate() {
-        Button addBtn = (Button) rootView.findViewById(R.id.btnAddItem);
+        ImageButton addBtn = (ImageButton) rootView.findViewById(R.id.btnAddItem);
+        addBtn.bringToFront();
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonClick((Button) view);
+                onButtonClick();
             }
         });
     }
