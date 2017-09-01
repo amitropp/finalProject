@@ -33,6 +33,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Timer;
 
 
@@ -45,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity mainActivity = null;
 
     public static Intent mNextCallIntent;
-//    public static ArrayList<Intent> sendMsgintent;
-//    public static Intent sendMsgintent;
     public static AlarmManager am;
     public static SmsMessage mNextSmsMessage;
     private ImageButton mAddBtn;
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public FutureHistoryFragment mHistoryFrag;
     private SharedPreferences mPrefs;
     private static User mUser;
+    private HashMap<Msg, Integer> msgIDInAlarm;
 
 
     @Override
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment[] tabFragments = {mContactListFrag, mFutureFrag, mHistoryFrag};
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
+        msgIDInAlarm = new HashMap<>();
 
 //        sendMsgintent =  new Intent(this, sendMsgsReceiver.class);
 //        Log.d("intent 0 - ", String.valueOf(sendMsgintent));
@@ -170,19 +171,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addMsgToManager(Msg msg){
-        Log.d("addMsgToManager", "1");
         Intent newInt =  new Intent(this, sendMsgsReceiver.class);
-//        sendMsgintent.add(newInt);
         newInt.putExtra("msgID", String.valueOf(msg).split("@")[1]);
         Log.d("intent 1 - ", String.valueOf(newInt));
-        Log.d("msg id", String.valueOf(msg).split("@")[1]);
-        Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
-        Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
-        Log.d("addMsgToManager", "2");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,  newInt, 0);
+        Log.d("addMsgToManager msgID", String.valueOf(msg).split("@")[1]);
+//        Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
+//        Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
+        final int _id = (int) System.currentTimeMillis();
+        Log.d("_id", String.valueOf(_id));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, _id, newInt, 0);
         Log.d("addMsgToManager", "3");
-        am.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis() + 1000, pendingIntent);
+        msgIDInAlarm.put(msg, _id);
+        am.set(AlarmManager.RTC, msg.getDateInMillis() + 1000, pendingIntent);
         Log.d("addMsgToManager", "4");
+    }
+
+    public void deleteMsgFromManager(Msg msg){
+        int id = msgIDInAlarm.get(msg);
+        Intent newInt = new Intent(this, sendMsgsReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, id, newInt,PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent.cancel();
+        am.cancel(pendingIntent);
     }
 
     public void updeateFutureRecyclerV(int pos, int contactPos) {

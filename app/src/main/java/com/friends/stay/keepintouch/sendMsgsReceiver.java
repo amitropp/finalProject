@@ -22,7 +22,7 @@ public class sendMsgsReceiver extends BroadcastReceiver {
 
     private void sendCurrentTimeSms(Intent intent){
         Log.d("sendCurrentTimeSms", "1");
-        Log.d("intent 3 - ", String.valueOf(intent));
+        Log.d("intent 3 - ", intent.toString());
         String msgID = intent.getStringExtra("msgID");
         Log.d("#UserFutureMessagesSize", String.valueOf(MainActivity.getUser().getAllFutureMessages().size()));
         Log.d("sendCurrentTimeSms", "2");
