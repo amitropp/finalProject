@@ -35,20 +35,20 @@ public class SmsMessage extends Msg {
     public void send() {
         Log.d("SmsMessage send", "1");
 
-        int permissionCheckReadState = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE);
+        int permissionCheckReadState = ContextCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.READ_PHONE_STATE);
         Log.d("SmsMessage send", "2");
         if (permissionCheckReadState != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((MainActivity) getContext(), new String[]{Manifest.permission.READ_PHONE_STATE}, MainActivity.REQUEST_READ_PHONE_STATE);
+            ActivityCompat.requestPermissions(MainActivity.getInstance(), new String[]{Manifest.permission.READ_PHONE_STATE}, MainActivity.REQUEST_READ_PHONE_STATE);
         }
         Log.d("SmsMessage send", "3");
 
-        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS);
+        int permissionCheck = ContextCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.SEND_SMS);
         Log.d("SmsMessage send", "3.5");
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             Log.d("SmsMessage send", "4");
             MainActivity.mNextSmsMessage = this;
             Log.d("SmsMessage send", "5");
-            ActivityCompat.requestPermissions((MainActivity) getContext(), new String[]{Manifest.permission.SEND_SMS}, MainActivity.MY_PERMISSIONS_REQUEST_SEND_SMS);
+            ActivityCompat.requestPermissions(MainActivity.getInstance(), new String[]{Manifest.permission.SEND_SMS}, MainActivity.MY_PERMISSIONS_REQUEST_SEND_SMS);
             Log.d("SmsMessage send", "6");
         }
         else {
@@ -58,10 +58,10 @@ public class SmsMessage extends Msg {
                 Log.d("SmsMessage send", "8");
                 smsManager.sendTextMessage(getNumber(), null, getContent(), null, null);
                 Log.d("SmsMessage send", "9");
-                Toast.makeText(getContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.getInstance(), "SMS sent.", Toast.LENGTH_LONG).show();
                 Log.d("SmsMessage send", "10");
             } catch (Exception e) {
-                Toast.makeText(getContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.getInstance(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             }
 
         }
