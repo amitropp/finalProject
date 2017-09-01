@@ -90,10 +90,21 @@ public class FutureHistoryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //switch to new fragment - request to add a new contact
-                Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-                startActivityForResult(contactPickerIntent, MainActivity.RESULT_PICK_CONTACT);
+                if (mPosOfContact != -1) {
+                    // we are in a contact so we know his name and phone
+                    Contact c = MainActivity.getInstance().getUser().getContacts().get(mPosOfContact);
+                    AddMsgFragment addMsgFragment = AddMsgFragment.newInstance(-1, isFuture, mPosOfContact, c.getName(), c.getNumber());
+                    getActivity().getFragmentManager().beginTransaction()
+                            .replace(R.id.frag_future, addMsgFragment)
+                            .addToBackStack(TAG_MESSAGES)
+                            .commit();
+                }
 
+                else {
+                    Intent contactPickerIntent = new Intent(Intent.ACTION_PICK,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+                    startActivityForResult(contactPickerIntent, MainActivity.RESULT_PICK_CONTACT);
+                }
             }
         });
     }
