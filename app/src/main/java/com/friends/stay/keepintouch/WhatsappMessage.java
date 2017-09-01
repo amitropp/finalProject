@@ -32,7 +32,7 @@ public class WhatsappMessage extends Msg {
 
     @Override
     public void send() {
-        PackageManager pm = getContext().getPackageManager();
+        PackageManager pm = MainActivity.getInstance().getPackageManager();
         //catch an exception if there is no
         try {
             //start a new send intent (send via whatsapp)
@@ -46,10 +46,10 @@ public class WhatsappMessage extends Msg {
 
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
             //start chooser
-            getContext().startActivity(Intent.createChooser(waIntent, ""));
+            MainActivity.getInstance().startActivity(Intent.createChooser(waIntent, ""));
 
         } catch (PackageManager.NameNotFoundException e) {
-            Toast.makeText(getContext(), WA_ERR, Toast.LENGTH_SHORT)
+            Toast.makeText(MainActivity.getInstance(), WA_ERR, Toast.LENGTH_SHORT)
                     .show();
         }
 

@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mAddBtn;
     private Tabs mTabs;
     private ContactsListFragment mContactListFrag;
-    private FutureHistoryFragment mFutureFrag;
-    private FutureHistoryFragment mHistoryFrag;
+    public FutureHistoryFragment mFutureFrag;
+    public FutureHistoryFragment mHistoryFrag;
     private SharedPreferences mPrefs;
     private static User mUser;
 

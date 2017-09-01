@@ -44,12 +44,16 @@ public class sendMsgsReceiver extends BroadcastReceiver {
             //Remove it from future (general and specific)
             Contact contact = MainActivity.getUser().findContactByMsg(msgToSend);
             Log.d("sendCurrentTimeSms", "7");
-            contact.delFromFutureMessages(msgToSend);
+            if (contact != null) {
+                contact.delFromFutureMessages(msgToSend);
+            }
             Log.d("sendCurrentTimeSms", "8");
             user.delFromFutureMsgByMsg(msgToSend);
+            MainActivity.getInstance().mFutureFrag.updateRVOnUpdate();
             Log.d("sendCurrentTimeSms", "9");
             //Move it to history (general and specific)
             user.addToAllHistoryMsg(msgToSend);
+            MainActivity.getInstance().mHistoryFrag.updateRVOnUpdate();
             Log.d("sendCurrentTimeSms", "10");
             //if not manually - Add new Mag to futureMsgs
             if (!msgToSend.isManual()){

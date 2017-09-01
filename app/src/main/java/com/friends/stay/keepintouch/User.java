@@ -225,7 +225,7 @@ public class User {
         Random random = new Random();
         Log.d("msgTemplate", String.valueOf(msgTemplate));
         if (msgTemplate.size() != 0){
-            int index = random.nextInt(msgTemplate.size()-1);
+            int index = random.nextInt(msgTemplate.size());
             return msgTemplate.get(index);
         } else {
             return "Hi :)";
