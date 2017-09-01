@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_READ_PHONE_STATE = 3;
     public static final int RESULT_PICK_CONTACT = 2;
     private static final String[] tabsNames = {"CONTACTS", "FUTURE", "HISTORY"};
-    private static boolean firstEntrance = true;
     private static MainActivity mainActivity = null;
 
     public static Intent mNextCallIntent;
@@ -77,10 +76,6 @@ public class MainActivity extends AppCompatActivity {
         Fragment[] tabFragments = {mContactListFrag, mFutureFrag, mHistoryFrag};
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
-
-        if (firstEntrance) {
-            //todo
-        }
 
         sendMsgintent =  new Intent(this, sendMsgsReceiver.class);
         Log.d("intent 0 - ", String.valueOf(sendMsgintent));
@@ -413,7 +408,11 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<SimpleMsg> simpleHistoryMsgs = gson.fromJson(stringSimpleHistoryMsg, typeSimpleMsgArray);
 
         if (simpleContactArrayList == null) {
+            //first time user entrances
             mUser = new User();
+            Intent intent = new Intent(this, MainSetting.class);
+            startActivity(intent);
+
         }
         else {
             mUser = new User(simpleContactArrayList, simpleFutureMsgs, simpleHistoryMsgs, this);
@@ -430,14 +429,6 @@ public class MainActivity extends AppCompatActivity {
         prefsEditor.putString("simpleFutureMsg", gson.toJson(mUser.getSimpleMsgs(true), typeSimpleMsgArray));
         prefsEditor.putString("simpleHistoryMsg", gson.toJson(mUser.getSimpleMsgs(false), typeSimpleMsgArray));
         prefsEditor.commit();
-
-//        ArrayList<SimpleContact> ac = new ArrayList<>();
-//        ac.add(new SimpleContact("abc", "efg"));
-//        ac.add(new SimpleContact("bbb", "fff"));
-//
-//        Type type2 = new TypeToken<ArrayList<SimpleContact>>(){}.getType();
-//        String json = gson.toJson(ac,type2);
-//        ArrayList<SimpleContact> fromjson = gson.fromJson(json, type2);
 
 
     }
