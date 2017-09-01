@@ -33,23 +33,33 @@ public class SmsMessage extends Msg {
 
     @Override
     public void send() {
+        Log.d("SmsMessage send", "1");
+
         int permissionCheckReadState = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_PHONE_STATE);
-
+        Log.d("SmsMessage send", "2");
         if (permissionCheckReadState != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(( MainActivity) getContext(), new String[]{Manifest.permission.READ_PHONE_STATE}, MainActivity.REQUEST_READ_PHONE_STATE);
+            ActivityCompat.requestPermissions((MainActivity) getContext(), new String[]{Manifest.permission.READ_PHONE_STATE}, MainActivity.REQUEST_READ_PHONE_STATE);
         }
-
+        Log.d("SmsMessage send", "3");
 
         int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS);
+        Log.d("SmsMessage send", "3.5");
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            Log.d("SmsMessage send", "4");
             MainActivity.mNextSmsMessage = this;
+            Log.d("SmsMessage send", "5");
             ActivityCompat.requestPermissions((MainActivity) getContext(), new String[]{Manifest.permission.SEND_SMS}, MainActivity.MY_PERMISSIONS_REQUEST_SEND_SMS);
+            Log.d("SmsMessage send", "6");
         }
         else {
+            Log.d("SmsMessage send", "7");
             SmsManager smsManager = SmsManager.getDefault();
             try {
+                Log.d("SmsMessage send", "8");
                 smsManager.sendTextMessage(getNumber(), null, getContent(), null, null);
+                Log.d("SmsMessage send", "9");
                 Toast.makeText(getContext(), "SMS sent.", Toast.LENGTH_LONG).show();
+                Log.d("SmsMessage send", "10");
             } catch (Exception e) {
                 Toast.makeText(getContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
             }

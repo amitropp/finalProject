@@ -172,13 +172,14 @@ public class MainActivity extends AppCompatActivity {
         Log.d("addMsgToManager", "1");
         sendMsgintent.putExtra("time", msg.getDateInMillis());
         Log.d("intent 1 - ", String.valueOf(sendMsgintent));
+        Log.d("msg ", String.valueOf(msg));
         Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
         Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
         Log.d("addMsgToManager", "2");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,  sendMsgintent, 0);
         Log.d("addMsgToManager", "3");
         am.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis() + 1000, pendingIntent);
-        Log.d("here", "4");
+        Log.d("addMsgToManager", "4");
     }
 
     public void updeateFutureRecyclerV(int pos, int contactPos) {
