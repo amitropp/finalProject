@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity mainActivity = null;
 
     public static Intent mNextCallIntent;
-    public static Intent sendMsgintent;
+//    public static ArrayList<Intent> sendMsgintent;
+//    public static Intent sendMsgintent;
     public static AlarmManager am;
     public static SmsMessage mNextSmsMessage;
     private ImageButton mAddBtn;
@@ -77,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
 
-        sendMsgintent =  new Intent(this, sendMsgsReceiver.class);
-        Log.d("intent 0 - ", String.valueOf(sendMsgintent));
+//        sendMsgintent =  new Intent(this, sendMsgsReceiver.class);
+//        Log.d("intent 0 - ", String.valueOf(sendMsgintent));
         //start running the manager
 //        Intent intent = new Intent(this, ManagerService.class);
 //        startService(intent);
@@ -170,13 +171,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void addMsgToManager(Msg msg){
         Log.d("addMsgToManager", "1");
-        sendMsgintent.putExtra("msgID", String.valueOf(msg).split("@")[1]);
-        Log.d("intent 1 - ", String.valueOf(sendMsgintent));
+        Intent newInt =  new Intent(this, sendMsgsReceiver.class);
+//        sendMsgintent.add(newInt);
+        newInt.putExtra("msgID", String.valueOf(msg).split("@")[1]);
+        Log.d("intent 1 - ", String.valueOf(newInt));
         Log.d("msg id", String.valueOf(msg).split("@")[1]);
         Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
         Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
         Log.d("addMsgToManager", "2");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,  sendMsgintent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,  newInt, 0);
         Log.d("addMsgToManager", "3");
         am.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis() + 1000, pendingIntent);
         Log.d("addMsgToManager", "4");
