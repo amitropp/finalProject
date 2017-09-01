@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static Intent mNextCallIntent;
     public static Intent sendMsgintent;
-    public static PendingIntent pendingIntent;
     public static AlarmManager am;
     public static SmsMessage mNextSmsMessage;
     private ImageButton mAddBtn;
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     //test the program
     private void test() {
         Date date = new Date();
-        Msg msg = new Call("Charlie", "0509332148", date, "", this, true);
+        Msg msg = new Call("Amit", "0524448111", date, "", this, true);
 //        msg.send();
 
     }
@@ -160,13 +159,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void addFutureMsgAndUpdeateRecyclerV(Msg newMsg) {
         mUser.addToAllFutureMsg(newMsg);
-        Contact contact = mUser.findContactByMsg(newMsg);
-        contact.addMsgToManager(newMsg);
+        addMsgToManager(newMsg);
         mFutureFrag.updateRecyclerViewOnAdd();
         if (EditContactActivity.getFutureFrag() != null) {
             EditContactActivity.getFutureFrag().updateRecyclerViewOnAdd();
         }
 
+    }
+
+    public void addMsgToManager(Msg msg){
+        Log.d("here", "1");
+        sendMsgintent.putExtra("time", msg.getDateInMillis());
+        Log.d("here", "2");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,  sendMsgintent, 0);
+        Log.d("here", "3");
+        Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
+        Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
+        am.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis() + 1000, pendingIntent);
+        Log.d("here", "4");
     }
 
     public void updeateFutureRecyclerV(int pos, int contactPos) {
@@ -246,7 +256,6 @@ public class MainActivity extends AppCompatActivity {
         File dataFile = new File(filesDir, "templates.txt");
         try {
             for (Object line : FileUtils.readLines(dataFile)){
-                Log.d("%%line", String.valueOf(line));
                 MainActivity.getUser().addTemplate((String) line);
             }
         } catch (IOException e) {
