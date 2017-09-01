@@ -203,6 +203,20 @@ public class User {
 
     }
 
+    public Msg getFuturMsgByID(String id){
+//        Calendar c = Calendar.getInstance();
+//        c.setTimeInMillis(milliSeconds);
+//        Date date = c.getTime();
+        for (Msg msg : allFutureMessages) {
+            Log.d("getFuturMsgByID", String.valueOf(msg).split("@")[1]);
+            if (String.valueOf(msg).split("@")[1].equals(id)){
+                return msg;
+            }
+        }
+        return null;
+
+    }
+
     public ArrayList<Msg> getAllFutureMessages() { return allFutureMessages; }
 
     public ArrayList<Msg> getAllHistoryMessages() { return allHistoryMessages; }

@@ -23,15 +23,15 @@ public class sendMsgsReceiver extends BroadcastReceiver {
     private void sendCurrentTimeSms(Intent intent){
         Log.d("sendCurrentTimeSms", "1");
         Log.d("intent 3 - ", String.valueOf(intent));
-        long msgMilliSeconds = intent.getLongExtra("time", 0);
+        String msgID = intent.getStringExtra("msgID");
         Log.d("#UserFutureMessagesSize", String.valueOf(MainActivity.getUser().getAllFutureMessages().size()));
         Log.d("sendCurrentTimeSms", "2");
-        Log.d("msgMilliSeconds", String.valueOf(msgMilliSeconds));
-        if (msgMilliSeconds != 0) {
+        Log.d("msgID", String.valueOf(msgID));
+        if (msgID != "") {
             Log.d("sendCurrentTimeSms", "3");
             User user = MainActivity.getUser();
             Log.d("sendCurrentTimeSms", "4");
-            Msg msgToSend = user.getFuturMsgByDate(msgMilliSeconds);
+            Msg msgToSend = user.getFuturMsgByID(msgID);
             Log.d("sendCurrentTimeSms", "5");
             Log.d("msgToSend", String.valueOf(msgToSend));
             Log.d("msgToSend.getContent", msgToSend.getContent());

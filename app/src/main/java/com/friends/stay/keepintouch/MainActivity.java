@@ -170,9 +170,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addMsgToManager(Msg msg){
         Log.d("addMsgToManager", "1");
-        sendMsgintent.putExtra("time", msg.getDateInMillis());
+        sendMsgintent.putExtra("msgID", String.valueOf(msg).split("@")[1]);
         Log.d("intent 1 - ", String.valueOf(sendMsgintent));
-        Log.d("msg ", String.valueOf(msg));
+        Log.d("msg id", String.valueOf(msg).split("@")[1]);
         Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
         Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
         Log.d("addMsgToManager", "2");
