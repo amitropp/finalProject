@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -120,30 +121,6 @@ class Contact {
     }
 
 
-    public void addFutureMessages(Msg newMessages) {
-        futureMessages.add(newMessages);
-        MainActivity.getUser().getAllFutureMessages().add(newMessages);
-        addMsgToManager(newMessages);
-    }
-
-    public void addMsgToManager(Msg msg){
-        Log.d("here", "1");
-        Intent intent = MainActivity.sendMsgintent;
-        Log.d("here", "2");
-        intent.putExtra("time", msg.getDateInMillis());
-        Log.d("here", "3");
-        PendingIntent pendingIntent = MainActivity.pendingIntent;
-        Log.d("here", "4");
-        AlarmManager alarmMgr = MainActivity.am;
-        Log.d("here", "5");
-        PendingIntent.getBroadcast(context, 0,  intent, 0);
-        Log.d("here", "6");
-        Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
-        Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis(), pendingIntent);
-        Log.d("here", "7");
-    }
-
     public Msg createFutureMsg(){
         //check existing msgs
         Calendar c = Calendar.getInstance();
@@ -179,27 +156,47 @@ class Contact {
         int DayOfResult = c.get(Calendar.DAY_OF_WEEK);
         //check availability
         ArrayList<String> currentDayRange = MainActivity.getUser().getAvailableTimes(DayOfResult);
-        //change day if needed (no available times that day)
-        while (currentDayRange.size() == 0){
-            Log.d("DayOfResult", String.valueOf(DayOfResult));
-            Log.d("currentDayRange", String.valueOf(currentDayRange));
-            Log.d("here", "5.1");
-            //move to the next day
-            DayOfResult += 1;
-            DayOfResult = DayOfResult % 8;
-            if(DayOfResult == 0){
-                DayOfResult = 1;
+
+        //check if user insert available times
+        boolean isInsert = false;
+        for(Map.Entry<Integer, ArrayList<String>> entry : MainActivity.getUser().getAvailableTimes().entrySet()) {
+            ArrayList<String> value = entry.getValue();
+            if (value.size() > 0){
+                isInsert = true;
+                break;
             }
-            //check availability for the next day
-            currentDayRange = MainActivity.getUser().getAvailableTimes(DayOfResult);
         }
-        //update to day with availability
-        c.add(Calendar.DAY_OF_WEEK, DayOfResult);
+        if (isInsert){
+            //change day if needed (no available times that day)
+            while (currentDayRange.size() == 0){
+                Log.d("DayOfResult", String.valueOf(DayOfResult));
+                Log.d("currentDayRange", String.valueOf(currentDayRange));
+                Log.d("here", "5.1");
+                //move to the next day
+                DayOfResult += 1;
+                DayOfResult = DayOfResult % 8;
+                if(DayOfResult == 0){
+                    DayOfResult = 1;
+                }
+                //check availability for the next day
+                currentDayRange = MainActivity.getUser().getAvailableTimes(DayOfResult);
+            }
+            //update to day with availability
+            c.add(Calendar.DAY_OF_WEEK, DayOfResult);
+        }
+
         //change time TODO date not right
-        Log.d("currentDayRange", String.valueOf(currentDayRange));
-        int index = random.nextInt(currentDayRange.size());
-        Log.d("index", String.valueOf(index));
-        String range = currentDayRange.get(index);
+        int index;
+        String range = "";
+        if (isInsert) {
+            Log.d("currentDayRange", String.valueOf(currentDayRange));
+            index = random.nextInt(currentDayRange.size());
+            Log.d("index", String.valueOf(index));
+            range = currentDayRange.get(index);
+        } else {
+            range = "8-18";
+        }
+        Log.d("range", String.valueOf(range));
         int start = Integer.valueOf(range.split("-")[0]);
         int end = Integer.valueOf(range.split("-")[1]);
         int hour = random.nextInt((end - start) + 1) + start;
@@ -208,6 +205,7 @@ class Contact {
         c.set(Calendar.MINUTE, minute);
         newMsgDate = c.getTime();
         Log.d("newMsgDate", String.valueOf(newMsgDate));
+
         boolean[] communicationTypeArray = {isWatsApp, isSMS, isCall};
 
         index = random.nextInt(3);
@@ -226,7 +224,6 @@ class Contact {
             //index == 2
             msg = new Call(name, number, newMsgDate, content, context, false);
         }
-//        addMsgToManager(msg); //TODO
         return msg;
 
     }
