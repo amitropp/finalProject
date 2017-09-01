@@ -14,6 +14,7 @@ public class sendMsgsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("sendMsgsReceiver", "1");
+        Log.d("intent 2 - ", String.valueOf(intent));
         sendCurrentTimeSms(intent);
         Log.d("sendMsgsReceiver", "2");
 
@@ -21,7 +22,9 @@ public class sendMsgsReceiver extends BroadcastReceiver {
 
     private void sendCurrentTimeSms(Intent intent){
         Log.d("sendCurrentTimeSms", "1");
+        Log.d("intent 3 - ", String.valueOf(intent));
         long msgMilliSeconds = intent.getLongExtra("time", 0);
+        Log.d("#UserFutureMessagesSize", String.valueOf(MainActivity.getUser().getAllFutureMessages().size()));
         Log.d("sendCurrentTimeSms", "2");
         Log.d("msgMilliSeconds", String.valueOf(msgMilliSeconds));
         if (msgMilliSeconds != 0) {
@@ -30,6 +33,9 @@ public class sendMsgsReceiver extends BroadcastReceiver {
             Log.d("sendCurrentTimeSms", "4");
             Msg msgToSend = user.getFuturMsgByDate(msgMilliSeconds);
             Log.d("sendCurrentTimeSms", "5");
+            Log.d("msgToSend", String.valueOf(msgToSend));
+            Log.d("msgToSend.getContent", msgToSend.getContent());
+            Log.d("msgToSend.getDate", String.valueOf(msgToSend.getDate()));
             Log.d("msgToSend.getName", msgToSend.getName());
             Log.d("msgToSend.getClass", String.valueOf(msgToSend.getClass()));
             //send the msg

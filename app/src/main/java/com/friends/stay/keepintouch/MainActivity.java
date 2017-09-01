@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         sendMsgintent =  new Intent(this, sendMsgsReceiver.class);
+        Log.d("intent 0 - ", String.valueOf(sendMsgintent));
         //start running the manager
 //        Intent intent = new Intent(this, ManagerService.class);
 //        startService(intent);
@@ -173,13 +174,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addMsgToManager(Msg msg){
-        Log.d("here", "1");
+        Log.d("addMsgToManager", "1");
         sendMsgintent.putExtra("time", msg.getDateInMillis());
-        Log.d("here", "2");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,  sendMsgintent, 0);
-        Log.d("here", "3");
+        Log.d("intent 1 - ", String.valueOf(sendMsgintent));
         Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
         Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
+        Log.d("addMsgToManager", "2");
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,  sendMsgintent, 0);
+        Log.d("addMsgToManager", "3");
         am.set(AlarmManager.RTC_WAKEUP, msg.getDateInMillis() + 1000, pendingIntent);
         Log.d("here", "4");
     }

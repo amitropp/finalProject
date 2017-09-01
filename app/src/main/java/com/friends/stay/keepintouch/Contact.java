@@ -171,7 +171,6 @@ class Contact {
             while (currentDayRange.size() == 0){
                 Log.d("DayOfResult", String.valueOf(DayOfResult));
                 Log.d("currentDayRange", String.valueOf(currentDayRange));
-                Log.d("here", "5.1");
                 //move to the next day
                 DayOfResult += 1;
                 DayOfResult = DayOfResult % 8;
