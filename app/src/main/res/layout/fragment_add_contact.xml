@@ -69,7 +69,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@android:color/darker_gray"/>
 
     <LinearLayout
@@ -89,7 +89,7 @@
 
         <EditText
             android:id="@+id/et_nickname"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
             android:textSize="20sp" />
@@ -98,7 +98,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@android:color/darker_gray"/>
 
 
@@ -140,7 +140,7 @@
             android:id="@+id/tv_err_no_chosen_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Please Choose A Box!"
+            android:text=" Please Choose A Box!"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="10dp"
             android:visibility="invisible"
@@ -151,7 +151,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@android:color/darker_gray"
         />
 
@@ -179,6 +179,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/btn_dropdown"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:spinnerMode="dropdown" />
 
             <TextView
@@ -195,7 +198,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@android:color/darker_gray"/>
 
 </LinearLayout>

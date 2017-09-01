@@ -1,373 +1,380 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frag_add_contact"
     android:layout_width="match_parent"
+    android:id="@+id/frag_add_contact"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?android:windowBackground"
     tools:context="com.friends.stay.keepintouch.AddContactFragment">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/textColorPrimary"
-        android:textSize="23sp"
-        android:text="@string/timesExplanation"
-        />
-
-    <!--#################################  Sunday  #################################-->
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColorPrimary"
-            android:textStyle="bold"
-            android:text="@string/sunday"
-            android:textSize="19sp"
+            android:textSize="23dp"
+            android:text="@string/timesExplanation"
             />
 
+        <!--#################################  Sunday  #################################-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:textStyle="bold"
+                android:text="@string/sunday"
+                android:textSize="19dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/sunday_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/morning" />
+
+            <CheckBox
+                android:id="@+id/sunday_noon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/noon" />
+
+            <CheckBox
+                android:id="@+id/sunday_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/evening" />
+
+
+
+        </LinearLayout>
+
+
+        <!--#################################  Monday  #################################-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="19dp"
+                android:textStyle="bold"
+                android:text="@string/monday"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/monday_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/morning" />
+
+            <CheckBox
+                android:id="@+id/monday_noon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/noon" />
+
+            <CheckBox
+                android:id="@+id/monday_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/evening" />
+
+
+
+        </LinearLayout>
+
+        <!--#################################  Tuesday  #################################-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="19dp"
+                android:textStyle="bold"
+                android:text="@string/tuesday"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/tuesday_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/morning" />
+
+            <CheckBox
+                android:id="@+id/tuesday_noon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/noon" />
+
+            <CheckBox
+                android:id="@+id/tuesday_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/evening" />
+
+
+
+        </LinearLayout>
+
+        <!--#################################  Wednesday  #################################-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="19dp"
+                android:textStyle="bold"
+                android:text="@string/wednesday"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/wednesday_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/morning" />
+
+            <CheckBox
+                android:id="@+id/wednesday_noon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/noon" />
+
+            <CheckBox
+                android:id="@+id/wednesday_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/evening" />
+
+
+
+        </LinearLayout>
+
+
+
+        <!--#################################  Thursday  #################################-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="19dp"
+                android:textStyle="bold"
+                android:text="@string/thursday"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/thursday_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/morning" />
+
+            <CheckBox
+                android:id="@+id/thursday_noon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/noon" />
+
+            <CheckBox
+                android:id="@+id/thursday_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/evening" />
+
+
+
+        </LinearLayout>
+
+        <!--#################################  Friday  #################################-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="19dp"
+                android:textStyle="bold"
+                android:text="@string/friday"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/friday_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/morning" />
+
+            <CheckBox
+                android:id="@+id/friday_noon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/noon" />
+
+            <CheckBox
+                android:id="@+id/friday_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/evening" />
+
+
+
+        </LinearLayout>
+
+        <!--#################################  Saturday  #################################-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="19dp"
+                android:textStyle="bold"
+                android:text="@string/saturday"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <CheckBox
+                android:id="@+id/saturday_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/morning" />
+
+            <CheckBox
+                android:id="@+id/saturday_noon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/noon" />
+
+            <CheckBox
+                android:id="@+id/saturday_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:text="@string/evening" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <ImageButton
+                android:id="@+id/btn_done"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1"
+                android:background="#0000"
+                android:src="@mipmap/ic_accept" />
+
+        </RelativeLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <CheckBox
-            android:id="@+id/sunday_morning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/morning" />
-
-        <CheckBox
-            android:id="@+id/sunday_noon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/noon" />
-
-        <CheckBox
-            android:id="@+id/sunday_evening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/evening" />
-
-
-
-    </LinearLayout>
-
-
-    <!--#################################  Monday  #################################-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:text="@string/monday"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <CheckBox
-            android:id="@+id/monday_morning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/morning" />
-
-        <CheckBox
-            android:id="@+id/monday_noon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/noon" />
-
-        <CheckBox
-            android:id="@+id/monday_evening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/evening" />
-
-
-
-    </LinearLayout>
-
-    <!--#################################  Tuesday  #################################-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:text="@string/tuesday"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <CheckBox
-            android:id="@+id/tuesday_morning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/morning" />
-
-        <CheckBox
-            android:id="@+id/tuesday_noon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/noon" />
-
-        <CheckBox
-            android:id="@+id/tuesday_evening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/evening" />
-
-
-
-    </LinearLayout>
-
-    <!--#################################  Wednesday  #################################-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:text="@string/wednesday"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <CheckBox
-            android:id="@+id/wednesday_morning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/morning" />
-
-        <CheckBox
-            android:id="@+id/wednesday_noon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/noon" />
-
-        <CheckBox
-            android:id="@+id/wednesday_evening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/evening" />
-
-
-
-    </LinearLayout>
-
-
-
-    <!--#################################  Thursday  #################################-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:text="@string/thursday"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <CheckBox
-            android:id="@+id/thursday_morning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/morning" />
-
-        <CheckBox
-            android:id="@+id/thursday_noon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/noon" />
-
-        <CheckBox
-            android:id="@+id/thursday_evening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/evening" />
-
-
-
-    </LinearLayout>
-
-    <!--#################################  Friday  #################################-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:text="@string/friday"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <CheckBox
-            android:id="@+id/friday_morning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/morning" />
-
-        <CheckBox
-            android:id="@+id/friday_noon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/noon" />
-
-        <CheckBox
-            android:id="@+id/friday_evening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/evening" />
-
-
-
-    </LinearLayout>
-
-    <!--#################################  Saturday  #################################-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:text="@string/saturday"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <CheckBox
-            android:id="@+id/saturday_morning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/morning" />
-
-        <CheckBox
-            android:id="@+id/saturday_noon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/noon" />
-
-        <CheckBox
-            android:id="@+id/saturday_evening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:text="@string/evening" />
-
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <ImageButton
-            android:id="@+id/btn_done"
-            android:layout_width="37dp"
-            android:layout_height="37dp"
-            android:layout_alignParentLeft="true"
-            android:layout_weight="1"
-            android:background="#0000"
-            android:src="@mipmap/ic_accept" />
-
-    </RelativeLayout>
-</LinearLayout>
+</ScrollView>
