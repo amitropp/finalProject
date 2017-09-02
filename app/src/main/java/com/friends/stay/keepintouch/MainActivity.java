@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public FutureHistoryFragment mHistoryFrag;
     private SharedPreferences mPrefs;
     private static User mUser;
-    private HashMap<Msg, Integer> msgIDInAlarm;
+    public HashMap<Msg, Integer> msgIDInAlarm;
 
 
     @Override
@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         int id = msgIDInAlarm.get(msg);
         Intent newInt = new Intent(this, sendMsgsReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, id, newInt,PendingIntent.FLAG_UPDATE_CURRENT);
+        msgIDInAlarm.remove(msg);
         pendingIntent.cancel();
         am.cancel(pendingIntent);
     }
