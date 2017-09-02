@@ -24,8 +24,8 @@ import java.util.Date;
 
 public class Call extends Msg {
 
-    public Call(String name, String number, Date date, String content, Context context, boolean isManual) {
-        super(name, number, date, "", context, isManual);
+    public Call(String name, String number, Date date, String content, Context context, boolean isManual, int id) {
+        super(name, number, date, "", context, isManual, id);
     }
 
     @Override

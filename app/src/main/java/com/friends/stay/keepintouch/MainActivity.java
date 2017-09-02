@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     public FutureHistoryFragment mHistoryFrag;
     private SharedPreferences mPrefs;
     private static User mUser;
-    private HashMap<Msg, Integer> msgIDInAlarm;
 
 
     @Override
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
         Fragment[] tabFragments = {mContactListFrag, mFutureFrag, mHistoryFrag};
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
-        msgIDInAlarm = new HashMap<>();
 
 //        sendMsgintent =  new Intent(this, sendMsgsReceiver.class);
 //        Log.d("intent 0 - ", String.valueOf(sendMsgintent));
@@ -95,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     //test the program
     private void test() {
         Date date = new Date();
-        Msg msg = new Call("Amit", "0524448111", date, "", this, true);
+        Msg msg = new Call("Amit", "0524448111", date, "", this, true, -1);
 //        msg.send();
 
     }
@@ -182,16 +180,16 @@ public class MainActivity extends AppCompatActivity {
 //        Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
 //        Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
         final int _id = (int) System.currentTimeMillis();
+        msg.setId(_id);
         Log.d("_id", String.valueOf(_id));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, _id, newInt, 0);
         Log.d("addMsgToManager", "3");
-        msgIDInAlarm.put(msg, _id);
         am.set(AlarmManager.RTC, msg.getDateInMillis() + 1000, pendingIntent);
         Log.d("addMsgToManager", "4");
     }
 
     public void deleteMsgFromManager(Msg msg){
-        int id = msgIDInAlarm.get(msg);
+        int id = msg.getId();
         Intent newInt = new Intent(this, sendMsgsReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, id, newInt,PendingIntent.FLAG_UPDATE_CURRENT);
         pendingIntent.cancel();
@@ -440,7 +438,6 @@ public class MainActivity extends AppCompatActivity {
             mUser = new User();
             Intent intent = new Intent(this, MainSetting.class);
             startActivity(intent);
-
         }
         else {
             mUser = new User(simpleContactArrayList, simpleFutureMsgs, simpleHistoryMsgs, this);

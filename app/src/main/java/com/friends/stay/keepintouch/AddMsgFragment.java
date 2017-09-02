@@ -384,7 +384,7 @@ public class AddMsgFragment extends Fragment {
                 }
                 else {
                     Msg newMsg = MsgFactory.newMsg(mChosenName, mChosenPhoneNumber, mChosenDate,
-                            msgContent, getActivity().getApplicationContext(), isCall, isMsg, isWhatsapp, true);
+                            msgContent, getActivity().getApplicationContext(), isCall, isMsg, isWhatsapp, true, -1);
                     //add new message to list
                     activity.addFutureMsgAndUpdeateRecyclerV(newMsg);
                 }
