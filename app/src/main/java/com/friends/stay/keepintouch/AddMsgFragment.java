@@ -375,14 +375,16 @@ public class AddMsgFragment extends Fragment {
                 if (mExistingMsg != null) {
                     if (mIsFuture)
                     {
+                        MainActivity.getInstance().deleteMsgFromManager(mExistingMsg);
                         mExistingMsg.setContent(msgContent);
                         mExistingMsg.setDate(mChosenDate);
                         activity.updeateFutureRecyclerV(mindexOfMsgToEdit, mposOfContact);
+                        MainActivity.getInstance().addMsgToManager(mExistingMsg);
                     }
                 }
                 else {
                     Msg newMsg = MsgFactory.newMsg(mChosenName, mChosenPhoneNumber, mChosenDate,
-                            msgContent, getActivity().getApplicationContext(), isCall, isMsg, isWhatsapp, true);
+                            msgContent, getActivity().getApplicationContext(), isCall, isMsg, isWhatsapp, true, -1);
                     //add new message to list
                     activity.addFutureMsgAndUpdeateRecyclerV(newMsg);
                 }

@@ -27,12 +27,14 @@ public abstract class Msg {
     private String name;
     //is manual msg
     private boolean isManual;
+    public int id;
 
     /**
      * abstract function to send the message. The inherit class will implement the
      * send function specific for the media we are using
      */
     public abstract void send();
+    public abstract void send(Context context);
     public abstract int getIconId();
 
     /**
@@ -42,7 +44,7 @@ public abstract class Msg {
      * @param content content of message
      * @param context context of the calling activity
      */
-    public Msg(String name, String number, Date date, String content, Context context, boolean isManual)
+    public Msg(String name, String number, Date date, String content, Context context, boolean isManual, int id)
     {
         this.number = number;
         this.date = date;
@@ -50,8 +52,17 @@ public abstract class Msg {
         this.context = context;
         this.name = name;
         this.isManual = isManual;
+        this.id = id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
+    public int getId() {
+        return id;
+    }
     public Context getContext() {
         return context;
     }
@@ -91,7 +102,7 @@ public abstract class Msg {
         boolean isSms = this instanceof SmsMessage;
         boolean isWhatsapp = this instanceof WhatsappMessage;
 
-        return new SimpleMsg(name, number, date, content, isManual, isCall, isSms, isWhatsapp);
+        return new SimpleMsg(name, number, date, content, isManual, isCall, isSms, isWhatsapp, id);
     }
 }
 
@@ -102,8 +113,6 @@ class SimpleMsg {
     public Date date;
     //content of message
     public String content;
-    //main activity context
-    public Context context;
     //name of contact
     public String name;
     public boolean isCall;
@@ -111,8 +120,9 @@ class SimpleMsg {
     public boolean isWa;
     //is manual msg
     public boolean isManual;
+    public int id;
     public SimpleMsg (String name, String number, Date date, String content, boolean isManual,
-                      boolean isCall, boolean isSms, boolean isWa) {
+                      boolean isCall, boolean isSms, boolean isWa, int id) {
         this.name = name;
         this.number = number;
         this.date = date;
@@ -121,6 +131,7 @@ class SimpleMsg {
         this.isCall = isCall;
         this.isMsg = isSms;
         this.isWa = isWa;
+        this.id = id;
     }
 
 }

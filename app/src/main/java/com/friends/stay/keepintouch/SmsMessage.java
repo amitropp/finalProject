@@ -27,8 +27,8 @@ public class SmsMessage extends Msg {
      * @param content content of the message
      * @param context context of the calling activity
      */
-    public SmsMessage(String name, String number, Date date, String content, Context context, boolean isManual) {
-        super(name, number, date, content, context, isManual);
+    public SmsMessage(String name, String number, Date date, String content, Context context, boolean isManual, int id) {
+        super(name, number, date, content, context, isManual, id);
     }
 
     @Override
@@ -65,6 +65,20 @@ public class SmsMessage extends Msg {
             }
 
         }
+    }
+
+
+    public void send(Context context) {
+//        SmsManager smsManager = SmsManager.getDefault();
+//        try {
+//            Log.d("SmsMessage send", "8");
+//            smsManager.sendTextMessage(getNumber(), null, getContent(), null, null);
+//            Log.d("SmsMessage send", "9");
+//            Toast.makeText(context, "SMS sent.", Toast.LENGTH_LONG).show();
+//            Log.d("SmsMessage send", "10");
+//        } catch (Exception e) {
+//            Toast.makeText(context, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+//        }
     }
 
     @Override

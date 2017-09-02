@@ -215,13 +215,13 @@ class Contact {
         }
         Msg msg;
         if (index == 0){
-            msg = new WhatsappMessage(name, number, newMsgDate, content, context, false);
+            msg = new WhatsappMessage(name, number, newMsgDate, content, context, false, -1);
 
         } else if (index == 1){
-            msg = new SmsMessage(name, number, newMsgDate, content, context, false);
+            msg = new SmsMessage(name, number, newMsgDate, content, context, false, -1);
         } else {
             //index == 2
-            msg = new Call(name, number, newMsgDate, content, context, false);
+            msg = new Call(name, number, newMsgDate, content, context, false, -1);
         }
         return msg;
 
