@@ -1,10 +1,13 @@
 package com.friends.stay.keepintouch;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 import java.util.Date;
@@ -45,8 +48,19 @@ public class WhatsappMessage extends Msg {
             waIntent.setPackage(WA_PACKAGE);
 
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.getInstance(), id, waIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(MainActivity.getInstance())
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle("KeepInTouch")
+                            .setContentText("Send Whatsapp To " + getName())
+                            .setContentIntent(pendingIntent);
+            mBuilder.setAutoCancel(true);
+            NotificationManager notificationManager = (NotificationManager) MainActivity.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(id, mBuilder.build());
             //start chooser
-            MainActivity.getInstance().startActivity(Intent.createChooser(waIntent, ""));
+//            MainActivity.getInstance().startActivity(Intent.createChooser(waIntent, ""));
 
         } catch (PackageManager.NameNotFoundException e) {
             Toast.makeText(MainActivity.getInstance(), WA_ERR, Toast.LENGTH_SHORT)

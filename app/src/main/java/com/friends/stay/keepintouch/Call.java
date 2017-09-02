@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,22 +31,22 @@ public class Call extends Msg {
 
     @Override
     public void send() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.getInstance());
-
-        builder.setTitle("Call " + getName() + "?")
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Remove the item within array at position
-                        dialog.dismiss();
-                    }
-                })
-                .setPositiveButton("Call", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        callNow();
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        showNotification();
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.getInstance());
+//        builder.setTitle("Call " + getName() + "?")
+//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // Remove the item within array at position
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .setPositiveButton("Call", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        callNow();
+//                    }
+//                });
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
 
     }
 
@@ -69,24 +70,36 @@ public class Call extends Msg {
     public void send(Context context){}
 
 
-    private void showNotification(String eventtext, Context ctx) {
-//        NotificationManager notificationManager = (NotificationManager) MainActivity.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        String MyText = "Reminder";
-//        Notification mNotification = new Notification(R.mipmap.ic_jog_dial_answer, MyText, System.currentTimeMillis() );
-//        //The three parameters are: 1. an icon, 2. a title, 3. time when the notification appears
-//
-//        String MyNotificationTitle = "Medicine!";
-//        String MyNotificationText  = "Don't forget to take your medicine!";
-//
-//        Intent MyIntent = new Intent(Intent.ACTION_VIEW);
-//        PendingIntent StartIntent = PendingIntent.getActivity(MainActivity.getInstance().getApplicationContext(),0,MyIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-//        //A PendingIntent will be fired when the notification is clicked. The FLAG_CANCEL_CURRENT flag cancels the pendingintent
-//
-//        mNotification.setLatestEventInfo(MainActivity.getInstance().getApplicationContext(), MyNotificationTitle, MyNotificationText, StartIntent);
-//
-//        int NOTIFICATION_ID = 1;
-//        notificationManager.notify(NOTIFICATION_ID , mNotification);
+    private void showNotification() {
+        int result = ContextCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.CALL_PHONE);
+        //if there is permission start calling
+        if (result != PackageManager.PERMISSION_GRANTED){
+            //there is no permission - so request for permission
+            ActivityCompat.requestPermissions(MainActivity.getInstance(),new String[]{Manifest.permission.CALL_PHONE},
+                    MainActivity.PERMISSION_REQUEST_CALL);
+        }
+
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        String number = getNumber();
+        callIntent.setData(Uri.parse("tel:"+number));
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.getInstance(), 0, callIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.getInstance())
+                .setSmallIcon(R.drawable.ic_call)
+                .setContentTitle(MainActivity.getInstance().getResources().getString(R.string.app_name))
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+
+
+        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+        notificationBuilder.setStyle(inboxStyle);
+        inboxStyle.setBigContentTitle("KeepInContact");
+        inboxStyle.addLine("Call" + getName());
+        notificationBuilder.setStyle(inboxStyle);
+
+        NotificationManager notificationManager =
+                (NotificationManager) MainActivity.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+        int NOTIFICATION_ID = 100;
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 
 

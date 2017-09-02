@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case PERMISSION_REQUEST_CALL:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(mNextCallIntent);
+//                    startActivity(mNextCallIntent);
+                    return;
                 }
                 break;
             case MY_PERMISSIONS_REQUEST_SEND_SMS:
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                         smsManager.sendTextMessage(mNextSmsMessage.getNumber(), null, mNextSmsMessage.getContent(), null, null);
                         Toast.makeText(getApplicationContext(), "SMS sent.",
                                 Toast.LENGTH_LONG).show();
+
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(),
                                 "SMS failed, please try again.", Toast.LENGTH_LONG).show();
@@ -436,6 +438,8 @@ public class MainActivity extends AppCompatActivity {
         if (simpleContactArrayList == null) {
             //first time user entrances
             mUser = new User();
+//            ActivityCompat.requestPermissions(MainActivity.getInstance(),new String[]{Manifest.permission.CALL_PHONE},
+//                    MainActivity.PERMISSION_REQUEST_CALL);
             Intent intent = new Intent(this, MainSetting.class);
             startActivity(intent);
         }
