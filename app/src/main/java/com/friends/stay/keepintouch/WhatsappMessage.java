@@ -49,7 +49,7 @@ public class WhatsappMessage extends Msg {
 
             waIntent.putExtra(Intent.EXTRA_TEXT, text);
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.getInstance(), id, waIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.getInstance(), 0, waIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(MainActivity.getInstance())
                             .setSmallIcon(R.mipmap.ic_launcher)
