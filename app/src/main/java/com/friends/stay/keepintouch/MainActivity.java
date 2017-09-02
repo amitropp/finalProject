@@ -167,7 +167,14 @@ public class MainActivity extends AppCompatActivity {
         if (EditContactActivity.getFutureFrag() != null) {
             EditContactActivity.getFutureFrag().updateRecyclerViewOnAdd();
         }
+    }
 
+    public void addHistoryMsgAndUpdeateRecyclerV(Msg newMsg) {
+        mUser.addToAllHistoryMsg(newMsg);
+        mHistoryFrag.updateRecyclerViewOnAdd();
+        if (EditContactActivity.getHistoryFrag() != null) {
+            EditContactActivity.getHistoryFrag().updateRecyclerViewOnAdd();
+        }
     }
 
     public void addMsgToManager(Msg msg){
@@ -249,6 +256,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void deleteFutureMsgAndUpdeateRecyclerV(Msg m) {
+        mUser.getAllFutureMessages().remove(m);
+        Contact c = mUser.findContactByMsg(m);
+        if (c != null) {
+            c.delFromFutureMessages(m);
+            EditContactActivity.getFutureFrag().updateRVOnUpdate();
+        }
+        mFutureFrag.updateRecyclerViewOnRemove(mUser.getAllFutureMessages().size() - 1);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
