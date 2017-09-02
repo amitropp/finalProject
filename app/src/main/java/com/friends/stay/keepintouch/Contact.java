@@ -120,6 +120,15 @@ class Contact {
         this.communicationRate = communicationRate;
     }
 
+    private Msg getLastFutureMsgToSpecificContact(){
+        Msg last = futureMessages.get(0);
+        for (Msg msg : futureMessages){
+            if (msg.getDate().after(last.getDate())){
+                last = msg;
+            }
+        }
+        return last;
+    }
 
     public Msg createFutureMsg(){
         //check existing msgs
@@ -132,15 +141,15 @@ class Contact {
         int size = futureMessages.size();
         //calculate date
         if (size != 0){
-            //there is futureMessages
-            Msg last = futureMessages.get(size -1);
+            //there is futureMessages to this contact
+            Msg last = getLastFutureMsgToSpecificContact();
             Date lastMsgDate = last.getDate();
             c.setTime(lastMsgDate);
             Log.d("lastMsgDate", String.valueOf(lastMsgDate));
             Log.d("communicationRate", String.valueOf(communicationRate));
             c.add(Calendar.DAY_OF_MONTH, communicationRate);
         } else {
-            //there is no futureMessages
+            //there is no futureMessages to this contact
             Date currentDate = new Date();
             c.setTime(currentDate);
             c.add(Calendar.DAY_OF_MONTH, communicationRate);
@@ -166,13 +175,18 @@ class Contact {
                 break;
             }
         }
+        Log.d("isInsert", String.valueOf(isInsert));
+        int daysToAdd = 0;
         if (isInsert){
             //change day if needed (no available times that day)
+            Log.d("*DayOfResult", String.valueOf(DayOfResult));
+            Log.d("*currentDayRange", String.valueOf(currentDayRange));
             while (currentDayRange.size() == 0){
-                Log.d("DayOfResult", String.valueOf(DayOfResult));
-                Log.d("currentDayRange", String.valueOf(currentDayRange));
+                Log.d("#DayOfResult", String.valueOf(DayOfResult));
+                Log.d("#currentDayRange", String.valueOf(currentDayRange));
                 //move to the next day
                 DayOfResult += 1;
+                daysToAdd += 1;
                 DayOfResult = DayOfResult % 8;
                 if(DayOfResult == 0){
                     DayOfResult = 1;
@@ -181,14 +195,18 @@ class Contact {
                 currentDayRange = MainActivity.getUser().getAvailableTimes(DayOfResult);
             }
             //update to day with availability
-            c.add(Calendar.DAY_OF_WEEK, DayOfResult);
+            Log.d("before", String.valueOf(c.getTime()));
+            Log.d("#DayOfResult to add", String.valueOf(DayOfResult));
+            c.add(Calendar.DAY_OF_WEEK, daysToAdd);
+            Log.d("after", String.valueOf(c.getTime()));
         }
 
         //change time TODO date not right
         int index;
         String range = "";
         if (isInsert) {
-            Log.d("currentDayRange", String.valueOf(currentDayRange));
+            Log.d("%DayOfResult", String.valueOf(DayOfResult));
+            Log.d("%currentDayRange", String.valueOf(currentDayRange));
             index = random.nextInt(currentDayRange.size());
             Log.d("index", String.valueOf(index));
             range = currentDayRange.get(index);
@@ -197,8 +215,9 @@ class Contact {
         }
         Log.d("range", String.valueOf(range));
         int start = Integer.valueOf(range.split("-")[0]);
-        int end = Integer.valueOf(range.split("-")[1]);
+        int end = Integer.valueOf(range.split("-")[1]) - 1;
         int hour = random.nextInt((end - start) + 1) + start;
+        Log.d("hour", String.valueOf(hour));
         c.set(Calendar.HOUR_OF_DAY, hour);
         int minute = random.nextInt((59 - 0) + 1) + 0;
         c.set(Calendar.MINUTE, minute);
