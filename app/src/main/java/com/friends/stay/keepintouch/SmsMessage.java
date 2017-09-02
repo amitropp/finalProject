@@ -67,6 +67,20 @@ public class SmsMessage extends Msg {
         }
     }
 
+
+    public void send(Context context) {
+//        SmsManager smsManager = SmsManager.getDefault();
+//        try {
+//            Log.d("SmsMessage send", "8");
+//            smsManager.sendTextMessage(getNumber(), null, getContent(), null, null);
+//            Log.d("SmsMessage send", "9");
+//            Toast.makeText(context, "SMS sent.", Toast.LENGTH_LONG).show();
+//            Log.d("SmsMessage send", "10");
+//        } catch (Exception e) {
+//            Toast.makeText(context, "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+//        }
+    }
+
     @Override
     public int getIconId() {
         return R.mipmap.ic_sms_image;

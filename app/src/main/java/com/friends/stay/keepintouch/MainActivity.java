@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             mainActivity = this;
         }
         super.onCreate(savedInstanceState);
-         mPrefs = getPreferences(MODE_PRIVATE);
+        mPrefs = getPreferences(MODE_PRIVATE);
         setContentView(R.layout.activity_main);
         _readUser();
         _readMsgTemplate();
@@ -164,9 +164,6 @@ public class MainActivity extends AppCompatActivity {
         mUser.addToAllFutureMsg(newMsg);
         addMsgToManager(newMsg);
         mFutureFrag.updateRecyclerViewOnAdd();
-        if (EditContactActivity.getFutureFrag() != null) {
-            EditContactActivity.getFutureFrag().updateRecyclerViewOnAdd();
-        }
     }
 
     public void addHistoryMsgAndUpdeateRecyclerV(Msg newMsg) {
@@ -261,9 +258,11 @@ public class MainActivity extends AppCompatActivity {
         Contact c = mUser.findContactByMsg(m);
         if (c != null) {
             c.delFromFutureMessages(m);
-            EditContactActivity.getFutureFrag().updateRVOnUpdate();
+            if (EditContactActivity.getFutureFrag() != null) {
+                EditContactActivity.getFutureFrag().updateRVOnUpdate();
+            }
         }
-        mFutureFrag.updateRecyclerViewOnRemove(mUser.getAllFutureMessages().size() - 1);
+        mFutureFrag.updateRVOnUpdate();
     }
 
     @Override

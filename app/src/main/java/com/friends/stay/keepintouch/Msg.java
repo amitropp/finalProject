@@ -33,6 +33,7 @@ public abstract class Msg {
      * send function specific for the media we are using
      */
     public abstract void send();
+    public abstract void send(Context context);
     public abstract int getIconId();
 
     /**

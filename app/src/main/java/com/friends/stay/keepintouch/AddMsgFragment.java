@@ -375,9 +375,11 @@ public class AddMsgFragment extends Fragment {
                 if (mExistingMsg != null) {
                     if (mIsFuture)
                     {
+                        MainActivity.getInstance().deleteMsgFromManager(mExistingMsg);
                         mExistingMsg.setContent(msgContent);
                         mExistingMsg.setDate(mChosenDate);
                         activity.updeateFutureRecyclerV(mindexOfMsgToEdit, mposOfContact);
+                        MainActivity.getInstance().addMsgToManager(mExistingMsg);
                     }
                 }
                 else {

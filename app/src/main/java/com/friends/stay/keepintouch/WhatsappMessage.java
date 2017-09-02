@@ -55,6 +55,8 @@ public class WhatsappMessage extends Msg {
 
     }
 
+    public void send(Context context){}
+
     @Override
     public int getIconId() {
         return R.mipmap.ic_whatsapp;
