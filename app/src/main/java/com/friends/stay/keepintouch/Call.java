@@ -86,19 +86,14 @@ public class Call extends Msg {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.getInstance())
                 .setSmallIcon(R.drawable.ic_call)
                 .setContentTitle(MainActivity.getInstance().getResources().getString(R.string.app_name))
+                .setContentText("Call " + getName())
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 
 
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        notificationBuilder.setStyle(inboxStyle);
-        inboxStyle.setBigContentTitle("KeepInContact");
-        inboxStyle.addLine("Call" + getName());
-        notificationBuilder.setStyle(inboxStyle);
-
         NotificationManager notificationManager =
                 (NotificationManager) MainActivity.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
-        int NOTIFICATION_ID = 100;
+        int NOTIFICATION_ID = getId();
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 

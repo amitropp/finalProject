@@ -114,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                         smsManager.sendTextMessage(mNextSmsMessage.getNumber(), null, mNextSmsMessage.getContent(), null, null);
                         Toast.makeText(getApplicationContext(), "SMS sent.",
                                 Toast.LENGTH_LONG).show();
+                        deleteFutureMsgAndUpdeateRecyclerV(mNextSmsMessage);
+                        addHistoryMsgAndUpdeateRecyclerV(mNextSmsMessage);
 
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(),
