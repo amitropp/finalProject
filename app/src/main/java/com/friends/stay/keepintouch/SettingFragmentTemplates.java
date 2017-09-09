@@ -50,7 +50,6 @@ public class SettingFragmentTemplates extends Fragment {
         adapter = new ArrayAdapter<String>(getContext(), R.layout.activity_listview, msgTemplate);
 
         listView = (ListView) rootView.findViewById(R.id.listView);
-        Log.d("here", String.valueOf(listView));
         listView.setAdapter(adapter);
         setupListViewListener();
         addNewTemplate();
@@ -83,10 +82,7 @@ public class SettingFragmentTemplates extends Fragment {
                     @Override
                     public void onItemClick (final AdapterView<?> adapter,
                                              View item, int pos, long id) {
-                        final int index = pos;
-                        Log.d("msgTemplate length", String.valueOf(msgTemplate.size()));
-                        Log.d("setOnItemClickListener", String.valueOf(pos));
-                        CharSequence dl = "Delete";
+                        final int index = pos;CharSequence dl = "Delete";
                         CharSequence sv = "Save";
                         final CharSequence nn = "<nickname>";
 
@@ -106,7 +102,6 @@ public class SettingFragmentTemplates extends Fragment {
                                     public void onClick(DialogInterface dialog, int id) {
                                     // Remove the item within array at position
                                     final String itemToRemoved = msgTemplate.get(index);
-                                    Log.d("firebaseLog", "~~~delete item");
                                     removeItemFromScreen(itemToRemoved);
                                     dialog.dismiss();
                                     }
@@ -114,16 +109,13 @@ public class SettingFragmentTemplates extends Fragment {
                                 .setPositiveButton(sv, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         String itemText = input.getText().toString();
-                                        Log.d("itemText = ", itemText);
                                         addItemToScreen(itemText);
                                         removeItemFromScreen(originMsg);
-                                        Log.d("firebaseLog", "~~~edit item");
                                     }
                                 })
                                 .setNeutralButton(nn, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         input.append(" <nickname> ");
-                                        Log.d("firebaseLog", "~~~add nick name");
                                     }});
 
                         AlertDialog dialog = builder.create();
@@ -164,7 +156,6 @@ public class SettingFragmentTemplates extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // add the item to the cloud
                         String itemText = input.getText().toString();// + ",\t" + date.getText().toString();
-                        Log.d("itemText = ", itemText);
                         addItemToScreen(itemText);
                         dialog.dismiss();
 
@@ -180,7 +171,6 @@ public class SettingFragmentTemplates extends Fragment {
                 .setNeutralButton(nn, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         input.append(" <nickname> ");
-                        Log.d("firebaseLog", "~~~add nick name");
                 }});
 
         AlertDialog dialog = builder.create();
@@ -207,7 +197,6 @@ public class SettingFragmentTemplates extends Fragment {
         File dataFile = new File(filesDir, "templates.txt");
         try {
             msgTemplate = new ArrayList<String>(FileUtils.readLines(dataFile));
-            Log.d("here", "0");
         } catch (IOException e) {
             msgTemplate = new ArrayList<String>();
         }

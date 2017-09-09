@@ -208,7 +208,6 @@ public class User {
 //        c.setTimeInMillis(milliSeconds);
 //        Date date = c.getTime();
         for (Msg msg : allFutureMessages) {
-            Log.d("getFuturMsgByID", String.valueOf(msg).split("@")[1]);
             if (String.valueOf(msg).split("@")[1].equals(id)){
                 return msg;
             }
@@ -223,7 +222,6 @@ public class User {
 
     public String getRandomMsgTemplate() {
         Random random = new Random();
-        Log.d("msgTemplate", String.valueOf(msgTemplate));
         if (msgTemplate.size() != 0){
             int index = random.nextInt(msgTemplate.size());
             return msgTemplate.get(index);

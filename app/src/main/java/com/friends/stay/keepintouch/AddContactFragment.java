@@ -181,7 +181,6 @@ public class AddContactFragment extends Fragment {
                     Contact newContact = new Contact(mChosenName, mChosenPhoneNumber, nickname,
                             isCall, isMsg, isWhatsapp, mChosenRate, getActivity());
                     //add new contact to list
-//                    MainActivity activity = MainActivity.getInstance();
                     MainActivity.getInstance().addContactAndUpdeateRecyclerV(newContact);
 
                     //add first 4 future msgs

@@ -34,8 +34,6 @@ public class Call extends Msg {
         showNotification();
     }
 
-    public void send(Context context){}
-
 
     private void showNotification() {
         int result = ContextCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.CALL_PHONE);

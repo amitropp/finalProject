@@ -211,7 +211,6 @@ public class SettingFragmentTimes extends Fragment {
     }
 
     public void setTimes(){
-        Log.d("", "setTimes");
         mDoneBtn = (ImageButton) thisView.findViewById(R.id.btn_done);
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,7 +222,6 @@ public class SettingFragmentTimes extends Fragment {
 
     // wait for the user to click the done button
     public void setDoneListener() {
-        Log.d("", "setDoneListener");
         //get times - Sunday
         isSundayMorning = cvSundayMorning.isChecked();
         isSundayNoon = cvSundayNoon.isChecked();

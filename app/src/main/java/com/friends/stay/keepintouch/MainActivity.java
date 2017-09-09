@@ -164,17 +164,10 @@ public class MainActivity extends AppCompatActivity {
     public void addMsgToManager(Msg msg){
         Intent newInt =  new Intent(this, sendMsgsReceiver.class);
         newInt.putExtra("msgID", String.valueOf(msg).split("@")[1]);
-        Log.d("intent 1 - ", String.valueOf(newInt));
-        Log.d("addMsgToManager msgID", String.valueOf(msg).split("@")[1]);
-//        Log.d("msg.getDate - ", String.valueOf(msg.getDate()));
-//        Log.d("msg.getDateInMillis - ", String.valueOf(msg.getDateInMillis()));
         final int _id = (int) System.currentTimeMillis();
         msg.setId(_id);
-        Log.d("_id", String.valueOf(_id));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, _id, newInt, 0);
-        Log.d("addMsgToManager", "3");
         am.set(AlarmManager.RTC, msg.getDateInMillis() + 1000, pendingIntent);
-        Log.d("addMsgToManager", "4");
     }
 
     public void deleteMsgFromManager(Msg msg){
