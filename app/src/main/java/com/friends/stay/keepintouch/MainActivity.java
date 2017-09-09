@@ -422,15 +422,15 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<SimpleMsg> simpleFutureMsgs = gson.fromJson(stringSimpleFutureMsg, typeSimpleMsgArray);
         ArrayList<SimpleMsg> simpleHistoryMsgs = gson.fromJson(stringSimpleHistoryMsg, typeSimpleMsgArray);
 
-//        if (simpleContactArrayList == null) {
+        if (simpleContactArrayList == null) {
             //first time user entrances
             mUser = new User();
             Intent intent = new Intent(this, FirstScreen.class);
             startActivity(intent);
-//        }
-//        else {
-//            mUser = new User(simpleContactArrayList, simpleFutureMsgs, simpleHistoryMsgs, this);
-//        }
+        }
+        else {
+            mUser = new User(simpleContactArrayList, simpleFutureMsgs, simpleHistoryMsgs, this);
+        }
     }
 
     private void _saveUser() {
