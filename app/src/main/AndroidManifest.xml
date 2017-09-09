@@ -16,19 +16,17 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".MainSetting" />
-        <activity android:name=".EditContactActivity"/>
-        <service android:name=".ManagerService"
-                    android:exported="false">
-        </service>
-        <receiver android:name=".sendMsgsReceiver"
-            android:enabled="true"
-            >
-        </receiver>
+        <activity android:name=".FirstScreen" />
+        <activity android:name=".EditContactActivity" />
+        <receiver
+            android:name=".sendMsgsReceiver"
+            android:enabled="true" />
+
     </application>
 
 </manifest>

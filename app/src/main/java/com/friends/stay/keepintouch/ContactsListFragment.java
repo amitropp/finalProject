@@ -16,7 +16,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Created by Avi on 13/05/2017.
  * contactList - this is the main screen, showing all contacts the user added to his list in
  * order to stay in contact with
  */

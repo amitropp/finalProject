@@ -9,7 +9,6 @@ import java.util.Date;
 
 
 /**
- * Created by Avi on 11/05/2017.
  * Abstract class of a message (children can be whatsapp message, sms message,
  * facebook message, etc.
  */

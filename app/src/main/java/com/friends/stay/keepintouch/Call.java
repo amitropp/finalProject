@@ -32,39 +32,6 @@ public class Call extends Msg {
     @Override
     public void send() {
         showNotification();
-//        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.getInstance());
-//        builder.setTitle("Call " + getName() + "?")
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        // Remove the item within array at position
-//                        dialog.dismiss();
-//                    }
-//                })
-//                .setPositiveButton("Call", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        callNow();
-//                    }
-//                });
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
-
-    }
-
-    private void callNow() {
-        Intent intent = new Intent(Intent.ACTION_CALL);
-        intent.setData(Uri.parse("tel:" + getNumber()));
-        //check for permission
-        int result = ContextCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.CALL_PHONE);
-        //if there is permission start calling
-        if (result == PackageManager.PERMISSION_GRANTED){
-            MainActivity.getInstance().startActivity(intent);
-        }
-        else {
-            MainActivity.mNextCallIntent = intent;
-            //there is no permission - so request for permission
-            ActivityCompat.requestPermissions(MainActivity.getInstance(),new String[]{Manifest.permission.CALL_PHONE},
-                    MainActivity.PERMISSION_REQUEST_CALL);
-        }
     }
 
     public void send(Context context){}

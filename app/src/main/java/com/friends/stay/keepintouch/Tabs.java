@@ -41,7 +41,7 @@ public class Tabs {
         this.tabNames = tabNames;
         this.tabFragments = tabFragments;
         rootView = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
-         activity = (AppCompatActivity) context;
+        activity = (AppCompatActivity) context;
         setTabs();
     }
 
@@ -102,6 +102,10 @@ public class Tabs {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 
 

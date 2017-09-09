@@ -14,10 +14,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
-/**
- * Created by amitropp on 26/08/2017.
- */
-
 public class sendMsgsReceiver extends BroadcastReceiver {
     private Context context;
     @Override

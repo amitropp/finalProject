@@ -11,9 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-/**
- * Created by user on 8/11/2017.
- */
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
     public static ArrayList<Contact> mDataset;
@@ -52,12 +49,6 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
                  myIntent.putExtras(b);
                  activity.startActivity(myIntent);
 
-//                 AddContactFragment addContactFrag = AddContactFragment.newInstance(pos);
-//                 // raise the addContact for editing the settings of the contact
-//                 activity.getFragmentManager().beginTransaction()
-//                         .replace(R.id.frag_contact_list, addContactFrag)
-//                         .addToBackStack(ContactsListFragment.TAG_CONATCT)
-//                         .commit();
              }
             });
         }

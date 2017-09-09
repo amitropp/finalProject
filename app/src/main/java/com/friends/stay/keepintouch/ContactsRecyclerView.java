@@ -6,9 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import java.util.ArrayList;
 
-/**
- * Created by user on 8/11/2017.
- */
+
 
 class ContactsRecyclerView {
     public RecyclerView mRecyclerView;

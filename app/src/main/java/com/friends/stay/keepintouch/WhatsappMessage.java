@@ -12,9 +12,6 @@ import android.widget.Toast;
 
 import java.util.Date;
 
-/**
- * Created by Avi on 11/05/2017.
- */
 
 public class WhatsappMessage extends Msg {
 

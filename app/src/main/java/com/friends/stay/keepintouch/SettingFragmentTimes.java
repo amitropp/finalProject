@@ -2,12 +2,15 @@ package com.friends.stay.keepintouch;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,9 +32,6 @@ import android.widget.GridLayout.LayoutParams;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * Created by amitropp on 05/08/2017.
- */
 
 public class SettingFragmentTimes extends Fragment {
 
@@ -387,5 +387,10 @@ public class SettingFragmentTimes extends Fragment {
         if (isSaturdayEvening){
             MainActivity.getUser().setAvailableTimes(Calendar.SATURDAY, EVNING);
         }
+
+        MainSetting ms = (MainSetting) getActivity();
+        ms.getTabs().getViewPager().setCurrentItem(2, true);
+
+
     }
 }

@@ -12,9 +12,6 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Created by Avi on 11/05/2017.
- */
 
 class Contact {
 
@@ -201,7 +198,7 @@ class Contact {
             Log.d("after", String.valueOf(c.getTime()));
         }
 
-        //change time TODO date not right
+        //change time
         int index;
         String range = "";
         if (isInsert) {

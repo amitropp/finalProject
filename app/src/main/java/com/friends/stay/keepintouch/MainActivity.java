@@ -77,25 +77,10 @@ public class MainActivity extends AppCompatActivity {
         //create tabs on screen using tab names array and tab fragments array
         mTabs = new Tabs(this, tabsNames, tabFragments);
 
-//        sendMsgintent =  new Intent(this, sendMsgsReceiver.class);
-//        Log.d("intent 0 - ", String.valueOf(sendMsgintent));
-        //start running the manager
-//        Intent intent = new Intent(this, ManagerService.class);
-//        startService(intent);
-
-        test();
     }
 
     public static MainActivity getInstance() {
         return mainActivity;
-    }
-
-    //test the program
-    private void test() {
-        Date date = new Date();
-        Msg msg = new Call("Amit", "0524448111", date, "", this, true, -1);
-//        msg.send();
-
     }
 
     @Override
@@ -437,17 +422,15 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<SimpleMsg> simpleFutureMsgs = gson.fromJson(stringSimpleFutureMsg, typeSimpleMsgArray);
         ArrayList<SimpleMsg> simpleHistoryMsgs = gson.fromJson(stringSimpleHistoryMsg, typeSimpleMsgArray);
 
-        if (simpleContactArrayList == null) {
+//        if (simpleContactArrayList == null) {
             //first time user entrances
             mUser = new User();
-//            ActivityCompat.requestPermissions(MainActivity.getInstance(),new String[]{Manifest.permission.CALL_PHONE},
-//                    MainActivity.PERMISSION_REQUEST_CALL);
-            Intent intent = new Intent(this, MainSetting.class);
+            Intent intent = new Intent(this, FirstScreen.class);
             startActivity(intent);
-        }
-        else {
-            mUser = new User(simpleContactArrayList, simpleFutureMsgs, simpleHistoryMsgs, this);
-        }
+//        }
+//        else {
+//            mUser = new User(simpleContactArrayList, simpleFutureMsgs, simpleHistoryMsgs, this);
+//        }
     }
 
     private void _saveUser() {

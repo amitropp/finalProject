@@ -23,16 +23,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
-
-/**
- * Created by amitropp on 05/08/2017.
- */
-
-
-//TODO - fix add button
-//TODO - remove firebase?
-//TODO - edit onItem click to have edit option and to actually delete
-
 public class SettingFragmentTemplates extends Fragment {
 
 
@@ -42,36 +32,47 @@ public class SettingFragmentTemplates extends Fragment {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private View rootView;
+    private ImageButton mDoneBtn;
 
+    public SettingFragmentTemplates(){
 
-//    public SettingFragmentTemplates(){
-//
-//        msgTemplate.add("Hey <nickname>, How are yoy?");
-//        msgTemplate.add("whats up <nickname>?");
-//        msgTemplate.add("<nickname>, I miss you!! \uD83E\uDD17");
-//    }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fregment_setting_templates, container, false);
 
         msgTemplate = new ArrayList<String>();
-//        msgTemplate.add("Hey <nickname>, How are yoy?");
-//        msgTemplate.add("whats up <nickname>?");
-//        msgTemplate.add("<nickname>, I miss you!! \uD83E\uDD17");
+
 
         String[] mStringArray = new String[msgTemplate.size()];
         readItems();
         adapter = new ArrayAdapter<String>(getContext(), R.layout.activity_listview, msgTemplate);
 
-
-
         listView = (ListView) rootView.findViewById(R.id.listView);
+        Log.d("here", String.valueOf(listView));
         listView.setAdapter(adapter);
         setupListViewListener();
         addNewTemplate();
+
+
+        if (msgTemplate.size() == 0) {
+            addItemToScreen("Hey <nickname>, How are you?");
+            addItemToScreen("whats up <nickname>?");
+            addItemToScreen("<nickname> I miss you!!");
+        }
+
+        mDoneBtn = (ImageButton) rootView.findViewById(R.id.btn_done);
+        mDoneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+
         return rootView;
     }
+
 
     private void setupListViewListener() {
 
@@ -130,18 +131,6 @@ public class SettingFragmentTemplates extends Fragment {
                         dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new CustomListener(dialog, input));
 
 
-
-
-                        //prevent <nickname> btn to close the dialog
-//                        final AlertDialog dialog = builder.create();
-//                        Button b = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
-//                        b.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                //// TODO: 18/08/2017
-//                            }
-//                        });
-
                     }
                 });
     }
@@ -184,8 +173,6 @@ public class SettingFragmentTemplates extends Fragment {
                 .setNegativeButton(can, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Refresh the adapter
-//                        String itemText = input.getText().toString();// + ",\t" + date.getText().toString();
-//                        removeItemFromScreen(itemText);
                         adapter.notifyDataSetChanged();
                         dialog.dismiss();
                     }
@@ -220,6 +207,7 @@ public class SettingFragmentTemplates extends Fragment {
         File dataFile = new File(filesDir, "templates.txt");
         try {
             msgTemplate = new ArrayList<String>(FileUtils.readLines(dataFile));
+            Log.d("here", "0");
         } catch (IOException e) {
             msgTemplate = new ArrayList<String>();
         }
@@ -245,7 +233,7 @@ public class SettingFragmentTemplates extends Fragment {
         });
     }
 
-    public void addItemToScreen(String newItem) { //TODO call
+    public void addItemToScreen(String newItem) {
         // Refresh the adapter
         adapter.notifyDataSetChanged();
         adapter.add(newItem);
